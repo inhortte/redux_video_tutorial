@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+<title>Ticketpro – vstupenka do světa zábavy</title>
+
+<link href="/static/14-1-PUBLIC/resources/general.css" type="text/css" media="screen" rel="stylesheet" />
+<link href="/static/14-1-PUBLIC/resources/screen2.css" type="text/css" media="screen" rel="stylesheet" />
+<link href="/static/14-1-PUBLIC/resources/print.css" type="text/css" media="print" rel="stylesheet" />
+
+<!--- vdna styles --->
+<link href="styles/vdnamenu.css" type="text/css" rel="stylesheet" />
+<!--- end vdna styles --->
+<!--[if lte IE 6]>
+	<style media="screen" type="text/css">
+		@import '/static/14-1-PUBLIC/resources/screen-ie.css';
+	</style>
+<![endif]-->
+<!-- VDNA thurk ---------------->
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("img[id^='zifter']").click(function() {
+    $("#vdnamenu").toggle(600);
+  });
+});
+</script>
+<!-- end VDNA thurk ------------------------->
+
+</head>
+<body id="home" class="cs" ng-app="ticketproApp">
+
+<!-- vdna logo --- -->
+<img id="zifter_logo" src="images/zifter.png" style="position: absolute; top: 5px; right: 5px; width: 50px; z-index: 400; cursor: pointer;" />
+
+<ng-include src=" 'partials/vdnamenu.html' "></ng-include>
+<!--------------------->
+
+<div id="special-background">
+
+<div id="nav-container">
+	<div id="nav">
+<!-- header -->
+<div id="header">
+<div class="topMenu">
+		<a class="topMenuItem" href="/jnp/prodejni-mista/index.html">PRODEJNÍ MÍSTA</a>
+		<a class="topMenuItem last" href="https://shop.ticketpro.cz/CZ/Account/LogOn">E-SHOP</a>
+	</div>
+
+
+<div id="menuLang">
+	<ul class="zalozky">
+<li class="active"><span>CZ</span></li>
+		<li><a href="/jnp/en/home/index.html">EN</a></li>
+</ul>
+	<div class="reset">&nbsp;</div>
+</div>
+<div id="destination">
+
+<form action="/jnp/home/index$5064-change_site.html" method="post" id="changeCountry">
+		<div>
+<span id="selectCountryHolder">
+			<select name="site" id="selectCountry" class="cs">
+<option value="14" class="cs" selected="selected" title="http://www.ticketpro.cz">Česko</option>
+<option value="4371" class="pl" title="http://www.ticketpro.pl">Polska</option>
+<option value="9031" class="hr" title="http://www.ticketpro.hr">Hrvatska</option>
+<option value="5565" class="my" title="http://www.ticketpro.com.my">Malaysia</option>
+<option value="89232" class="lt" title="http://www.ticketpro.lt">Lietuvių</option>
+<option value="98291" class="lv" title="http://www.ticketpro.lv">Latvija</option>
+<option value="98292" class="ee" title="http://www.ticketpro.ee">Eesti</option>
+<option value="6689" class="bg" title="http://www.ticketpro.bg">България</option>
+<option value="97903" class="cl" title="http://www.ticketpro.cl">Chile</option>
+<option value="204856" class="by" title="http://www.ticketpro.by">Беларусь</option>
+<option value="558936" class="hu" title="http://www.ticketpro.hu">Magyarország</option>
+</select>
+			</span>
+
+		</div>
+		</form>
+</div>
+	<div class="reset"><hr /></div>
+	<div id="clubHolder">
+
+	<div class="club button">
+		<a href="/jnp/club/home/index.html">
+			<img src="/public/ba/a7/2f/1341038_847058_buttons_03.png" />
+		</a>
+		<br />
+		<span>Zpravodaj, Soutěže, Slevy</span>
+	</div>
+<div class="eshop button">
+		<a href="https://shop.ticketpro.cz/CZ/Account/LogOn">
+			<img src="/public/9c/8a/db/1341040_847060_buttons_05.png" />
+		</a>
+		<br />
+		<span>Nákup a stažení vstupenek</span>
+	</div>
+</div>
+	<div id="logo">
+		<a href="/jnp/home/index.html"><img src="/public/a3/e5/a6/149_849929_ticketpro_cz.png" alt="Ticketpro - www.ticketpro.cz" width="172" height="80" />
+<img src="/public/5d/eb/7e/185_871899_claim_cz.png" alt="Vstupenka do světa zábavy" width="200" height="17" id="vstupenka" /></a>
+	</div>
+	<div id="socialIconsHolder">
+<a href="https://www.facebook.com/Ticketpro" onclick="return !window.open(this.href)" class="socialIcon" title="Facebook Ticketpro">
+				<img src="/public/d3/98/98/1340917_846922_social_icons_03.png" />
+			</a>
+<a href="https://plus.google.com/111287036059053704930" onclick="return !window.open(this.href)" class="socialIcon" title="G+ Ticketpro">
+				<img src="/public/95/c1/88/1340919_846924_social_icons_05.png" />
+			</a>
+<a href="https://twitter.com/ticketpro_cz" onclick="return !window.open(this.href)" class="socialIcon" title="Twitter Ticketpro">
+				<img src="/public/eb/e4/37/1340998_850390_twitter.png" />
+			</a>
+</div>
+	<div class="reset">&nbsp;</div>
+</div>
+<!-- /header --><div class="reset"></div>
+
+<script>
+$( document ).ready(function() {
+
+	// validate search form
+ 	$("#searchForm").submit(function() {
+		if ($("#advancedSearch").is(':visible')) {
+			if ( !$("#queryANDWords").val() && !$("#category").val() && !$("#region").val() ) {
+				$("#errorMsg").text("Zvolte kategorii či region.");
+				return false;
+			}
+		}
+		$ ("#errorMsg").text("");
+		return true;
+	});
+});
+</script>
+<!-- search  -->
+<form method="get" action="/jnp/vyhledavani/index$867.html" id="searchForm">
+	<div>
+		<input type="hidden" name="segments" value="all" />
+		<input type="hidden" name="translateUrl" value="0" />
+		<input type="hidden" name="prefixQuery" value="1"/>
+	</div>
+	<div id="search">
+	<div id="cal"></div>
+		<table>
+			<tr>
+				<td><div class="searchInputHolder"><input type="text" name="queryANDWords" id="queryANDWords" value="" class="searchInput" placeholder="Zadejte umělce, akci nebo místo konání" /></div></td>
+				<td class="sButton"><input type="image" src="/public/da/94/7e/1336579_849899_search.png" id="sB1" /></td>
+				<td id="aS"><a href="?advS=1" class="adSearch" onclick="adSearch(); return false;">Pokročilé hledání</a></td>
+			</tr>
+		</table>
+	</div>
+	<div class="reset h0"><hr /></div>
+	<div id="advancedSearch">
+<div id="calendarHolder">
+
+<strong>Rychlý výběr akcí dle data:</strong>
+<div id="calendar">
+<div class="listing">
+			<a href="/jnp/home/index$743-showMonth.html?year=2015&amp;month=3" onclick="ajax('calendarHolder','/jnp/updater-section/index$743-showMonth.html?mode=calendar&amp;year=2015&amp;month=3&amp;async=true'); return false;" class="next"><img src="/public/d6/d0/26/88_94_calendar_right.gif" alt="&gt;&gt;" width="28" height="18" /></a>
+			<a href="/jnp/home/index$743-showMonth.html?year=2015&amp;month=1" onclick="ajax('calendarHolder','/jnp/updater-section/index$743-showMonth.html?mode=calendar&amp;year=2015&amp;month=1&amp;async=true'); return false;" class="prev"><img src="/public/fa/d5/c4/86_93_calendar_left.gif" alt="&lt;&lt;" width="28" height="18" /></a>
+			<div class="month"><span style="position:relative;">Únor 2015</span ></div>
+		<div class="reset">&nbsp;</div>
+	</div>
+	<table cellspacing="1">
+		<tbody>
+		<tr class="first">
+			<th>PO</th><th>ÚT</th><th>ST</th><th>ČT</th><th>PÁ</th><th class="dark">SO</th><th class="dark">NE</th>
+		</tr>
+<tr>
+<td class=" empty">
+</td>
+<td class=" empty">
+</td>
+<td class=" empty">
+</td>
+<td class=" empty">
+</td>
+<td class=" empty">
+</td>
+<td class=" empty">
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=1.2.2015&amp;segments=all">1</a>
+</td>
+</tr>
+<tr class="odd">
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=2.2.2015&amp;segments=all">2</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=3.2.2015&amp;segments=all">3</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=4.2.2015&amp;segments=all">4</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=5.2.2015&amp;segments=all">5</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=6.2.2015&amp;segments=all">6</a>
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=7.2.2015&amp;segments=all">7</a>
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=8.2.2015&amp;segments=all">8</a>
+</td>
+</tr>
+<tr>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=9.2.2015&amp;segments=all">9</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=10.2.2015&amp;segments=all">10</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=11.2.2015&amp;segments=all">11</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=12.2.2015&amp;segments=all">12</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=13.2.2015&amp;segments=all">13</a>
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=14.2.2015&amp;segments=all">14</a>
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=15.2.2015&amp;segments=all">15</a>
+</td>
+</tr>
+<tr class="odd">
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=16.2.2015&amp;segments=all">16</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=17.2.2015&amp;segments=all">17</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=18.2.2015&amp;segments=all">18</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=19.2.2015&amp;segments=all">19</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=20.2.2015&amp;segments=all">20</a>
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=21.2.2015&amp;segments=all">21</a>
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=22.2.2015&amp;segments=all">22</a>
+</td>
+</tr>
+<tr>
+<td class=" today">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=23.2.2015&amp;segments=all">23</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=24.2.2015&amp;segments=all">24</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=25.2.2015&amp;segments=all">25</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=26.2.2015&amp;segments=all">26</a>
+</td>
+<td class="">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=27.2.2015&amp;segments=all">27</a>
+</td>
+<td class=" dark">
+<a href="/jnp/vyhledavani/index$867.html?eventDate=28.2.2015&amp;segments=all">28</a>
+</td>
+<td class=" empty">
+</td>
+</tr>
+</tbody>
+	</table>
+</div>
+
+</div>
+<table class="aS">
+			<tr>
+				<td class="first">&nbsp;</td>
+				<td class="second">
+					<input type="radio" id="all" name="queryField" value="" checked="checked" />&nbsp;<label for="all">všude</label>
+					<input type="radio" id="name" class="radio" name="queryField" value="title" />&nbsp;<label for="name">v názvech akcí</label>
+					<input type="radio" id="place" class="radio" name="queryField" value="venue" />&nbsp;<label for="place">v místech konání</label>
+				</td>
+			</tr>
+			<tr>
+				<td class="first"><label for="category" class="strong">V kategorii:</label></td>
+				<td class="second">
+					<select name="category" id="category" class="select">
+					<option value="">Zvolte kategorii</option>
+<option value="cr.novinky">Novinky</option>
+<option value="cr.hudba">Hudba</option>
+<option value="cr.divadlo">Divadlo</option>
+<option value="cr.festivaly">Festivaly</option>
+<option value="cr.klub">Kluby</option>
+<option value="cr.sport">Sport</option>
+<option value="cr.spolecenskeakce">Společenské akce</option>
+<option value="cz.vanoce">Vánoce</option>
+<option value="cr.vystavy">Výstavy</option>
+<option value="cr.deti">Děti</option>
+<option value="cr.ostatni">Ostatní</option>
+<option value="cr.souteze">Soutěže</option>
+</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="first"><label for="region" class="strong">V regionu:</label></td>
+				<td class="second">
+					<select name="region" id="region" class="select">
+						<option value="">Zvolte region</option>
+<option value="cr.hmp">Praha</option>
+<option value="cr.pardubicky">Pardubický kraj</option>
+<option value="cr.jihomoravsky">Jihomoravský kraj</option>
+<option value="cr.plzensky">Plzeňský kraj</option>
+<option value="cr.kralovehradecky">Královéhradecký kraj</option>
+<option value="cr.stredocesky">Středočeský kraj</option>
+<option value="cr.moravskoslezsky">Moravskoslezský kraj</option>
+<option value="cr.zlinsky">Zlínský kraj</option>
+<option value="cr.ustecky">Ústecký kraj</option>
+<option value="cz.karlovarsky">Karlovarský kraj</option>
+<option value="cr.olomoucky">Olomoucký kraj</option>
+<option value="cr.vysocina">Vysočina</option>
+<option value="cr.jihocesky">Jihočeský kraj</option>
+<option value="cr.liberecky">Liberecký kraj</option>
+<option value="sk.bratislava">Bratislava</option>
+<option value="cr.none">Ostatní</option>
+<option value="mimo.cr">Mimo ČR</option>
+<option value="cz.slovensko">Slovensko</option>
+</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="first"><strong>Datum konání:</strong></td>
+				<td class="second">
+<label for="eventFrom" class="strong">od:</label>&nbsp;
+					<input type="text" class="calendar" name="eventFrom" id="eventFrom" value="" />
+					<label for="eventTo" class="strong">do:</label>&nbsp;
+					<input type="text" class="calendar" name="eventTo" id="eventTo" value="" />
+				</td>
+			</tr>
+			<tr>
+				<td class="first">&nbsp;</td>
+				<td class="second">
+					<strong class="red" id="errorMsg"></strong>
+				</td>
+			</tr>
+		</table>
+		<div class="reset">&nbsp;</div>
+	</div>
+</form>
+<!-- /search  -->
+<div class="reset"></div>
+	</div>
+	<div id="menu-container">
+<!-- main menu -->
+<div id="mainMenu">
+	<ul id="menu">
+		<li id="first"><a class="active" href="/jnp/home/index.html"><span class="homeIcon"></span></a></li>
+<li><a href="/jnp/novinky/index.html">Novinky</a>
+<div class="submenu leanLeft">
+						<ul>
+<li><a href="/jnp/novinky/zmeny-akce/index.html">Akce - změny</a></li>
+<li><a href="/jnp/novinky/upozorneni-akce/index.html">Upozornění</a></li>
+<li><a href="/jnp/novinky/zrusene-akce/index.html">Zrušené akce</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/hudba/index.html">Hudba</a>
+<div class="submenu leanLeft">
+						<ul>
+<li><a href="/jnp/hudba/rock/index.html">Rock</a></li>
+<li><a href="/jnp/hudba/klasicka-hudba-operni-arie/index.html">Klasická hudba / Operní árie</a></li>
+<li><a href="/jnp/hudba/jazz-blues/index.html">Jazz / Blues</a></li>
+<li><a href="/jnp/hudba/swing-sanson/index.html">Swing / šanson</a></li>
+<li><a href="/jnp/hudba/folklor-etno-world-music/index.html">Folklór / Etno / World music</a></li>
+<li><a href="/jnp/hudba/funk-gospel-soul/index.html">Funk / Gospel / Soul / R&amp;B</a></li>
+<li><a href="/jnp/hudba/pop/index.html">Pop/Muzikálové melodie</a></li>
+<li><a href="/jnp/hudba/experiment-alternativa/index.html">Experiment / Alternativa</a></li>
+<li><a href="/jnp/hudba/tanecni-elektronicka-hudba/index.html">Taneční / Elektronická hudba</a></li>
+<li><a href="/jnp/hudba/hip-hop-rap/index.html">Hip hop / Rap</a></li>
+<li><a href="/jnp/hudba/reggae-ska/index.html">Reggae / Ska</a></li>
+<li><a href="/jnp/hudba/country-folk/index.html">Country / Folk</a></li>
+<li><a href="/jnp/hudba/metal-punk-emo/index.html">Metal / Punk / EMO</a></li>
+<li><a href="/jnp/hudba/ruzne-zanry/index.html">Různé žánry</a></li>
+<li><a href="/jnp/hudba/kluby/index.html">Kluby</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/divadlo/index.html">Divadlo</a>
+<div class="submenu leanLeft">
+						<ul>
+<li><a href="/jnp/divadlo/cinohra/index.html">Činohra</a></li>
+<li><a href="/jnp/divadlo/opera-opereta/index.html">Opera / Opereta</a></li>
+<li><a href="/jnp/divadlo/muzikaly-hudebni-divadlo/index.html">Muzikály / Hudební divadlo</a></li>
+<li><a href="/jnp/divadlo/balet-tanec/index.html">Balet / Tanec</a></li>
+<li><a href="/jnp/divadlo/cerne-divadlo-pantomima/index.html">Černé divadlo / Pantomima</a></li>
+<li><a href="/jnp/divadlo/laterna-magika/index.html">Laterna magika</a></li>
+<li><a href="/jnp/divadlo/loutkove-divadlo/index.html">Loutkové divadlo</a></li>
+<li><a href="/jnp/divadlo/variete-kabaret/index.html">Varieté / Kabaret / Zábavní pořad</a></li>
+<li><a href="/jnp/divadlo/fringe-cirkus-ledni-revue/index.html">Fringe / Cirkus / Lední revue</a></li>
+<li><a href="/jnp/divadlo/multimedia-experiment-improvizace/index.html">Multimedia / Experiment / Improvizace</a></li>
+<li><a href="/jnp/divadlo/talk-show/index.html">Talk show / Scénické čtení</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/festivaly/index.html">Festivaly</a>
+<div class="submenu leanLeft">
+						<ul>
+<li><a href="/jnp/festivaly/hudebni/index.html">Festivaly hudební</a></li>
+<li><a href="/jnp/festivaly/divadelni/index.html">Festivaly divadelní</a></li>
+<li><a href="/jnp/festivaly/vicezanrove/index.html">Festivaly vícežánrové</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/klubova-scena/index.html">Kluby</a>
+</li>
+<li><a href="/jnp/sport/index.html">Sport</a>
+<div class="submenu leanRight">
+						<ul>
+<li><a href="/jnp/sport/golf/index.html">Golf</a></li>
+<li><a href="/jnp/sport/hokej/index.html">Hokej</a></li>
+<li><a href="/jnp/sport/fotbal/index.html">Fotbal</a></li>
+<li><a href="/jnp/sport/basketbal/index.html">Basketbal</a></li>
+<li><a href="/jnp/sport/box-bojova-umeni/index.html">Box / Bojová umění</a></li>
+<li><a href="/jnp/sport/motorismus/index.html">F1/Motorismus</a></li>
+<li><a href="/jnp/sport/freestyle/index.html">Freestyle</a></li>
+<li><a href="/jnp/sport/ostatni/index.html">Ostatní sporty</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/spolecenske-akce/index.html">Společenské akce</a>
+<div class="submenu leanRight">
+						<ul>
+<li><a href="/jnp/spolecenske-akce/benefice-charitativni-akce/index.html">Benefice / Charitativní akce</a></li>
+<li><a href="/jnp/spolecenske-akce/ples-tanecni-zabava/index.html">Ples / Taneční párty</a></li>
+<li><a href="/jnp/spolecenske-akce/modni-prehlidka/index.html">Módní přehlídka / Soutěže krásy</a></li>
+<li><a href="/jnp/spolecenske-akce/souteze-krasy-zivotni-styl/index.html">Životní styl</a></li>
+<li><a href="/jnp/spolecenske-akce/vystavy/index.html">Výstavy</a></li>
+<li><a href="/jnp/spolecenske-akce/gastronomie/index.html">Gastronomie</a></li>
+<li><a href="/jnp/spolecenske-akce/lidove-slavnosti/index.html">Lidové slavnosti / Velikonoční akce</a></li>
+<li><a href="/jnp/spolecenske-akce/silvestr-vanocni-akce/index.html">Vánoční akce</a></li>
+<li><a href="/jnp/spolecenske-akce/silvestr/index.html">Silvestr / Novoroční akce</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/pro-deti/index.html">Děti</a>
+<div class="submenu leanRight">
+						<ul>
+<li><a href="/jnp/pro-deti/divadlo-pro-deti/index.html">Divadlo pro děti</a></li>
+<li><a href="/jnp/pro-deti/ostatni-akce-pro-deti/index.html">Ostatní akce pro děti</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/ostatni/index.html">Ostatní</a>
+<div class="submenu leanRight">
+						<ul>
+<li><a href="/jnp/ostatni/vystavy/index.html">Výstavy</a></li>
+<li><a href="/jnp/ostatni/poukazky/index.html">Poukázky</a></li>
+<li><a href="/jnp/ostatni/kurzy-prednasky-konference/index.html">Kurzy / Přednášky / Konference/ Besedy</a></li>
+<li><a href="/jnp/ostatni/vyhlidkove-plavby-prochazky/index.html">Vyhlídkové plavby / procházky</a></li>
+<li><a href="/jnp/ostatni/zazitky/index.html">Zážitky</a></li>
+</ul>
+					</div>
+</li>
+<li><a href="/jnp/souteze-klub/index.html">Soutěže</a>
+</li>
+</ul>
+	<div class="reset"></div>
+</div>
+<!-- /main menu --><div class="reset"></div>
+	</div>
+
+<div vdnaclass="vison" id="super-event" style="background: #006699;"><div class="banner"><a href="/jnp/pro-deti/ostatni-akce-pro-deti/1474885-sesame-street-live-.html"><img src="/public/ac/2c/2e/1347299_993365__980_x_200_TicketPro__Leden_.jpg" alt="superbanner" title="superbanner" onClick="_gaq.push(['_trackEvent', 'Superevent', 'přechod ze superevent banneru', '/jnp/pro-deti/ostatni-akce-pro-deti/1474885-sesame-street-live-.html']);" /></a></div></div>
+</div>
+<div id="page">
+	<div id="content" class="wide">
+
+<div id="newsticker" class="newsticker-narrow">
+			<h2>aktuálně</h2>
+			<ul id="news">
+
+<li>Kazaky, mužská taneční skupina čtyř profesionálních tanečníků vystoupí v Praze <a href="/jnp/hudba/pop/1540592-kazaky-evropske-turne-2015.html">Více &raquo;</a></li>
+
+<li>Macy Gray se vrátí do ČR! Nenechte si ujít koncert této americké zpěvačky a skladatelky <a href="/jnp/hudba/funk-gospel-soul/1475367-macy-gray.html">Více &raquo;</a></li>
+
+<li>Suchišviliho národní balet Gruzie vystoupí v rámci Evropského turné i v ČR. <a href="/jnp/divadlo/balet-tanec/1541578-sukhishvili.html">Více &raquo;</a></li>
+
+<li>Robert Plant vystoupí 23.7.2015 v doprovodu Sensational Space Shifters v Brně.  <a href="/jnp/hudba/rock/1536791-robert-plant.html">Více &raquo;</a></li>
+			</ul>
+		</div>
+<div id="fb-root"></div>
+			<div id="fb-nt-right"><fb:like href="https://www.facebook.com/Ticketpro" send="false" layout="button_count" width="180" show_faces="false" font="verdana"></fb:like></div>
+	<div class="reset"><hr /></div>
+
+<div class="informace"><p><strong>Pro informace o zrušených akcích klikněte <a href="/jnp/novinky/zrusene-akce/index.html">zde</a>. Informace o změně místa konání nebo termínu najdete <a href="/jnp/novinky/zmeny-akce/index.html">zde</a>.</strong></p>
+<h3><span style="color: red;">Za platnost a pravost vstupenek zakoupených mimo síť Ticketpro neručíme.</span> Seznam prodejních míst <a href="/jnp/prodejni-mista/index.html" onclick="window.open(this.href);return false;" onkeypress="window.open(this.href);return false;">zde.</a></h3>
+</div>
+
+
+<div class="reset"><hr /></div>
+
+<div class="eventsHolder">
+<h2><span>DOPORUČUJEME</span></h2>
+				<p class="print-none"><a href="/jnp/akce/index.html">zobrazit všechny</a></p>
+<div class="events">
+
+<!-- main content -->
+<div ng-view></div>
+<!-- end main content -->
+
+  <div class="reset">&nbsp;</div>
+</div>
+</div>
+<div class="reset"><hr /></div>
+
+<div class="reset"><hr /></div>
+
+<div class="reset"></div>
+
+<div id="infoBoxes">
+<div class="infoBox middle first"><h3>Soutěže</h3>
+
+<ul><li><a href="/jnp/club/souteze/lamuzgueule-3-3-2015.html?competitionUid=499">Lamuzgueule - soutěž o vstupenky na koncert...</a></li>
+<li><a href="/jnp/club/souteze/soutez-vondrackova-26-3-2015.html?competitionUid=500">Helena Vondráčková - 26.3.2015 / Brno</a></li>
+<li><a href="/jnp/club/souteze/one-festival-19-6-2015.html?competitionUid=502">The One Festival - soutěž o vstupenky na...</a></li>
+</ul>
+<p class="right"><a href="/jnp/club/souteze/index.html">více soutěží</a></p></div>
+
+<div class="infoBox middle"><h3>Včasný nákup</h3>
+<ul><li><a href="/jnp/divadlo/opera-opereta/613258-rockopera-skup.html">RockOpera Praha</a></li>
+<li><a href="/jnp/hudba/kluby/1472803-metronomy-uk-.html">Metronomy (UK)</a></li>
+<li><a href="/jnp/hudba/kluby/1524042-ohio-boombox-stalley-usa-.html">Ohio Boombox STALLEY (USA)</a></li>
+<li><a href="/jnp/hudba/rock/1541563-tvrdy-havelka-s-kapelou.html">Tvrdý / Havelka s kapelou</a></li>
+<li><a href="/jnp/hudba/1442417-rytmus-ego-separ-strapo.html">Rytmus, Ego, Separ, Strapo</a></li>
+</ul>
+<p class="right"><a href="/jnp/akce/index.html?type=bargain">další</a></p></div>
+<div class="reset"></div></div><div class="reset"></div></div>
+	<hr />
+
+<div id="footer">
+	<div class="textHolder">
+		<div class="klub">
+<h3>Klub</h3>
+<p><a href="https://www.ticketpro.cz/jnp/club/index.html"><img alt="Ticketpro Club Logo " height="117" src="/public/f0/ba/82/3914_573295_klub.gif" width="117"/></a>Novinky, soutěže a slevy<br/>exkluzivně pro členy<br/>Ticketpro klubu.</p>
+<div class="reset"></div>
+<p style="margin-top: 10px;"><a href="https://www.facebook.com/Ticketpro" target="_blank"><img src="/public/19/90/1d/337797_672189_fb_square.gif" alt="Facebook"/></a> <a href="https://plus.google.com/111287036059053704930" rel="publisher" target="_blank"><img src="/public/dd/2e/ec/1070638_665339_gplus.png" alt="Google+"/></a></p></div>
+		<div class="platby">
+<h3>Platby</h3>
+<p>U nás můžete použít tyto platební metody:</p>
+<p><img alt="VISA, Visa Electron, MasterCard, eKonto, Platba24, Mobito" height="140" src="/public/e8/ae/27/4497_706949_karty_cz.gif" width="240"/></p>
+</div>
+		<div class="ticketpro">
+			<h3>Ticketpro</h3>
+<ul><li><a href="/jnp/hudba/index.html">Hudba</a></li>
+<li><a href="/jnp/divadlo/index.html">Divadlo</a></li>
+<li><a href="/jnp/festivaly/index.html">Festivaly</a></li>
+<li><a href="/jnp/sport/index.html">Sport</a></li>
+<li><a href="/jnp/spolecenske-akce/index.html">Společenské akce</a></li>
+<li><a href="/jnp/pro-deti/index.html">Děti</a></li>
+<li><a href="/jnp/ostatni/index.html">Ostatní</a></li>
+</ul>
+<ul class="w145"><li><a href="/jnp/prodejni-mista/index.html">Prodejní místa</a></li>
+<li><a href="/jnp/obchodni-podminky/index.html">Obchodní podmínky</a></li>
+<li><a href="/jnp/jak-nakupovat/index.html">Jak nakupovat</a></li>
+<li><a href="/jnp/o-nas/index.html">O nás</a></li>
+</ul>
+<ul><li><a href="/jnp/dotazy/prodej-vstupenek-informace-o-akcich/index.html">Prodej vstupenek, informace o akcích v předprodeji</a></li>
+<li><a href="/jnp/kontakt/index.html">Kontakt</a></li>
+<li><a href="/jnp/partneri/index.html">Partneři</a></li>
+</ul>
+		</div>
+		<div class="reset">&nbsp;</div>
+	</div>
+	<div class="utils">
+		<div class="utilsHolder">
+		&copy;&nbsp;2015 Ticketpro a.s. <span class="print-none">| vyrobila <a href="http://www.etnetera.cz/">Etnetera</a>
+		<a href="/jnp/rss/index.xml" class="rss">RSS</a></span>
+		</div>
+		<a href="http://www.ticketpro.biz"><img src="/public/e8/f/cb/143_124_footer_ticketpro_logo.gif" width="62" height="31" alt="Ticketpro - www.ticketpro.biz" class="footerLogo" /></a>
+	</div>
+</div>
+
+
+</div>
+
+</div>
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="js/app.js"></script>
+<!-- endbuild -->
+
+
+<!-- monitoring
+__ETN_.O.K.__
+// monitoring -->
+</body>
+</html>

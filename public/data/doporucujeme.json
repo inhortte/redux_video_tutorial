@@ -1,0 +1,515 @@
+[
+  {
+    "vdnaclass": "concerts",
+    "url": "/jnp/hudba/pop/1470756-helena-vondrackova.html",
+    "type": "Pop/Muzikálové melodie",
+    "name": "Helena Vondráčková",
+    "img": "/public/a2/34/b4/1470779_960258_Helena_100x100.jpg",
+    "location": "Sono Centrum, Brno",
+    "date": "26.03.2015"
+  },
+  {
+    "vdnaclass": "concerts, festivals, jazz, rock music",
+    "url": "/jnp/festivaly/hudebni/1535850-the-one-festival.html",
+    "type": "Festivaly hudební",
+    "name": "The One Festival",
+    "img": "/public/ac/d2/f7/1535875_980517__100x100jpeg.jpg",
+    "location": "Sportovní hala Pod Lipou, Roudnice nad &hellip;",
+    "date": "19.06.2015"
+  },
+  {
+    "vdnaclass": "concerts, rock music",
+    "url": "/jnp/hudba/kluby/1413858-kadebostany-chh-.html",
+    "type": "Kluby",
+    "name": "Kadebostany (CH) + Katarzia (SK)",
+    "img": "/public/eb/58/65/1422346_907397_kade.jpg",
+    "location": "Palác Akropolis, Praha 3",
+    "date": "27.02.2015"
+  },
+  {
+    "vdnaclass": "film",
+    "url": "/jnp/ostatni/kino/1524844-playstation-noc-reklamozroutu.html",
+    "type": "Kino",
+    "name": "Playstation Noc Reklamožroutů",
+    "img": "/public/47/d2/36/1525683_973331_noc.jpg",
+    "location": "Lucerna - kino, Praha 1",
+    "date": "27.02.2015"
+  },
+  {
+    "vdnaclass": "exposition",
+    "url": "/jnp/spolecenske-akce/vystavy/1516305-motocykl.html",
+    "type": "Výstavy",
+    "name": "Motocykl",
+    "img": "/public/22/74/fa/1516424_967229_motocykl100.jpg",
+    "location": "Výstaviště, Praha",
+    "date": "05.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/1489157-zebrik-2014-bacardi-music-awards.html",
+    "type": "Hudba",
+    "name": "Žebřík 2014 Bacardi Music Awards",
+    "img": "/public/5c/e1/7e/1489183_979811_zebrik100.jpg",
+    "location": "KC Depo, Plzeň",
+    "date": "13.03.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1493313-chinaski-rockfield-tour-2015.html",
+    "type": "Rock",
+    "name": "Chinaski - Rockfield Tour 2015",
+    "img": "/public/62/43/fa/1493353_953611_chinaski.jpg",
+    "location": "Různá místa v České republice",
+    "date": "14.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/1520394-mandrage-o-d-zacatku.html",
+    "type": "Hudba",
+    "name": "Mandrage o(d) začátku",
+    "img": "/public/12/a5/b0/1525717_973403__100x100.jpg",
+    "location": "Divadlo Hybernia, Praha 1",
+    "date": "18.03.2015"
+  },
+  {
+    "vdnaclass": "opera, classical music, concerts",
+    "url": "/jnp/hudba/klasicka-hudba-operni-arie/1489117-koncerty-pro-zasvecene-2015-jaroslav-sveceny-.html",
+    "type": "Klasická hudba / Operní árie",
+    "name": "Koncerty pro zasvěcené 2015 (Jaroslav Svěcený)",
+    "img": "/public/c6/ee/44/1489249_950600_sveceny100.jpg",
+    "location": "Klementinum, Praha 1",
+    "date": "19.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/1442417-rytmus-ego-separ-strapo.html",
+    "type": "Hudba",
+    "name": "Rytmu",
+    "img": "/public/cb/e/f5/1442441_922815__100x100.jpg",
+    "location": "Bobycentrum, Brno",
+    "date": "20.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/pop/1542900-aneta-langerova.html",
+    "type": "Pop/Muzikálové melodie",
+    "name": "Aneta Langerová",
+    "img": "/public/e8/1f/6b/1547325_988789_aneta.jpg",
+    "location": "ŠKODA Muzeum, Mlada Boleslav",
+    "date": "10.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts, folk music",
+    "url": "/jnp/hudba/country-folk/1527906-jessica-pratt-us.html",
+    "type": "Country / Folk",
+    "name": "Jessica Pratt /US",
+    "img": "/public/32/61/2/1528035_975244_jessica.jpg",
+    "location": "Jazz Dock, Praha 5",
+    "date": "20.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts, classical music, opera",
+    "url": "/jnp/hudba/klasicka-hudba-operni-arie/1541354-dagmar-peckova.html",
+    "type": "Klasická hudba / Operní árie",
+    "name": "Dagmar Pecková",
+    "img": "/public/da/6a/7e/1541375_984964_peckova_100_x_100.jpg.png",
+    "location": "Rudolfinum, Praha 1",
+    "date": "24.03.2015"
+  },
+  {
+    "vdnaclass": "science, health",
+    "url": "/jnp/ostatni/kurzy-prednasky-konference/1527041--1-rocnik-konference-o-strave-myslime-jime-zijeme.html",
+    "type": "Kurzy / Přednášky / Konference/ Besedy",
+    "name": "Myslíme-Jíme-Žijeme - 1. ročník konference o stravě",
+    "img": "/public/a7/5b/b/1527064_974498_myslime.jpg",
+    "location": "Lucerna - Velký sál, Praha 1",
+    "date": "28.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts, film, jazz, drama",
+    "url": "/jnp/hudba/ruzne-zanry/1420493-evergreen-tour-2014.html",
+    "type": "Různé žánry",
+    "name": "Evergreen tour 2015",
+    "img": "/public/94/78/ec/1420514_931159_bannery_ticketpro_100x100.jpg",
+    "location": "Různá místa v České republice",
+    "date": "30.03.2015"
+  },
+  {
+    "vdnaclass": "music, jazz, blues, concerts",
+    "url": "/jnp/hudba/jazz-blues/1507521-agharta-prague-jazz-festival-sheila-e.html",
+    "type": "Jazz / Blues",
+    "name": "AghaRTA Prague Jazz Festival: Sheila E",
+    "img": "/public/bf/bd/a5/1515985_966856_sheyla.jpg",
+    "location": "Lucerna Music Bar, Praha 1",
+    "date": "31.03.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/kluby/1500156-girlschool-gb-support-the-agony.html",
+    "type": "Kluby",
+    "name": "Girlschool (GB) support: The Agony",
+    "img": "/public/f0/e6/21/1525788_973426_girlschool.jpg",
+    "location": "Hudební klub Nová Chmelnice, Praha",
+    "date": "03.04.2015"
+  },
+  {
+    "vdnaclass": "classical music, opera, concerts",
+    "url": "/jnp/hudba/klasicka-hudba-operni-arie/1541195-max-emanuel-cencic.html",
+    "type": "Klasická hudba / Operní árie",
+    "name": "Max Emanuel Cencic",
+    "img": "/public/52/53/8/1541220_984829_cencil.jpg",
+    "location": "Rudolfinum, Praha 1",
+    "date": "04.04.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1514706-manfred-manns-earth-band.html",
+    "type": "Rock",
+    "name": "Manfred Mann’s Earth Band",
+    "img": "/public/75/b2/19/1517066_969565_Manfred_100x100.jpg",
+    "location": "Lucerna Music Bar, Praha 1",
+    "date": "09.04.2015"
+  },
+  {
+    "vdnaclass": "music, club scene",
+    "url": "/jnp/spolecenske-akce/ples-tanecni-zabava/1508484-ondrej-havelka-melody-makers-9-tanecni-vecer-v-lucerne.html",
+    "type": "Ples / Taneční párty",
+    "name": "Ondřej Havelka & Melody Makers - 9. taneční večer v Lucerně",
+    "img": "/public/af/c7/6a/1508550_963419_havelka.jpg",
+    "location": "Lucerna - Velký sál, Praha 1",
+    "date": "11.04.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/ruzne-zanry/1503804-vojtech-dyk-b-side-band-deska-tour-2015.html",
+    "type": "Různé žánry",
+    "name": "Vojtěch Dyk & B-Side Band - Deska tour 2015",
+    "img": "/public/b3/a8/0/1503829_960225_dyk.jpg",
+    "location": "Forum Karlín, Praha",
+    "date": "18.04.2015"
+  },
+  {
+    "vdnaclass": "music, club scene",
+    "url": "/jnp/hudba/tanecni-elektronicka-hudba/1477034-camouflage.html",
+    "type": "Taneční / Elektronická hudba",
+    "name": "Camouflage",
+    "img": "/public/cf/9d/44/1477058_981375_camouflage100.jpg",
+    "location": "Roxy, Praha 1",
+    "date": "19.04.2015"
+  },
+  {
+    "vdnaclass": "classical music, opera, concerts",
+    "url": "/jnp/hudba/klasicka-hudba-operni-arie/1485999-jarni-gala-daniel-hope.html",
+    "type": "Klasická hudba / Operní árie",
+    "name": "Jarní Gala: Daniel Hope & orchestr L’Arte del Mondo",
+    "img": "/public/22/73/bd/1486021_948037_gala15_ticketpro_360x360.jpg",
+    "location": "Pražský hrad, Praha 1",
+    "date": "29.04.2015"
+  },
+  {
+    "vdnaclass": "music",
+    "url": "/jnp/hudba/ruzne-zanry/1488636-carodejales-2015.html",
+    "type": "Různé žánry",
+    "name": "Čarodějáles 2015",
+    "img": "/public/b3/94/b/1488702_976019_carodejales100.jpg",
+    "location": "Koupaliště Riviera, Brno",
+    "date": "30.04.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1485214-lynyrd-skynyrd-usa-predkapela-zluty-pes.html",
+    "type": "Rock",
+    "name": "Lynyrd Skynyrd (USA",
+    "img": "/public/74/51/e1/1485282_949240__100x100_Lynyrd_Skynyrd.jpg",
+    "location": " Areál ploché dráhy, Plzeň",
+    "date": "01.05.2015"
+  },
+  {
+    "vdnaclass": "club scene, music",
+    "url": "/jnp/hudba/tanecni-elektronicka-hudba/1500358-magnetic-kveten-2015.html",
+    "type": "Taneční / Elektronická hudba",
+    "name": "Magnetic Festival 2015",
+    "img": "/public/14/d6/c7/1500385_958924_magnetic_2015_ticketpro_100x100_color.jpg",
+    "location": "PVA Letňany, Praha",
+    "date": "07.05.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1538180-rockove-legendy.html",
+    "type": "Rock",
+    "name": "Rockové legendy",
+    "img": "/public/72/67/65/1538215_982541_Legendy_baner_100_100.jpg",
+    "location": "Velká Synagoga, Plzeň",
+    "date": "07.05.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1492388-scorpions.html",
+    "type": "Rock",
+    "name": "Scorpions",
+    "img": "/public/b/d3/b4/1494284_955075_Scorpions_100x100.jpg",
+    "location": "Tipsport arena, Pardubice",
+    "date": "08.05.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/pop/1540592-kazaky-evropske-turne-2015.html",
+    "type": "Pop/Muzikálové melodie",
+    "name": "KAZAKY - Evropské turné 2015",
+    "img": "/public/84/93/44/1540751_988427_kazaky_100x100px.jpg",
+    "location": "Lucerna - Velký sál, Praha 1",
+    "date": "15.05.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1469857-def-leppard.html",
+    "type": "Rock",
+    "name": "Def Leppard",
+    "img": "/public/4d/2d/c8/1478805_943775_DL_Ostrava_100x100.jpg",
+    "location": "ČEZ Arena, Ostrava",
+    "date": "22.05.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1544285-kosheen-uk-featuring-bohemian-symphony.html",
+    "type": "Rock",
+    "name": "Kosheen (UK) featuring Bohemian Symphony",
+    "img": "/public/e6/34/57/1544311_987159__100x100_kosheen.jpg",
+    "location": "Forum Karlín, Praha",
+    "date": "02.06.2015"
+  },
+  {
+    "vdnaclass": "circus",
+    "url": "/jnp/divadlo/fringe-cirkus-ledni-revue/1508343-cirk-la-putyka-liberec.html",
+    "type": "Fringe / Cirkus / Lední revue",
+    "name": "Cirk La Putyka Liberec",
+    "img": "/public/a1/70/d2/1508379_963276_putyka.jpg",
+    "location": "Home Credit Arena, Liberec",
+    "date": "05.06.2015"
+  },
+  {
+    "vdnaclass": "club scene, music",
+    "url": "/jnp/hudba/tanecni-elektronicka-hudba/1535178-kosheen.html",
+    "type": "Taneční / Elektronická hudba",
+    "name": "Kosheen live in concert",
+    "img": "/public/73/61/43/1536310_980924_k100x100.jpg",
+    "location": "Bobycentrum, Brno",
+    "date": "05.06.2015"
+  },
+  {
+    "vdnaclass": "festivals, club scene, music",
+    "url": "/jnp/festivaly/vicezanrove/1522003-tanecvalmez.html",
+    "type": "Festivaly vícežánrové",
+    "name": "TanecValmez",
+    "img": "/public/6f/6b/d4/1526993_974423_tnvl.jpg",
+    "location": "Zámek Žerotínů, Valašské Meziříčí",
+    "date": "05.06.2015"
+  },
+  {
+    "vdnaclass": "festivals, music",
+    "url": "/jnp/festivaly/hudebni/1512793-votvirak-2015.html",
+    "type": "Festivaly hudební",
+    "name": "Votvírák 2015",
+    "img": "/public/19/cb/97/1547911_989477_votvirak.jpg",
+    "location": "Letiště Milovice, Milovice",
+    "date": "12.06.2015"
+  },
+  {
+    "vdnaclass": "sports",
+    "url": "/jnp/sport/motorismus/1477371-legendy-motoristicka-slavnost.html",
+    "type": "F1/Motorismus",
+    "name": "Legendy - motoristická slavnost",
+    "img": "/public/63/1c/6c/1549883_990953_LEGENDY2015___banner_100x100_V2.jpg",
+    "location": "Bohnice,",
+    "date": "13.06.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/pop/1502528-roxette.html",
+    "type": "Pop/Muzikálové melodie",
+    "name": "Roxette",
+    "img": "/public/ed/f9/3a/1502606_959046_roxette.jpg",
+    "location": "ČEZ Arena, Ostrava",
+    "date": "15.06.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1448331-judas-priest.html",
+    "type": "Rock",
+    "name": "Judas Priest",
+    "img": "/public/b1/16/46/1455975_927707_JP_Praha_100x100.jpg",
+    "location": "ČEZ Arena, Ostrava",
+    "date": "25.06.2015"
+  },
+  {
+    "vdnaclass": "festivals, music",
+    "url": "/jnp/festivaly/hudebni/1474258-mighty-sounds-2015.html",
+    "type": "Festivaly hudební",
+    "name": "Mighty Sounds 2015",
+    "img": "/public/eb/35/e8/1474283_939767_Ticketpro_100x100.jpg",
+    "location": "Letiště Čápův Dvůr, Tábor",
+    "date": "03.07.2015"
+  },
+  {
+    "vdnaclass": "festivals, rock music",
+    "url": "/jnp/festivaly/hudebni/1544152-masters-of-rock-2015.html",
+    "type": "Festivaly hudební",
+    "name": "Masters of Rock 2015",
+    "img": "/public/7/2d/a9/1544186_987090_mor.jpg",
+    "location": "areál likérky R. Jelínek, Vizovice",
+    "date": "09.07.2015"
+  },
+  {
+    "vdnaclass": "festivals, rock music",
+    "url": "/jnp/festivaly/hudebni/1472910-the-legends-rock-fest-aneb-legendy-ozivaji-17-7-18-7-2015-.html",
+    "type": "Festivaly hudební",
+    "name": "The Legends Rock Fest aneb Legendy ožívají",
+    "img": "/public/1/52/88/1473782_939336_legends_360x360.jpg",
+    "location": "Areál  U věže, Hořice",
+    "date": "17.07.2015"
+  },
+  {
+    "vdnaclass": "festivals, music",
+    "url": "/jnp/festivaly/hudebni/1532312--90-festival-polsko-.html",
+    "type": "Festivaly hudební",
+    "name": "90 Festival",
+    "img": "/public/86/a1/61/1532338_992200__90_100.jpg",
+    "location": "Bielsko-Biala, Polsko",
+    "date": "18.07.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1536791-robert-plant.html",
+    "type": "Rock",
+    "name": "Robert Plant",
+    "img": "/public/cb/65/7e/1539944_984013_plant100.jpg",
+    "location": "Hala Rondo, Brno",
+    "date": "23.07.2015"
+  },
+  {
+    "vdnaclass": "festivals, music",
+    "url": "/jnp/festivaly/hudebni/1477134-benatska-noc-2015.html",
+    "type": "Festivaly hudební",
+    "name": "Benátská!",
+    "img": "/public/10/e2/3d/1477173_981399_benatska100.jpg",
+    "location": "areál Vesec, Liberec",
+    "date": "23.07.2015"
+  },
+  {
+    "vdnaclass": "festivals, rock music",
+    "url": "/jnp/festivaly/hudebni/1491646-rockovy-festival-rock-of-sadska.html",
+    "type": "Festivaly hudební",
+    "name": "Rockový festival Rock of Sadská",
+    "img": "/public/85/e7/a1/1491707_952477_sadska_logo.jpg",
+    "location": "Jezero Sadská, Sadská",
+    "date": "15.08.2015"
+  },
+  {
+    "vdnaclass": "festivals, music",
+    "url": "/jnp/festivaly/hudebni/1499852-finlandia-machac-2015.html",
+    "type": "Festivaly hudební",
+    "name": "Finlandia Mácháč 2015",
+    "img": "/public/88/4b/fe/1499876_956884_machac.jpg",
+    "location": "Máchovo jezero - pláž Klůček, Doksy",
+    "date": "21.08.2015"
+  },
+  {
+    "vdnaclass": "festivals, rock music",
+    "url": "/jnp/festivaly/vicezanrove/1487890-rock-for-churchill-2015.html",
+    "type": "Festivaly vícežánrové",
+    "name": "Rock For Churchill",
+    "img": "/public/1/30/35/1487943_949694_avatar_100.jpg",
+    "location": "Areál Myslivna, Vroutek",
+    "date": "28.08.2015"
+  },
+  {
+    "vdnaclass": "opera, classical music",
+    "url": "/jnp/hudba/klasicka-hudba-operni-arie/1498063-dvorakova-praha-tonhalle-orchester-zurich.html",
+    "type": "Klasická hudba / Operní árie",
+    "name": "Dvořákova Praha: Tonhalle-Orchester Zürich",
+    "img": "/public/20/f/d2/1500697_957694_dp2015_360x360_ticketpro.jpg",
+    "location": "Rudolfinum, Praha 1",
+    "date": "19.09.2015"
+  },
+  {
+    "vdnaclass": "music",
+    "url": "/jnp/hudba/swing-sanson/1543774-narozeninovy-koncert-lada-kerndl-70.html",
+    "type": "Swing / šanson",
+    "name": "Narozeninový koncert – Laďa Kerndl 70",
+    "img": "/public/f/9d/91/1548892_990283_kerndl_100.jpg",
+    "location": "Žofín, Praha 1",
+    "date": "30.09.2015"
+  },
+  {
+    "vdnaclass": "exhibitions, gastronomy",
+    "url": "/jnp/spolecenske-akce/gastronomie/1541797-slavnost-jablka.html",
+    "type": "Gastronomie",
+    "name": "Slavnost Jablka",
+    "img": "/public/96/c2/ca/1541822_987581_jablko_100_x_100.jpg",
+    "location": "Zámek Sychrov, Sychrov",
+    "date": "03.10.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1407379-apocalyptica.html",
+    "type": "Rock",
+    "name": "Apocalyptica",
+    "img": "/public/59/3a/ae/1410472_899711_apocalyptica.jpg",
+    "location": "Forum Karlín, Praha",
+    "date": "10.10.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1448317-deep-purple.html",
+    "type": "Rock",
+    "name": "Deep Purple",
+    "img": "/public/3d/c7/e5/1465811_933573_dp.jpg",
+    "location": "ČEZ Arena, Ostrava",
+    "date": "27.10.2015"
+  },
+  {
+    "vdnaclass": "music, ballet",
+    "url": "/jnp/divadlo/balet-tanec/1426608-lord-of-the-dance-dangerous-games.html",
+    "type": "Balet / Tanec",
+    "name": "Lord of The Dance - Dangerous Games",
+    "img": "/public/75/ad/fe/1426784_910425_lord.jpg",
+    "location": "Různá místa v České republice",
+    "date": "28.10.2015"
+  },
+  {
+    "vdnaclass": "rock music, concerts",
+    "url": "/jnp/hudba/rock/1547863-krystof-srdcebeat-tour-2015.html",
+    "type": "Rock",
+    "name": "Kryštof Srdcebeat Tour 2015",
+    "img": "/public/b1/b4/3f/1547886_989409_krystof.jpg",
+    "location": "Home Credit Arena, Liberec",
+    "date": "31.10.2015"
+  },
+  {
+    "vdnaclass": "theater, musical",
+    "url": "/jnp/divadlo/muzikaly-hudebni-divadlo/1549744-mary-poppins.html",
+    "type": "Muzikály / Hudební divadlo",
+    "name": "Mary Poppins",
+    "img": "/public/41/83/3d/1549817_990915_mary_100x100.jpg",
+    "location": "Divadlo Hybernia, Praha 1",
+    "date": "05.11.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/1443043-suzi-quatro.html",
+    "type": "Hudba",
+    "name": "Suzi Quatro",
+    "img": "/public/af/a2/df/1445416_937531_Suzi_2015_100x100.jpg",
+    "location": "Různá místa v České republice",
+    "date": "11.11.2015"
+  },
+  {
+    "vdnaclass": "music, concerts",
+    "url": "/jnp/hudba/pop/1531201-petra-janu-vera-spinarova-tour-2015.html",
+    "type": "Pop/Muzikálové melodie",
+    "name": "Petra Janů & Věra Špinarová Tour 2015",
+    "img": "/public/af/92/e/1531275_977523_PJ_VS_tour15_100.jpg",
+    "location": "Různá místa v České republice",
+    "date": "12.11.2015"
+  }
+]

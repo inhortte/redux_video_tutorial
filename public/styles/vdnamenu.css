@@ -1,0 +1,51 @@
+#vdnamenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    text-align: left;
+    color: #aabbcc;
+    font-weight: bold;
+    display: none;
+    background: rgba(50,50,50,0.7);
+    z-index: 1000;
+    width: 100%;
+}
+
+#vdnamenu .r {
+    position: relative;
+}
+
+#vdnamenu .left {
+    width: 20%;
+    float: left;
+}
+
+#vdnamenu .middle {
+    width: 60%;
+    float: left;
+}
+
+#vdnamenu ul li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
+}
+
+#vdnamenu .clear {
+    clear:  both;
+}
+
+#keyspan, #aperture, #title {
+    margin-bottom: 10px;
+}
+
+#keyspan ul li, #like_select ul li {
+    padding: 4px 10px 4px 10px;
+}
+
+#vdnamenu #power {
+    margin-left: 20px;
+}

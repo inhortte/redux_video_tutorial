@@ -1,0 +1,16 @@
+{
+  "name": "ticketpro",
+  "version": "0.0.0",
+  "dependencies": {},
+  "repository": {},
+  "devDependencies": {
+    "http-server": "^0.7.5",
+    "request": "*"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+
+  }
+}

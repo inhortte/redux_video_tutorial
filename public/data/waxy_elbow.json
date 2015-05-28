@@ -1,0 +1,38 @@
+[
+  {
+    "vdnaclass": "world music, concerts",
+    "url": "/jnp/hudba/folklor-etno-world-music/1547175-ukrajinsky-armadni-soubor.html",
+    "type": "Folklór / Etno / World music",
+    "name": "Ukrajinský armádní soubor",
+    "img": "/public/6f/ff/57/1549806_990909_other_ukraine_100x100px.jpg",
+    "location": "Různá místa v České republice",
+    "date": "23.05.2015"
+  },
+  {
+    "vdnaclass": "concerts",
+    "url": "/jnp/hudba/pop/1470756-helena-vondrackova.html",
+    "type": "Pop/Muzikálové melodie",
+    "name": "Helena Vondráčková",
+    "img": "/public/a2/34/b4/1470779_960258_Helena_100x100.jpg",
+    "location": "Sono Centrum, Brno",
+    "date": "26.03.2015"
+  },
+  {
+    "vdnaclass": "club scene, music",
+    "url": "/jnp/hudba/tanecni-elektronicka-hudba/1550774-citadela.html",
+    "type": "Taneční / Elektronická hudba",
+    "name": "Citadela 2015 - Nervo",
+    "img": "/public/f4/55/bf/1550794_993132__100x100.jpg",
+    "location": "Bobycentrum, Brno",
+    "date": "23.05.2015"
+  },
+  {
+    "vdnaclass": "opera, classical music",
+    "url": "/jnp/hudba/klasicka-hudba-operni-arie/1550215-maksim-mrvica.html",
+    "type": "Klasická hudba / Operní árie",
+    "name": "Maksim Mrvica",
+    "img": "/public/46/a7/de/1550240_991261_maksim.jpg",
+    "location": "Divadlo Hybernia, Praha 1",
+    "date": "14.05.2015"
+  }
+]
