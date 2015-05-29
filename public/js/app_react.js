@@ -1,3 +1,6 @@
+var vdnaKeywords = ['film', 'rock music', 'science', 'comedy', 'jazz'];
+var vdnaAvailableKeywords = ['world music', 'concerts', 'club scene', 'music', 'opera', 'classical music', 'humor', 'caberet', 'dance', 'theater', 'sport', 'ballet', 'children', 'festivals', 'expositions', 'folkmusic', 'health', 'drama', 'blues', 'circus', 'sports', 'exhibitions', 'gastronomy', 'musical'];
+
 var VdnaMenu = React.createClass({
   render: function() {
     return (
@@ -79,22 +82,31 @@ var Aperture = React.createClass({
 });
 
 // -------------
-// implement toggleCategory
+// implement toggleKeyword
 // significa cojer de Keywoards y colocar en Entries
-// implement the loop for vdnaCategories (with map)
+// implement the loop for vdnaKeywords (with map)
 // -------------
 var Keywords = React.createClass({
+  toggleKeyword: function() { },
+  getInitialState: function() {
+    return {vdnaKeywords: vdnaKeywords};
+  },
   render: function() {
+    var vdnaKeywordNodes = this.state.vdnaKeywords.map(function(keyword) {
+      return (
+        <li>
+          <span title={keyword} style={{cursor: 'pointer'}} onClick={this.toggleKeyword}>
+            {keyword}
+          </span>
+        </li>
+      );
+    });
     return (
       <div id="keywords">
         <span className="left">Keywords:</span>
         <span id="keyspan" className="middle">
           <ul>
-            <li ng-repeat="vdnaCategory in vdnaCategories">
-              <span title="vdnaClass-name" style={{cursor: 'pointer'}} ng-click="toggleCategory(vdnaCategory[0])">
-                vdnaCategory
-              </span>
-            </li>
+            {vdnaKeywordNodes}
           </ul>
         </span>
       </div>
@@ -103,21 +115,30 @@ var Keywords = React.createClass({
 });
 
 // -------------
-// implement the loop that displays vdnaAvailableCategories (with map)
-// implement toggleAvailableCategory (see 'Keywords')
+// implement the loop that displays vdnaAvailableKeywords (with map)
+// implement toggleAvailableKeyword (see 'Keywords')
 // -------------
 var Entries = React.createClass({
+  toggleAvailableKeyword: function() { },
+  getInitialState: function() {
+    return {vdnaAvailableKeywords: vdnaAvailableKeywords};
+  },
   render: function() {
+    var vdnaAvailableKeywordNodes = this.state.vdnaAvailableKeywords.map(function(keyword) {
+      return (
+        <li>
+          <span title={keyword} style={{cursor: 'pointer'}} onClick={this.toggleKeyword}>
+            {keyword}
+          </span>
+        </li>
+      );
+    });
     return (
       <div id="entries">
         <span className="left">Enter a [like]:</span>
         <span id="like_select" className="middle">
           <ul>
-            <li ng-repeat="vdnaAvailableCategory in vdnaAvailableCategories">
-              <span style={{cursor: 'pointer'}} ng-click="toggleAvailableCategory(vdnaAvailableCategory[0])">
-                vdnaAvailableCategory
-              </span>
-            </li>
+            {vdnaAvailableKeywordNodes}
           </ul>
         </span>
       </div>
