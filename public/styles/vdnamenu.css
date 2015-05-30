@@ -6,10 +6,10 @@
     margin: 5px;
     padding: 5px;
     text-align: left;
-    color: #aabbcc;
+    color: #bbbbbb;
     font-weight: bold;
     display: none;
-    background: rgba(50,50,50,0.7);
+    background: rgba(50,50,50,0.9);
     z-index: 1000;
     width: 100%;
 }
@@ -26,12 +26,13 @@
 #vdnamenu .middle {
     width: 60%;
     float: left;
+    margin-right: 20px;
 }
 
 #vdnamenu ul li {
     display: inline;
     list-style-type: none;
-    padding-right: 10px;
+    margin-right: 10px;
 }
 
 #vdnamenu .clear {

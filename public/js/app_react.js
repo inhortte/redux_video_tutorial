@@ -1,19 +1,16 @@
-var vdnaKeywords = ['film', 'rock music', 'science', 'comedy', 'jazz'];
-var vdnaAvailableKeywords = ['world music', 'concerts', 'club scene', 'music', 'opera', 'classical music', 'humor', 'caberet', 'dance', 'theater', 'sport', 'ballet', 'children', 'festivals', 'expositions', 'folkmusic', 'health', 'drama', 'blues', 'circus', 'sports', 'exhibitions', 'gastronomy', 'musical'];
+var vdnaKeywords = {'film': true, 'rock music': true, 'science': true, 'comedy': true, 'jazz': true, 'world music': false, 'concerts': false, 'club scene': false, 'music': false, 'opera': false, 'classical music': false, 'humor': false, 'caberet': false, 'dance': false, 'theater': false, 'sport': false, 'ballet': false, 'children': false, 'festivals': false, 'expositions': false, 'folkmusic': false, 'health': false, 'drama': false, 'blues': false, 'circus': false, 'sports': false, 'exhibitions': false, 'gastronomy': false, 'musical': false};
 
 var VdnaMenu = React.createClass({
   render: function() {
     return (
-      <div class="r">
+      <div className="r">
         <HideVdna />
         <img src="images/zifter.png" id="zifterlogo" style={{position: 'absolute', top: 20, right: 20, width: '5%'}} />
         <Header />
         <br className="clear" />
         <Aperture />
         <br className="clear" />
-        <Keywords />
-        <br className="clear" />
-        <Entries />
+        <KeywordGroups vdnaKeywords={this.props.vdnaKeywords} />
       </div>
     );
   }
@@ -51,8 +48,8 @@ var Weighted = React.createClass({
     return (
       <span id="weighted">
         Sort:
-        <select ng-model="weighted" ng-change="toggleWeighted()">
-          <option value="true" selected>By my likes</option>
+        <select ng-model="weighted" ng-change="toggleWeighted()" defaultValue="true">
+          <option value="true">By my likes</option>
           <option value="false">Orig sorting</option>
         </select>
       </span>
@@ -64,7 +61,7 @@ var Power = React.createClass({
   render: function() {
     return (
       <span id="power">
-        On/Off
+        {'On/Off '}
         <input type="checkbox" ng-model="power" ng-change="hitThatSwitch()" />
       </span>
     );
@@ -81,29 +78,40 @@ var Aperture = React.createClass({
   }
 });
 
-// -------------
-// implement toggleKeyword
-// significa cojer de Keywoards y colocar en Entries
-// implement the loop for vdnaKeywords (with map)
-// -------------
-var Keywords = React.createClass({
-  toggleKeyword: function() { },
+var KeywordGroups = React.createClass({
   getInitialState: function() {
-    return {vdnaKeywords: vdnaKeywords};
+    return {vdnaKeywords: this.props.vdnaKeywords};
+  },
+  toggleKeyword: function(keyword) {
+    var vdnaKeywords = this.state.vdnaKeywords;
+    vdnaKeywords[keyword] = !vdnaKeywords[keyword];
+    this.setState({vdnaKeywords: vdnaKeywords});
   },
   render: function() {
-    var vdnaKeywordNodes = this.state.vdnaKeywords.map(function(keyword) {
+    return (
+      <div>
+        <Keywords vdnaKeywords={this.props.vdnaKeywords} userKeywords={true} toggleKeyword={this.toggleKeyword} />
+        <br className="clear" />
+        <Keywords vdnaKeywords={this.props.vdnaKeywords} userKeywords={false} toggleKeyword={this.toggleKeyword} />
+      </div>
+    );
+  }
+});
+
+var Keywords = React.createClass({
+  render: function() {
+    var that = this;
+    var vdnaKeywordNodes = Object.keys(this.props.vdnaKeywords).filter(function(keyword) {
+      return that.props.userKeywords == that.props.vdnaKeywords[keyword];
+    }).map(function(keyword) {
       return (
-        <li>
-          <span title={keyword} style={{cursor: 'pointer'}} onClick={this.toggleKeyword}>
-            {keyword}
-          </span>
-        </li>
+        <Keyword key={keyword} keyword={keyword} toggleKeyword={that.props.toggleKeyword} />
       );
     });
+    var heading = this.props.userKeywords ? 'Keywords' : 'Enter a [like]';
     return (
       <div id="keywords">
-        <span className="left">Keywords:</span>
+        <span className="left">{heading}:</span>
         <span id="keyspan" className="middle">
           <ul>
             {vdnaKeywordNodes}
@@ -114,39 +122,22 @@ var Keywords = React.createClass({
   }
 });
 
-// -------------
-// implement the loop that displays vdnaAvailableKeywords (with map)
-// implement toggleAvailableKeyword (see 'Keywords')
-// -------------
-var Entries = React.createClass({
-  toggleAvailableKeyword: function() { },
-  getInitialState: function() {
-    return {vdnaAvailableKeywords: vdnaAvailableKeywords};
+var Keyword = React.createClass({
+  handleClick: function() {
+    this.props.toggleKeyword(React.findDOMNode(this.refs.keywordSpan).title);
   },
   render: function() {
-    var vdnaAvailableKeywordNodes = this.state.vdnaAvailableKeywords.map(function(keyword) {
-      return (
-        <li>
-          <span title={keyword} style={{cursor: 'pointer'}} onClick={this.toggleKeyword}>
-            {keyword}
-          </span>
-        </li>
-      );
-    });
     return (
-      <div id="entries">
-        <span className="left">Enter a [like]:</span>
-        <span id="like_select" className="middle">
-          <ul>
-            {vdnaAvailableKeywordNodes}
-          </ul>
+      <li>
+        <span title={this.props.keyword} style={{cursor: 'pointer'}} ref="keywordSpan" onClick={this.handleClick}>
+          {this.props.keyword}
         </span>
-      </div>
+      </li>
     );
   }
 });
 
 React.render(
-  <VdnaMenu />,
+  <VdnaMenu vdnaKeywords={vdnaKeywords} />,
   document.getElementById('vdnamenu')
 );
