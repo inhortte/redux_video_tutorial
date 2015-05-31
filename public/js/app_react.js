@@ -1,5 +1,12 @@
 var vdnaKeywords = {'film': true, 'rock music': true, 'science': true, 'comedy': true, 'jazz': true, 'world music': false, 'concerts': false, 'club scene': false, 'music': false, 'opera': false, 'classical music': false, 'humor': false, 'caberet': false, 'dance': false, 'theater': false, 'sport': false, 'ballet': false, 'children': false, 'festivals': false, 'expositions': false, 'folkmusic': false, 'health': false, 'drama': false, 'blues': false, 'circus': false, 'sports': false, 'exhibitions': false, 'gastronomy': false, 'musical': false};
 
+var reMap = function(m1, m2) {
+  return Object.keys(m2).reduce(function(m3, key) {
+    m3[key] = m2[key];
+    return m3;
+  }, m1);
+};
+
 var VdnaMenu = React.createClass({
   render: function() {
     return (
@@ -130,7 +137,7 @@ var Keyword = React.createClass({
     return (
       <li>
         <span title={this.props.keyword} style={{cursor: 'pointer'}} ref="keywordSpan" onClick={this.handleClick}>
-          {this.props.keyword}
+          {this.props.keyword}{' '}
         </span>
       </li>
     );
