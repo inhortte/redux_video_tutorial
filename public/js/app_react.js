@@ -26,7 +26,7 @@
 ["1000000000000000000000000000000000000000000000000000000000000", 1152921504606846976, "Fitness"]
 */
 var arbitraryMapping = {
-  "industrial music": "1000000000000000000000000000000000000",
+  "music": "1000000000000000000000000000000000000",
   "french actors": "10000000000000000000000000000000000000",
   "actors": "100000000000000000000000000000000000000",
   "la rioja": "1000000000000000000000000000000000000000",
@@ -53,7 +53,7 @@ var arbitraryMapping = {
   "fitness": "1000000000000000000000000000000000000000000000000000000000000"
 };
 
-var vdnaKeywords = {'film': true, 'rock music': true, 'science': true, 'comedy': true, 'jazz': true, 'world music': false, 'concerts': false, 'club scene': false, 'music': false, 'opera': false, 'classical music': false, 'humor': false, 'caberet': false, 'dance': false, 'theater': false, 'sport': false, 'ballet': false, 'children': false, 'festivals': false, 'expositions': false, 'folkmusic': false, 'health': false, 'drama': false, 'blues': false, 'circus': false, 'sports': false, 'exhibitions': false, 'gastronomy': false, 'musical': false};
+var vdnaKeywords = {'film': true, 'rock music': true, 'comics': true, 'jazz': true, 'concerts': false, 'music': false, 'opera': false, 'humor': false, 'caberet': false, 'drama': false, 'theater': false, 'contemporary art': false, 'fitness': false, 'spain': false, 'la rioja': true, 'rio': false, 'czech film': false, 'actors': false};
 
 var reMap = function(m1, m2) {
   return Object.keys(m2).reduce(function(m3, key) {
@@ -81,7 +81,7 @@ var binStringToDec = function(binString) {
 
 // Esto solo funciona con integrales positivos.
 var decToBinString = function(dec) {
-  if(dec === 0) {
+  if(dec === undefined) {
     return "0";
   }
   var binString = "";
@@ -116,8 +116,6 @@ var keywordSpanTitle = function(keyword) {
   var keywordArr = [];
   keywordArr.push(keyword);
   var binStringAndDec = keywordsToBinStringAndDec(keywordArr, arbitraryMapping);
-  console.log(keyword);
-  console.log(JSON.stringify(binStringAndDec));
   return("Keyword: " + keyword + "; Binary: " + binStringAndDec['binString'] + "; Decimal: " + binStringAndDec['dec']);
 };
 
