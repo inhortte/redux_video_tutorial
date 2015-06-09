@@ -25,33 +25,33 @@
 ["100000000000000000000000000000000000000000000000000000000000", 576460752303423488, "Opera"]
 ["1000000000000000000000000000000000000000000000000000000000000", 1152921504606846976, "Fitness"]
 */
-var arbitraryMapping = [
-  {"Industrial Music": "1000000000000000000000000000000000000"},
-  {"French Actors": "10000000000000000000000000000000000000"},
-  {"Actors": "100000000000000000000000000000000000000"},
-  {"La Rioja": "1000000000000000000000000000000000000000"},
-  {"Castille y León": "10000000000000000000000000000000000000000"},
-  {"Spain": "100000000000000000000000000000000000000000"},
-  {"Spirituality": "1000000000000000000000000000000000000000000"},
-  {"RIO": "10000000000000000000000000000000000000000000"},
-  {"Czech Film": "100000000000000000000000000000000000000000000"},
-  {"Rock Music": "1000000000000000000000000000000000000000000000"},
-  {"Jazz": "10000000000000000000000000000000000000000000000"},
-  {"Technology": "100000000000000000000000000000000000000000000000"},
-  {"Health": "1000000000000000000000000000000000000000000000000"},
-  {"Dental": "10000000000000000000000000000000000000000000000000"},
-  {"Comics": "100000000000000000000000000000000000000000000000000"},
-  {"Humor": "1000000000000000000000000000000000000000000000000000"},
-  {"Literature": "10000000000000000000000000000000000000000000000000000"},
-  {"Science": "100000000000000000000000000000000000000000000000000000"},
-  {"Drama": "1000000000000000000000000000000000000000000000000000000"},
-  {"Theater": "10000000000000000000000000000000000000000000000000000000"},
-  {"Film": "100000000000000000000000000000000000000000000000000000000"},
-  {"Concerts": "1000000000000000000000000000000000000000000000000000000000"},
-  {"Contemporary Art": "10000000000000000000000000000000000000000000000000000000000"},
-  {"Opera": "100000000000000000000000000000000000000000000000000000000000"},
-  {"Fitness": "1000000000000000000000000000000000000000000000000000000000000"}
-];
+var arbitraryMapping = {
+  "industrial music": "1000000000000000000000000000000000000",
+  "french actors": "10000000000000000000000000000000000000",
+  "actors": "100000000000000000000000000000000000000",
+  "la rioja": "1000000000000000000000000000000000000000",
+  "castille y león": "10000000000000000000000000000000000000000",
+  "spain": "100000000000000000000000000000000000000000",
+  "spirituality": "1000000000000000000000000000000000000000000",
+  "rio": "10000000000000000000000000000000000000000000",
+  "czech film": "100000000000000000000000000000000000000000000",
+  "rock music": "1000000000000000000000000000000000000000000000",
+  "jazz": "10000000000000000000000000000000000000000000000",
+  "technology": "100000000000000000000000000000000000000000000000",
+  "health": "1000000000000000000000000000000000000000000000000",
+  "dental": "10000000000000000000000000000000000000000000000000",
+  "comics": "100000000000000000000000000000000000000000000000000",
+  "humor": "1000000000000000000000000000000000000000000000000000",
+  "literature": "10000000000000000000000000000000000000000000000000000",
+  "science": "100000000000000000000000000000000000000000000000000000",
+  "drama": "1000000000000000000000000000000000000000000000000000000",
+  "theater": "10000000000000000000000000000000000000000000000000000000",
+  "film": "100000000000000000000000000000000000000000000000000000000",
+  "concerts": "1000000000000000000000000000000000000000000000000000000000",
+  "contemporary art": "10000000000000000000000000000000000000000000000000000000000",
+  "opera": "100000000000000000000000000000000000000000000000000000000000",
+  "fitness": "1000000000000000000000000000000000000000000000000000000000000"
+};
 
 var vdnaKeywords = {'film': true, 'rock music': true, 'science': true, 'comedy': true, 'jazz': true, 'world music': false, 'concerts': false, 'club scene': false, 'music': false, 'opera': false, 'classical music': false, 'humor': false, 'caberet': false, 'dance': false, 'theater': false, 'sport': false, 'ballet': false, 'children': false, 'festivals': false, 'expositions': false, 'folkmusic': false, 'health': false, 'drama': false, 'blues': false, 'circus': false, 'sports': false, 'exhibitions': false, 'gastronomy': false, 'musical': false};
 
@@ -77,6 +77,48 @@ var binStringToDec = function(binString) {
     acc += powArr[i] * parseInt(binString.charAt(i));
   };
   return acc;
+};
+
+// Esto solo funciona con integrales positivos.
+var decToBinString = function(dec) {
+  if(dec === 0) {
+    return "0";
+  }
+  var binString = "";
+  while(dec >= 1) {
+    binString = (dec % 2).toString() + binString;
+    dec = Math.floor(dec / 2);
+  };
+  return binString;
+};
+
+//----------------------
+// In: [Keyword, ....], mapping
+// Out: {binString: "1000000.....", dec: 78210...}
+//----------------------
+var keywordsToBinStringAndDec = function(keywordArr, mapping) {
+  return keywordArr.map(function(keyword) {
+    return mapping[keyword];
+  }).reduce(function(culmination, binString) {
+    var dec;
+    if(binString === undefined) {
+      dec = dec;
+    } else {
+      dec = culmination['dec'] + binStringToDec(binString);
+    }
+    culmination['binString'] = decToBinString(dec);
+    culmination['dec'] = dec;
+    return culmination;
+  }, {binString: "", dec: 0});
+};
+
+var keywordSpanTitle = function(keyword) {
+  var keywordArr = [];
+  keywordArr.push(keyword);
+  var binStringAndDec = keywordsToBinStringAndDec(keywordArr, arbitraryMapping);
+  console.log(keyword);
+  console.log(JSON.stringify(binStringAndDec));
+  return("Keyword: " + keyword + "; Binary: " + binStringAndDec['binString'] + "; Decimal: " + binStringAndDec['dec']);
 };
 
 var VdnaMenu = React.createClass({
@@ -227,6 +269,7 @@ var Keywords = React.createClass({
 var Keyword = React.createClass({
   handleClick: function() {
     this.props.toggleKeyword(React.findDOMNode(this.refs.keywordSpan).title);
+    $('#respuestas').append(keywordSpanTitle(this.props.keyword) + "<br />");
   },
   render: function() {
     return (
