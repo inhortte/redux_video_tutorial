@@ -255,8 +255,6 @@ var keywordSpanTitle = function(keyword) {
   return("Keyword: " + keyword + "; Binary: " + binStringAndDec['binString'] + "; Decimal: " + binStringAndDec['dec']);
 };
 
-// --- end helper monkeys
-
 var VdnaMenu = React.createClass({
   render: function() {
     // ---- facebook likes of the logged on user.
@@ -277,16 +275,10 @@ var VdnaMenu = React.createClass({
             return cl.name;
           });
           // vdna.setCategories(vdnaclasses); // -- from angular version
-          console.log(JSON.stringify(userLikes));
+          // console.log(JSON.stringify(userLikes));
         });
       }, {scope: 'user_likes'});
     });
-
-    // ---- get cookie info if it exists.
-    if(docCookies.hasItem('vdna')) {
-      alert("Your cookie: " + docCookies.getItem('vdna') + " and deleting....");
-      docCookies.removeItem('vdna');
-    }
     return (
       <div className="r">
         <HideVdna />
@@ -364,15 +356,35 @@ var Aperture = React.createClass({
 });
 
 var KeywordGroups = React.createClass({
-  handleClick: function() {
+  saveCookie: function() {
     var that = this;
     var activeKeywords = Object.keys(this.state.vdnaKeywords).filter(function(keyword) {
       return that.state.vdnaKeywords[keyword];
     });
     docCookies.setItem('vdna', keywordsToDecArr(activeKeywords, arbitraryDecMapping).toString(), Infinity);
+    console.log('cookie saved');
+  },
+  deleteCookie: function() {
+    docCookies.removeItem('vdna');
+    console.log('cookie deleted');
   },
   getInitialState: function() {
-    return {vdnaKeywords: this.props.vdnaKeywords};
+    // ---- get cookie info if it exists.
+    // ---- the cookie is a string and must be parsed back to integers.
+    if(docCookies.hasItem('vdna')) {
+      var userKeywords = decArrToKeywords(docCookies.getItem('vdna').split(/,/).map(function(part) {
+        return parseInt(part);
+      }), arbitraryDecMapping);
+      console.log(JSON.stringify(userKeywords));
+      var vdnaKeywords = this.props.vdnaKeywords;
+      Object.keys(vdnaKeywords).forEach(function(keyword) {
+        vdnaKeywords[keyword] = userKeywords.indexOf(keyword) > -1 ? true : false;
+      });
+      console.log(JSON.stringify(vdnaKeywords));
+      return {vdnaKeywords: vdnaKeywords};
+    } else {
+      return {vdnaKeywords: this.props.vdnaKeywords};
+    }
   },
   toggleKeyword: function(keyword) {
     var vdnaKeywords = this.state.vdnaKeywords;
@@ -382,8 +394,12 @@ var KeywordGroups = React.createClass({
   render: function() {
     return (
       <div>
-        <span title="Save Cookie" style={{color: '#00bb00', cursor: 'pointer', margin: '0 50px 20px 100px'}} ref="saveCookie" onClick={this.handleClick}>
+        <span title="Save Cookie" style={{color: '#00bb00', cursor: 'pointer', margin: '0 0 20px 100px'}} ref="saveCookie" onClick={this.saveCookie}>
           Save Cookie
+        </span>
+        {' | ' }
+        <span title="Delete Cookie" style={{color: '#00bb00', cursor: 'pointer', margin: '0 50px 0 0'}} ref="saveCookie" onClick={this.deleteCookie}>
+          Delete Cookie
         </span>
         <br className="clear" />
         <br className="clear" />
