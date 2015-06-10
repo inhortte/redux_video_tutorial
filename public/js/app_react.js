@@ -1,3 +1,47 @@
+// --- mozilla simple cookie framework.
+var docCookies = {
+  getItem: function (sKey) {
+    if (!sKey) { return null; }
+    return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+  },
+  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+    var sExpires = "";
+    if (vEnd) {
+      switch (vEnd.constructor) {
+        case Number:
+          sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+          break;
+        case String:
+          sExpires = "; expires=" + vEnd;
+          break;
+        case Date:
+          sExpires = "; expires=" + vEnd.toUTCString();
+          break;
+      }
+    }
+    document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+    return true;
+  },
+  removeItem: function (sKey, sPath, sDomain) {
+    if (!this.hasItem(sKey)) { return false; }
+    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+    return true;
+  },
+  hasItem: function (sKey) {
+    if (!sKey) { return false; }
+    return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+  },
+  keys: function () {
+    var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+    for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+    return aKeys;
+  }
+};
+// --- end mozilla simple cookie framework
+
+// --- vdna
+
 /*
 ["1000000000000000000000000000000000000", 68719476736, "Industrial Music"]
 ["10000000000000000000000000000000000000", 137438953472, "French Actors"]
@@ -19,13 +63,66 @@
 ["100000000000000000000000000000000000000000000000000000", 9007199254740992, "Science"]
 ["1000000000000000000000000000000000000000000000000000000", 18014398509481984, "Drama"]
 ["10000000000000000000000000000000000000000000000000000000", 36028797018963968, "Theater"]
-["100000000000000000000000000000000000000000000000000000000", 72057594037927936, "Film"]
-["1000000000000000000000000000000000000000000000000000000000", 144115188075855872, "Concerts"]
+["100000000000000000000000000000000000000000000000000000000", 72057594037927940, "Film"]
+["1000000000000000000000000000000000000000000000000000000000", 144115188075855870, "Concerts"]
 ["10000000000000000000000000000000000000000000000000000000000", 288230376151711744, "Contemporary Art"]
 ["100000000000000000000000000000000000000000000000000000000000", 576460752303423488, "Opera"]
 ["1000000000000000000000000000000000000000000000000000000000000", 1152921504606846976, "Fitness"]
 */
-var arbitraryMapping = {
+
+// --- helper monkeys
+
+var powOf2Arr = function(i) {
+  var arr = [];
+  for(var j = 0; j < i; j++) {
+    arr.push(Math.pow(2, j));
+  };
+  return arr;
+};
+
+// --- split into n (32 for now) bit trozos.
+var binStringSplit = function(n, binString) {
+  var remString = binString;
+  var trozos = [];
+  while(remString.length > n) {
+    trozos.unshift(remString.substr(remString.length - n));
+    remString = remString.substr(0, remString.length - n);
+  };
+  trozos.unshift(remString);
+  return trozos;
+};
+
+var binStringToDec = function(binString) {
+  var powArr = powOf2Arr(binString.length).reverse();
+  var acc = 0;
+  for(var i = 0; i < binString.length; i++) {
+    acc += powArr[i] * parseInt(binString.charAt(i));
+  };
+  return acc;
+};
+
+var binStringArrToDecArr = function(binStringArr) {
+  return binStringArr.map(function(binString) {
+    return binStringToDec(binString);
+  });
+};
+
+// Esto solo funciona con integrales positivos.
+var decToBinString = function(dec) {
+  if(dec === undefined) {
+    return "0";
+  }
+  var binString = "";
+  while(dec >= 1) {
+    binString = (dec % 2).toString() + binString;
+    dec = Math.floor(dec / 2);
+  };
+  return binString;
+};
+
+// --- end helper monkeys
+
+var arbitraryBinMapping = {
   "music": "1000000000000000000000000000000000000",
   "french actors": "10000000000000000000000000000000000000",
   "actors": "100000000000000000000000000000000000000",
@@ -53,6 +150,24 @@ var arbitraryMapping = {
   "fitness": "1000000000000000000000000000000000000000000000000000000000000"
 };
 
+var reverseBinMapping = Object.keys(arbitraryBinMapping).reduce(function(rMap, key) {
+  rMap[arbitraryBinMapping[key]] = key;
+  return rMap;
+}, {});
+
+// --- everything must be split into two 32 bit thurks.
+var arbitraryDecMapping = Object.keys(arbitraryBinMapping).reduce(function(dMap, key) {
+  dMap[key] = binStringArrToDecArr(binStringSplit(32, arbitraryBinMapping[key]));
+  return dMap;
+}, {});
+
+// ---- REMEMBER: All of the keys are strings are must be converted back to Long.
+// ---- obsolesced because of multiple 32 bit integers.
+// var reverseDecMapping = Object.keys(arbitraryDecMapping).reduce(function(rMap, key) {
+//  rMap[arbitraryDecMapping[key]] = key;
+//  return rMap;
+//}, {});
+
 var vdnaKeywords = {'film': true, 'rock music': true, 'comics': true, 'jazz': true, 'concerts': false, 'music': false, 'opera': false, 'humor': false, 'caberet': false, 'drama': false, 'theater': false, 'contemporary art': false, 'fitness': false, 'spain': false, 'la rioja': true, 'rio': false, 'czech film': false, 'actors': false};
 
 var reMap = function(m1, m2) {
@@ -60,36 +175,6 @@ var reMap = function(m1, m2) {
     m3[key] = m2[key];
     return m3;
   }, m1);
-};
-
-var powOf2Arr = function(i) {
-  var arr = [];
-  for(var j = 0; j < i; j++) {
-    arr.push(Math.pow(2, j));
-  };
-  return arr;
-};
-
-var binStringToDec = function(binString) {
-  var powArr = powOf2Arr(binString.length).reverse();
-  var acc = 0;
-  for(var i = 0; i < binString.length; i++) {
-    acc += powArr[i] * parseInt(binString.charAt(i));
-  };
-  return acc;
-};
-
-// Esto solo funciona con integrales positivos.
-var decToBinString = function(dec) {
-  if(dec === undefined) {
-    return "0";
-  }
-  var binString = "";
-  while(dec >= 1) {
-    binString = (dec % 2).toString() + binString;
-    dec = Math.floor(dec / 2);
-  };
-  return binString;
 };
 
 //----------------------
@@ -112,16 +197,68 @@ var keywordsToBinStringAndDec = function(keywordArr, mapping) {
   }, {binString: "", dec: 0});
 };
 
+Array.prototype.add = function(arr) {
+  var res = [];
+  for(var i = 0; i < this.length || i < arr.length; i++) {
+    if(this[i] === undefined) {
+      res.push(arr[i]);
+    } else if(arr[i] === undefined) {
+      res.push(this[i]);
+    } else {
+      res.push(this[i] + arr[i]);
+    }
+  };
+  return res;
+};
+
+// -----------------------
+// In [Keyword, ....] (to DecArr) mapping.
+// Out: {binString: "10000...", decArr: [ 4194304, 0 ] (example)}
+var keywordsToDecArr = function(keywordArr, mapping) {
+  var _mapping = mapping === undefined ? arbitraryDecMapping : mapping;
+  return keywordArr.map(function(keyword) {
+    return mapping[keyword.toLowerCase()];
+  }).reduce(function(culmination, decArr) {
+    if(decArr !== undefined) {
+      culmination = culmination.add(decArr);
+    }
+    return culmination;
+  }, [0]);
+};
+
+//----------------------
+// In: decimal array
+// Out: [Keyword, Keyword, ....]
+// For now, I'll always pass arbitraryDecMapping as mapping
+// ---------------------
+var decArrToKeywords = function(decArr, mapping) {
+  return Object.keys(mapping).reduce(function(keywords, keyword) {
+    var keywordDecArr = mapping[keyword];
+    if(keywordDecArr.length == decArr.length) {
+      var match = true;
+      for(var i = 0; i < decArr.length; i++) {
+        match = match && (decArr[i] == keywordDecArr[i] || (decArr[i] & keywordDecArr[i]) > 0);
+      };
+      if(match) {
+        keywords.push(keyword);
+      }
+    }
+    return keywords;
+  }, []);
+};
+
+// --- obsolescent
 var keywordSpanTitle = function(keyword) {
   var keywordArr = [];
   keywordArr.push(keyword);
-  var binStringAndDec = keywordsToBinStringAndDec(keywordArr, arbitraryMapping);
+  var binStringAndDec = keywordsToBinStringAndDec(keywordArr, arbitraryBinMapping);
   return("Keyword: " + keyword + "; Binary: " + binStringAndDec['binString'] + "; Decimal: " + binStringAndDec['dec']);
 };
 
+// --- end helper monkeys
+
 var VdnaMenu = React.createClass({
   render: function() {
-
     // ---- facebook likes of the logged on user.
     $.getScript('//connect.facebook.net/en_UK/all.js', function(){
       FB.init({
@@ -144,6 +281,12 @@ var VdnaMenu = React.createClass({
         });
       }, {scope: 'user_likes'});
     });
+
+    // ---- get cookie info if it exists.
+    if(docCookies.hasItem('vdna')) {
+      alert("Your cookie: " + docCookies.getItem('vdna') + " and deleting....");
+      docCookies.removeItem('vdna');
+    }
     return (
       <div className="r">
         <HideVdna />
@@ -214,13 +357,20 @@ var Aperture = React.createClass({
   render: function() {
     return (
       <div id="aperture">
-        <span className="left">Aperture:</span><span className="middle" />
+        <span className="left">Aperture:</span>
       </div>
     );
   }
 });
 
 var KeywordGroups = React.createClass({
+  handleClick: function() {
+    var that = this;
+    var activeKeywords = Object.keys(this.state.vdnaKeywords).filter(function(keyword) {
+      return that.state.vdnaKeywords[keyword];
+    });
+    docCookies.setItem('vdna', keywordsToDecArr(activeKeywords, arbitraryDecMapping).toString(), Infinity);
+  },
   getInitialState: function() {
     return {vdnaKeywords: this.props.vdnaKeywords};
   },
@@ -232,6 +382,11 @@ var KeywordGroups = React.createClass({
   render: function() {
     return (
       <div>
+        <span title="Save Cookie" style={{color: '#00bb00', cursor: 'pointer', margin: '0 50px 20px 100px'}} ref="saveCookie" onClick={this.handleClick}>
+          Save Cookie
+        </span>
+        <br className="clear" />
+        <br className="clear" />
         <Keywords vdnaKeywords={this.props.vdnaKeywords} userKeywords={true} toggleKeyword={this.toggleKeyword} />
         <br className="clear" />
         <Keywords vdnaKeywords={this.props.vdnaKeywords} userKeywords={false} toggleKeyword={this.toggleKeyword} />
@@ -243,14 +398,16 @@ var KeywordGroups = React.createClass({
 var Keywords = React.createClass({
   render: function() {
     var that = this;
-    var vdnaKeywordNodes = Object.keys(this.props.vdnaKeywords).filter(function(keyword) {
+    var vdnaKeywords = Object.keys(this.props.vdnaKeywords).filter(function(keyword) {
       return that.props.userKeywords == that.props.vdnaKeywords[keyword];
-    }).map(function(keyword) {
+    });
+    var vdnaKeywordNodes = vdnaKeywords.map(function(keyword) {
       return (
         <Keyword key={keyword} keyword={keyword} toggleKeyword={that.props.toggleKeyword} />
       );
     });
     var heading = this.props.userKeywords ? 'Keywords' : 'Enter a [like]';
+    var combinedCode = keywordsToDecArr(vdnaKeywords, arbitraryDecMapping);
     return (
       <div id="keywords">
         <span className="left">{heading}:</span>
@@ -258,6 +415,11 @@ var Keywords = React.createClass({
           <ul>
             {vdnaKeywordNodes}
           </ul>
+        </span>
+        <span id="combinedCode" className="left">
+          Code: {combinedCode[0]}
+          {', '}
+          {combinedCode[1]}
         </span>
       </div>
     );
