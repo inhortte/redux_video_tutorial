@@ -1,3 +1,4 @@
+var Moment = require('moment');
 var data = require('vdna/static_data');
 // var Autocomplete = require('react-autocomplete/lib/main.js');
 // var Combobox = Autocomplete.Combobox;
@@ -574,7 +575,7 @@ var MyProfileLikeDetails = React.createClass({
                     <li>
                       <small>
                         <strong>Source:</strong> Imported from {data.capitalize(this.props.currentDetails['source'])}<br />
-                        Added on {this.props.currentDetails['added']}
+                        Added on {Moment(this.props.currentDetails['added']).format("DD MMM YYYY")}
                       </small>
                     </li>
                   </ul>

@@ -9,7 +9,8 @@
     "http-server": "^0.7.5",
     "request": "*",
     "babelify": "*",
-    "reactify": "*"
+    "reactify": "*",
+    "moment": "*"
   },
   "engines": {
     "node": ">=0.10.0"
