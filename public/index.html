@@ -9,7 +9,9 @@
 <link href="/static/14-1-PUBLIC/resources/print.css" type="text/css" media="print" rel="stylesheet" />
 
 <!--- vdna styles --->
-<link href="styles/vdnamenu.css" type="text/css" rel="stylesheet" />
+<link href="styles/vdnazoltan.css" type="text/css" rel="stylesheet" />
+<link href="styles/vdnajames.css" type="text/css" rel="stylesheet" />
+
 <!--- end vdna styles --->
 <!--[if lte IE 6]>
 	<style media="screen" type="text/css">
@@ -17,11 +19,14 @@
 	</style>
 <![endif]-->
 <!-- VDNA thurk ---------------->
+<script src="bower_components/react/react.js"></script>
+<script src="bower_components/react/JSXTransformer.js"></script>
 <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="js/modernizr-2.6.2.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-  $("img[id^='zifter']").click(function() {
-    $("#vdnamenu").toggle(600);
+  $("#openVdna").click(function() {
+    $("#vdnamenu").toggle(0);
   });
 });
 </script>
@@ -31,9 +36,12 @@ $(document).ready(function() {
 <body id="home" class="cs" ng-app="ticketproApp">
 
 <!-- vdna logo --- -->
-<img id="zifter_logo" src="images/zifter.png" style="position: absolute; top: 5px; right: 5px; width: 50px; z-index: 400; cursor: pointer;" />
-
-<ng-include src=" 'partials/vdnamenu.html' "></ng-include>
+<div id="openVdna">
+  <span data-toggle="tooltip" title="Click to open VDNA" class="btn btn-sm btn-primary openVdna">
+    Open vDNA
+  </span>
+</div>
+<div id="vdnamenu"></div>
 <!--------------------->
 
 <div id="special-background">
@@ -509,7 +517,1166 @@ $( document ).ready(function() {
 <div class="events">
 
 <!-- main content -->
-<div ng-view></div>
+
+
+<div vdnaclass="world music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/folklor-etno-world-music/1547175-ukrajinsky-armadni-soubor.html" onClick="_gaq.push(['_trackEvent', 'Folklór / Etno / World music', 'Ukrajinský armádní soubor', '{{event.name', 0]);">
+        <img src="/public/6f/ff/57/1549806_990909_other_ukraine_100x100px.jpg" width="100" height="100" alt="Ukrajinský armádní soubor" title="Ukrajinský armádní soubor" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/folklor-etno-world-music/1547175-ukrajinsky-armadni-soubor.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Folklór / Etno / World music', 'Ukrajinský armádní soubor', 'Ukrajinský armádní soubor', 0]);">Ukrajinský armádní soubor</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">23.05.2015<span class="value-title" title="23.05.2015"></span></span> až <span class="dtend">23.05.2015<span class="value-title" title="23.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="club scene, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/tanecni-elektronicka-hudba/1550774-citadela.html" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Citadela 2015 - Nervo', '{{event.name', 0]);">
+        <img src="/public/f4/55/bf/1550794_993132__100x100.jpg" width="100" height="100" alt="Citadela 2015 - Nervo" title="Citadela 2015 - Nervo" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/tanecni-elektronicka-hudba/1550774-citadela.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Citadela 2015 - Nervo', 'Citadela 2015 - Nervo', 0]);">Citadela 2015 - Nervo</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Bobycentrum, Brno</span></span></p>
+    <p class="date">
+      <span class="dtstart">23.05.2015<span class="value-title" title="23.05.2015"></span></span> až <span class="dtend">23.05.2015<span class="value-title" title="23.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="opera, classical music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/klasicka-hudba-operni-arie/1550215-maksim-mrvica.html" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Maksim Mrvica', '{{event.name', 0]);">
+        <img src="/public/46/a7/de/1550240_991261_maksim.jpg" width="100" height="100" alt="Maksim Mrvica" title="Maksim Mrvica" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/klasicka-hudba-operni-arie/1550215-maksim-mrvica.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Maksim Mrvica', 'Maksim Mrvica', 0]);">Maksim Mrvica</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Divadlo Hybernia, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">14.05.2015<span class="value-title" title="14.05.2015"></span></span> až <span class="dtend">14.05.2015<span class="value-title" title="14.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/funk-gospel-soul/1475367-macy-gray.html" onClick="_gaq.push(['_trackEvent', 'Funk / Gospel / Soul / R&amp;B', 'Macy Gray', '{{event.name', 0]);">
+        <img src="/public/ad/1f/4c/1479494_943992_macy.jpg" width="100" height="100" alt="Macy Gray" title="Macy Gray" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/funk-gospel-soul/1475367-macy-gray.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Funk / Gospel / Soul / R&amp;B', 'Macy Gray', 'Macy Gray', 0]);">Macy Gray</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">SaSaZu, Praha 7</span></span></p>
+    <p class="date">
+      <span class="dtstart">23.02.2015<span class="value-title" title="23.02.2015"></span></span> až <span class="dtend">23.02.2015<span class="value-title" title="23.02.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="comedy, humor, caberet" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/divadlo/variete-kabaret/1542484-underground-comedy.html" onClick="_gaq.push(['_trackEvent', 'Varieté / Kabaret / Zábavní pořad', 'Underground Comedy', '{{event.name', 0]);">
+        <img src="/public/8d/56/fc/1401025_892985__1272109_797336_under390.jpg" width="100" height="100" alt="Underground Comedy" title="Underground Comedy" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/divadlo/variete-kabaret/1542484-underground-comedy.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Varieté / Kabaret / Zábavní pořad', 'Underground Comedy', 'Underground Comedy', 0]);">Underground Comedy</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Royal, Praha</span></span></p>
+    <p class="date">
+      <span class="dtstart">23.02.2015<span class="value-title" title="23.02.2015"></span></span> až <span class="dtend">23.02.2015<span class="value-title" title="23.02.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/pop/1370436-dracula-muzikal-stoleti.html" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Dracula - Muzikál století', '{{event.name', 0]);">
+        <img src="/public/a3/51/4a/1370461_870638_dracula.jpg" width="100" height="100" alt="Dracula - Muzikál století" title="Dracula - Muzikál století" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/pop/1370436-dracula-muzikal-stoleti.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Dracula - Muzikál století', 'Dracula - Muzikál století', 0]);">Dracula - Muzikál století</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Home Credit Arena, Liberec</span></span></p>
+    <p class="date">
+      <span class="dtstart">24.02.2015<span class="value-title" title="24.02.2015"></span></span> až <span class="dtend">24.02.2015<span class="value-title" title="24.02.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="dance, theater, sport" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/sport/ostatni/1514482-mistrovstvi-cr-v-latinskoamerickych-tancich.html" onClick="_gaq.push(['_trackEvent', 'Ostatní sporty', 'Mistrovství ČR v Latinskoamerických tancích', '{{event.name', 0]);">
+        <img src="/public/1d/17/47/1525848_973508_latina.jpg" width="100" height="100" alt="Mistrovství ČR v Latinskoamerických tancích" title="Mistrovství ČR v Latinskoamerických tancích" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/sport/ostatni/1514482-mistrovstvi-cr-v-latinskoamerickych-tancich.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Ostatní sporty', 'Mistrovství ČR v Latinskoamerických tancích', 'Mistrovství ČR v Latinskoamerických tancích', 0]);">Mistrovství ČR v Latinskoamerických tancích</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna - Velký sál, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">28.02.2015<span class="value-title" title="28.02.2015"></span></span> až <span class="dtend">28.02.2015<span class="value-title" title="28.02.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="dance, ballet, theater" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/divadlo/balet-tanec/1446419-los-vivancos-aeternum-vecnost-.html" onClick="_gaq.push(['_trackEvent', 'Balet / Tanec', 'Los Vivancos „Aeternum“ („Věčnost“)', '{{event.name', 0]);">
+        <img src="/public/a0/34/47/1475167_940184__360x360_Los.jpg" width="100" height="100" alt="Los Vivancos „Aeternum“ („Věčnost“)" title="Los Vivancos „Aeternum“ („Věčnost“)" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/divadlo/balet-tanec/1446419-los-vivancos-aeternum-vecnost-.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Balet / Tanec', 'Los Vivancos „Aeternum“ („Věčnost“)', 'Los Vivancos „Aeternum“ („Věčnost“)', 0]);">Los Vivancos „Aeternum“ („Věčnost“)</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org"> Kongresové centrum Praha, Praha 4, &hellip;</span></span></p>
+    <p class="date">
+      <span class="dtstart">15.03.2015<span class="value-title" title="15.03.2015"></span></span> až <span class="dtend">15.03.2015<span class="value-title" title="15.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="caberet, humor, comedy" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/divadlo/variete-kabaret/1515874-komici-s-r-o-nejvetsi-ko-s-micka-show-v-cr.html" onClick="_gaq.push(['_trackEvent', 'Varieté / Kabaret / Zábavní pořad', 'Komici s.r.o. - Největší Ko(S)mická show v ČR', '{{event.name', 0]);">
+        <img src="/public/d5/d5/ae/1516106_987139_KO_S_MICKA_SHOW_100X100.jpg" width="100" height="100" alt="Komici s.r.o. - Největší Ko(S)mická show v ČR" title="Komici s.r.o. - Největší Ko(S)mická show v ČR" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/divadlo/variete-kabaret/1515874-komici-s-r-o-nejvetsi-ko-s-micka-show-v-cr.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Varieté / Kabaret / Zábavní pořad', 'Komici s.r.o. - Největší Ko(S)mická show v ČR', 'Komici s.r.o. - Největší Ko(S)mická show v ČR', 0]);">Komici s.r.o. - Největší Ko(S)mická show v ČR</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna - Velký sál, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">22.03.2015<span class="value-title" title="22.03.2015"></span></span> až <span class="dtend">22.03.2015<span class="value-title" title="22.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="children, theater" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/pro-deti/ostatni-akce-pro-deti/1474885-sesame-street-live-.html" onClick="_gaq.push(['_trackEvent', 'Ostatní akce pro děti', 'Sesame Street Live! Elmo hraje dětem', '{{event.name', 0]);">
+        <img src="/public/c4/a4/8d/1474952_940895_elmo100.jpg" width="100" height="100" alt="Sesame Street Live! Elmo hraje dětem" title="Sesame Street Live! Elmo hraje dětem" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/pro-deti/ostatni-akce-pro-deti/1474885-sesame-street-live-.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Ostatní akce pro děti', 'Sesame Street Live! Elmo hraje dětem', 'Sesame Street Live! Elmo hraje dětem', 0]);">Sesame Street Live! Elmo hraje dětem</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">19.03.2015<span class="value-title" title="19.03.2015"></span></span> až <span class="dtend">19.03.2015<span class="value-title" title="19.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="ballet, dance, theater" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/divadlo/balet-tanec/1541578-sukhishvili.html" onClick="_gaq.push(['_trackEvent', 'Balet / Tanec', 'Sukhishvili', '{{event.name', 0]);">
+        <img src="/public/d5/4a/ee/1541603_985086_sukhishvili_100x100px.jpg" width="100" height="100" alt="Sukhishvili" title="Sukhishvili" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/divadlo/balet-tanec/1541578-sukhishvili.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Balet / Tanec', 'Sukhishvili', 'Sukhishvili', 0]);">Sukhishvili</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">23.05.2015<span class="value-title" title="23.05.2015"></span></span> až <span class="dtend">23.05.2015<span class="value-title" title="23.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/pop/1470756-helena-vondrackova.html" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Helena Vondráčková', '{{event.name', 0]);">
+        <img src="/public/a2/34/b4/1470779_960258_Helena_100x100.jpg" width="100" height="100" alt="Helena Vondráčková" title="Helena Vondráčková" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/pop/1470756-helena-vondrackova.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Helena Vondráčková', 'Helena Vondráčková', 0]);">Helena Vondráčková</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Sono Centrum, Brno</span></span></p>
+    <p class="date">
+      <span class="dtstart">26.03.2015<span class="value-title" title="26.03.2015"></span></span> až <span class="dtend">26.03.2015<span class="value-title" title="26.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="concerts, festivals, jazz, rock music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1535850-the-one-festival.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'The One Festival', '{{event.name', 0]);">
+        <img src="/public/ac/d2/f7/1535875_980517__100x100jpeg.jpg" width="100" height="100" alt="The One Festival" title="The One Festival" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1535850-the-one-festival.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'The One Festival', 'The One Festival', 0]);">The One Festival</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Sportovní hala Pod Lipou, Roudnice nad &hellip;</span></span></p>
+    <p class="date">
+      <span class="dtstart">19.06.2015<span class="value-title" title="19.06.2015"></span></span> až <span class="dtend">19.06.2015<span class="value-title" title="19.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="concerts, rock music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/kluby/1413858-kadebostany-chh-.html" onClick="_gaq.push(['_trackEvent', 'Kluby', 'Kadebostany (CH) + Katarzia (SK)', '{{event.name', 0]);">
+        <img src="/public/eb/58/65/1422346_907397_kade.jpg" width="100" height="100" alt="Kadebostany (CH) + Katarzia (SK)" title="Kadebostany (CH) + Katarzia (SK)" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/kluby/1413858-kadebostany-chh-.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Kluby', 'Kadebostany (CH) + Katarzia (SK)', 'Kadebostany (CH) + Katarzia (SK)', 0]);">Kadebostany (CH) + Katarzia (SK)</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Palác Akropolis, Praha 3</span></span></p>
+    <p class="date">
+      <span class="dtstart">27.02.2015<span class="value-title" title="27.02.2015"></span></span> až <span class="dtend">27.02.2015<span class="value-title" title="27.02.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="film" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/ostatni/kino/1524844-playstation-noc-reklamozroutu.html" onClick="_gaq.push(['_trackEvent', 'Kino', 'Playstation Noc Reklamožroutů', '{{event.name', 0]);">
+        <img src="/public/47/d2/36/1525683_973331_noc.jpg" width="100" height="100" alt="Playstation Noc Reklamožroutů" title="Playstation Noc Reklamožroutů" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/ostatni/kino/1524844-playstation-noc-reklamozroutu.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Kino', 'Playstation Noc Reklamožroutů', 'Playstation Noc Reklamožroutů', 0]);">Playstation Noc Reklamožroutů</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna - kino, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">27.02.2015<span class="value-title" title="27.02.2015"></span></span> až <span class="dtend">27.02.2015<span class="value-title" title="27.02.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="expositions" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/spolecenske-akce/vystavy/1516305-motocykl.html" onClick="_gaq.push(['_trackEvent', 'Výstavy', 'Motocykl', '{{event.name', 0]);">
+        <img src="/public/22/74/fa/1516424_967229_motocykl100.jpg" width="100" height="100" alt="Motocykl" title="Motocykl" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/spolecenske-akce/vystavy/1516305-motocykl.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Výstavy', 'Motocykl', 'Motocykl', 0]);">Motocykl</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Výstaviště, Praha</span></span></p>
+    <p class="date">
+      <span class="dtstart">05.03.2015<span class="value-title" title="05.03.2015"></span></span> až <span class="dtend">05.03.2015<span class="value-title" title="05.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/1489157-zebrik-2014-bacardi-music-awards.html" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Žebřík 2014 Bacardi Music Awards', '{{event.name', 0]);">
+        <img src="/public/5c/e1/7e/1489183_979811_zebrik100.jpg" width="100" height="100" alt="Žebřík 2014 Bacardi Music Awards" title="Žebřík 2014 Bacardi Music Awards" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/1489157-zebrik-2014-bacardi-music-awards.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Žebřík 2014 Bacardi Music Awards', 'Žebřík 2014 Bacardi Music Awards', 0]);">Žebřík 2014 Bacardi Music Awards</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">KC Depo, Plzeň</span></span></p>
+    <p class="date">
+      <span class="dtstart">13.03.2015<span class="value-title" title="13.03.2015"></span></span> až <span class="dtend">13.03.2015<span class="value-title" title="13.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1493313-chinaski-rockfield-tour-2015.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Chinaski - Rockfield Tour 2015', '{{event.name', 0]);">
+        <img src="/public/62/43/fa/1493353_953611_chinaski.jpg" width="100" height="100" alt="Chinaski - Rockfield Tour 2015" title="Chinaski - Rockfield Tour 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1493313-chinaski-rockfield-tour-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Chinaski - Rockfield Tour 2015', 'Chinaski - Rockfield Tour 2015', 0]);">Chinaski - Rockfield Tour 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">14.03.2015<span class="value-title" title="14.03.2015"></span></span> až <span class="dtend">14.03.2015<span class="value-title" title="14.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/1520394-mandrage-o-d-zacatku.html" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Mandrage o(d) začátku', '{{event.name', 0]);">
+        <img src="/public/12/a5/b0/1525717_973403__100x100.jpg" width="100" height="100" alt="Mandrage o(d) začátku" title="Mandrage o(d) začátku" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/1520394-mandrage-o-d-zacatku.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Mandrage o(d) začátku', 'Mandrage o(d) začátku', 0]);">Mandrage o(d) začátku</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Divadlo Hybernia, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">18.03.2015<span class="value-title" title="18.03.2015"></span></span> až <span class="dtend">18.03.2015<span class="value-title" title="18.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="opera, classical music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/klasicka-hudba-operni-arie/1489117-koncerty-pro-zasvecene-2015-jaroslav-sveceny-.html" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Koncerty pro zasvěcené 2015 (Jaroslav Svěcený)', '{{event.name', 0]);">
+        <img src="/public/c6/ee/44/1489249_950600_sveceny100.jpg" width="100" height="100" alt="Koncerty pro zasvěcené 2015 (Jaroslav Svěcený)" title="Koncerty pro zasvěcené 2015 (Jaroslav Svěcený)" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/klasicka-hudba-operni-arie/1489117-koncerty-pro-zasvecene-2015-jaroslav-sveceny-.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Koncerty pro zasvěcené 2015 (Jaroslav Svěcený)', 'Koncerty pro zasvěcené 2015 (Jaroslav Svěcený)', 0]);">Koncerty pro zasvěcené 2015 (Jaroslav Svěcený)</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Klementinum, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">19.03.2015<span class="value-title" title="19.03.2015"></span></span> až <span class="dtend">19.03.2015<span class="value-title" title="19.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/1442417-rytmus-ego-separ-strapo.html" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Rytmu', '{{event.name', 0]);">
+        <img src="/public/cb/e/f5/1442441_922815__100x100.jpg" width="100" height="100" alt="Rytmu" title="Rytmu" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/1442417-rytmus-ego-separ-strapo.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Rytmu', 'Rytmu', 0]);">Rytmu</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Bobycentrum, Brno</span></span></p>
+    <p class="date">
+      <span class="dtstart">20.03.2015<span class="value-title" title="20.03.2015"></span></span> až <span class="dtend">20.03.2015<span class="value-title" title="20.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/pop/1542900-aneta-langerova.html" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Aneta Langerová', '{{event.name', 0]);">
+        <img src="/public/e8/1f/6b/1547325_988789_aneta.jpg" width="100" height="100" alt="Aneta Langerová" title="Aneta Langerová" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/pop/1542900-aneta-langerova.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Aneta Langerová', 'Aneta Langerová', 0]);">Aneta Langerová</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">ŠKODA Muzeum, Mlada Boleslav</span></span></p>
+    <p class="date">
+      <span class="dtstart">10.03.2015<span class="value-title" title="10.03.2015"></span></span> až <span class="dtend">10.03.2015<span class="value-title" title="10.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts, folk music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/country-folk/1527906-jessica-pratt-us.html" onClick="_gaq.push(['_trackEvent', 'Country / Folk', 'Jessica Pratt /US', '{{event.name', 0]);">
+        <img src="/public/32/61/2/1528035_975244_jessica.jpg" width="100" height="100" alt="Jessica Pratt /US" title="Jessica Pratt /US" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/country-folk/1527906-jessica-pratt-us.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Country / Folk', 'Jessica Pratt /US', 'Jessica Pratt /US', 0]);">Jessica Pratt /US</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Jazz Dock, Praha 5</span></span></p>
+    <p class="date">
+      <span class="dtstart">20.03.2015<span class="value-title" title="20.03.2015"></span></span> až <span class="dtend">20.03.2015<span class="value-title" title="20.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts, classical music, opera" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/klasicka-hudba-operni-arie/1541354-dagmar-peckova.html" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Dagmar Pecková', '{{event.name', 0]);">
+        <img src="/public/da/6a/7e/1541375_984964_peckova_100_x_100.jpg.png" width="100" height="100" alt="Dagmar Pecková" title="Dagmar Pecková" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/klasicka-hudba-operni-arie/1541354-dagmar-peckova.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Dagmar Pecková', 'Dagmar Pecková', 0]);">Dagmar Pecková</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Rudolfinum, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">24.03.2015<span class="value-title" title="24.03.2015"></span></span> až <span class="dtend">24.03.2015<span class="value-title" title="24.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="science, health" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/ostatni/kurzy-prednasky-konference/1527041--1-rocnik-konference-o-strave-myslime-jime-zijeme.html" onClick="_gaq.push(['_trackEvent', 'Kurzy / Přednášky / Konference/ Besedy', 'Myslíme-Jíme-Žijeme - 1. ročník konference o stravě', '{{event.name', 0]);">
+        <img src="/public/a7/5b/b/1527064_974498_myslime.jpg" width="100" height="100" alt="Myslíme-Jíme-Žijeme - 1. ročník konference o stravě" title="Myslíme-Jíme-Žijeme - 1. ročník konference o stravě" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/ostatni/kurzy-prednasky-konference/1527041--1-rocnik-konference-o-strave-myslime-jime-zijeme.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Kurzy / Přednášky / Konference/ Besedy', 'Myslíme-Jíme-Žijeme - 1. ročník konference o stravě', 'Myslíme-Jíme-Žijeme - 1. ročník konference o stravě', 0]);">Myslíme-Jíme-Žijeme - 1. ročník konference o stravě</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna - Velký sál, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">28.03.2015<span class="value-title" title="28.03.2015"></span></span> až <span class="dtend">28.03.2015<span class="value-title" title="28.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts, film, jazz, drama" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/ruzne-zanry/1420493-evergreen-tour-2014.html" onClick="_gaq.push(['_trackEvent', 'Různé žánry', 'Evergreen tour 2015', '{{event.name', 0]);">
+        <img src="/public/94/78/ec/1420514_931159_bannery_ticketpro_100x100.jpg" width="100" height="100" alt="Evergreen tour 2015" title="Evergreen tour 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/ruzne-zanry/1420493-evergreen-tour-2014.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Různé žánry', 'Evergreen tour 2015', 'Evergreen tour 2015', 0]);">Evergreen tour 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">30.03.2015<span class="value-title" title="30.03.2015"></span></span> až <span class="dtend">30.03.2015<span class="value-title" title="30.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, jazz, blues, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/jazz-blues/1507521-agharta-prague-jazz-festival-sheila-e.html" onClick="_gaq.push(['_trackEvent', 'Jazz / Blues', 'AghaRTA Prague Jazz Festival: Sheila E', '{{event.name', 0]);">
+        <img src="/public/bf/bd/a5/1515985_966856_sheyla.jpg" width="100" height="100" alt="AghaRTA Prague Jazz Festival: Sheila E" title="AghaRTA Prague Jazz Festival: Sheila E" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/jazz-blues/1507521-agharta-prague-jazz-festival-sheila-e.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Jazz / Blues', 'AghaRTA Prague Jazz Festival: Sheila E', 'AghaRTA Prague Jazz Festival: Sheila E', 0]);">AghaRTA Prague Jazz Festival: Sheila E</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna Music Bar, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">31.03.2015<span class="value-title" title="31.03.2015"></span></span> až <span class="dtend">31.03.2015<span class="value-title" title="31.03.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/kluby/1500156-girlschool-gb-support-the-agony.html" onClick="_gaq.push(['_trackEvent', 'Kluby', 'Girlschool (GB) support: The Agony', '{{event.name', 0]);">
+        <img src="/public/f0/e6/21/1525788_973426_girlschool.jpg" width="100" height="100" alt="Girlschool (GB) support: The Agony" title="Girlschool (GB) support: The Agony" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/kluby/1500156-girlschool-gb-support-the-agony.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Kluby', 'Girlschool (GB) support: The Agony', 'Girlschool (GB) support: The Agony', 0]);">Girlschool (GB) support: The Agony</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Hudební klub Nová Chmelnice, Praha</span></span></p>
+    <p class="date">
+      <span class="dtstart">03.04.2015<span class="value-title" title="03.04.2015"></span></span> až <span class="dtend">03.04.2015<span class="value-title" title="03.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="classical music, opera, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/klasicka-hudba-operni-arie/1541195-max-emanuel-cencic.html" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Max Emanuel Cencic', '{{event.name', 0]);">
+        <img src="/public/52/53/8/1541220_984829_cencil.jpg" width="100" height="100" alt="Max Emanuel Cencic" title="Max Emanuel Cencic" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/klasicka-hudba-operni-arie/1541195-max-emanuel-cencic.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Max Emanuel Cencic', 'Max Emanuel Cencic', 0]);">Max Emanuel Cencic</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Rudolfinum, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">04.04.2015<span class="value-title" title="04.04.2015"></span></span> až <span class="dtend">04.04.2015<span class="value-title" title="04.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1514706-manfred-manns-earth-band.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Manfred Mann’s Earth Band', '{{event.name', 0]);">
+        <img src="/public/75/b2/19/1517066_969565_Manfred_100x100.jpg" width="100" height="100" alt="Manfred Mann’s Earth Band" title="Manfred Mann’s Earth Band" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1514706-manfred-manns-earth-band.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Manfred Mann’s Earth Band', 'Manfred Mann’s Earth Band', 0]);">Manfred Mann’s Earth Band</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna Music Bar, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">09.04.2015<span class="value-title" title="09.04.2015"></span></span> až <span class="dtend">09.04.2015<span class="value-title" title="09.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, club scene" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/spolecenske-akce/ples-tanecni-zabava/1508484-ondrej-havelka-melody-makers-9-tanecni-vecer-v-lucerne.html" onClick="_gaq.push(['_trackEvent', 'Ples / Taneční párty', 'Ondřej Havelka & Melody Makers - 9. taneční večer v Lucerně', '{{event.name', 0]);">
+        <img src="/public/af/c7/6a/1508550_963419_havelka.jpg" width="100" height="100" alt="Ondřej Havelka & Melody Makers - 9. taneční večer v Lucerně" title="Ondřej Havelka & Melody Makers - 9. taneční večer v Lucerně" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/spolecenske-akce/ples-tanecni-zabava/1508484-ondrej-havelka-melody-makers-9-tanecni-vecer-v-lucerne.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Ples / Taneční párty', 'Ondřej Havelka & Melody Makers - 9. taneční večer v Lucerně', 'Ondřej Havelka & Melody Makers - 9. taneční večer v Lucerně', 0]);">Ondřej Havelka & Melody Makers - 9. taneční večer v Lucerně</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna - Velký sál, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">11.04.2015<span class="value-title" title="11.04.2015"></span></span> až <span class="dtend">11.04.2015<span class="value-title" title="11.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/ruzne-zanry/1503804-vojtech-dyk-b-side-band-deska-tour-2015.html" onClick="_gaq.push(['_trackEvent', 'Různé žánry', 'Vojtěch Dyk & B-Side Band - Deska tour 2015', '{{event.name', 0]);">
+        <img src="/public/b3/a8/0/1503829_960225_dyk.jpg" width="100" height="100" alt="Vojtěch Dyk & B-Side Band - Deska tour 2015" title="Vojtěch Dyk & B-Side Band - Deska tour 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/ruzne-zanry/1503804-vojtech-dyk-b-side-band-deska-tour-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Různé žánry', 'Vojtěch Dyk & B-Side Band - Deska tour 2015', 'Vojtěch Dyk & B-Side Band - Deska tour 2015', 0]);">Vojtěch Dyk & B-Side Band - Deska tour 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Forum Karlín, Praha</span></span></p>
+    <p class="date">
+      <span class="dtstart">18.04.2015<span class="value-title" title="18.04.2015"></span></span> až <span class="dtend">18.04.2015<span class="value-title" title="18.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, club scene" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/tanecni-elektronicka-hudba/1477034-camouflage.html" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Camouflage', '{{event.name', 0]);">
+        <img src="/public/cf/9d/44/1477058_981375_camouflage100.jpg" width="100" height="100" alt="Camouflage" title="Camouflage" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/tanecni-elektronicka-hudba/1477034-camouflage.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Camouflage', 'Camouflage', 0]);">Camouflage</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Roxy, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">19.04.2015<span class="value-title" title="19.04.2015"></span></span> až <span class="dtend">19.04.2015<span class="value-title" title="19.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="classical music, opera, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/klasicka-hudba-operni-arie/1485999-jarni-gala-daniel-hope.html" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Jarní Gala: Daniel Hope & orchestr L’Arte del Mondo', '{{event.name', 0]);">
+        <img src="/public/22/73/bd/1486021_948037_gala15_ticketpro_360x360.jpg" width="100" height="100" alt="Jarní Gala: Daniel Hope & orchestr L’Arte del Mondo" title="Jarní Gala: Daniel Hope & orchestr L’Arte del Mondo" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/klasicka-hudba-operni-arie/1485999-jarni-gala-daniel-hope.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Jarní Gala: Daniel Hope & orchestr L’Arte del Mondo', 'Jarní Gala: Daniel Hope & orchestr L’Arte del Mondo', 0]);">Jarní Gala: Daniel Hope & orchestr L’Arte del Mondo</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Pražský hrad, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">29.04.2015<span class="value-title" title="29.04.2015"></span></span> až <span class="dtend">29.04.2015<span class="value-title" title="29.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/ruzne-zanry/1488636-carodejales-2015.html" onClick="_gaq.push(['_trackEvent', 'Různé žánry', 'Čarodějáles 2015', '{{event.name', 0]);">
+        <img src="/public/b3/94/b/1488702_976019_carodejales100.jpg" width="100" height="100" alt="Čarodějáles 2015" title="Čarodějáles 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/ruzne-zanry/1488636-carodejales-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Různé žánry', 'Čarodějáles 2015', 'Čarodějáles 2015', 0]);">Čarodějáles 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Koupaliště Riviera, Brno</span></span></p>
+    <p class="date">
+      <span class="dtstart">30.04.2015<span class="value-title" title="30.04.2015"></span></span> až <span class="dtend">30.04.2015<span class="value-title" title="30.04.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1485214-lynyrd-skynyrd-usa-predkapela-zluty-pes.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Lynyrd Skynyrd (USA', '{{event.name', 0]);">
+        <img src="/public/74/51/e1/1485282_949240__100x100_Lynyrd_Skynyrd.jpg" width="100" height="100" alt="Lynyrd Skynyrd (USA" title="Lynyrd Skynyrd (USA" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1485214-lynyrd-skynyrd-usa-predkapela-zluty-pes.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Lynyrd Skynyrd (USA', 'Lynyrd Skynyrd (USA', 0]);">Lynyrd Skynyrd (USA</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org"> Areál ploché dráhy, Plzeň</span></span></p>
+    <p class="date">
+      <span class="dtstart">01.05.2015<span class="value-title" title="01.05.2015"></span></span> až <span class="dtend">01.05.2015<span class="value-title" title="01.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="club scene, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/tanecni-elektronicka-hudba/1500358-magnetic-kveten-2015.html" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Magnetic Festival 2015', '{{event.name', 0]);">
+        <img src="/public/14/d6/c7/1500385_958924_magnetic_2015_ticketpro_100x100_color.jpg" width="100" height="100" alt="Magnetic Festival 2015" title="Magnetic Festival 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/tanecni-elektronicka-hudba/1500358-magnetic-kveten-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Magnetic Festival 2015', 'Magnetic Festival 2015', 0]);">Magnetic Festival 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">PVA Letňany, Praha</span></span></p>
+    <p class="date">
+      <span class="dtstart">07.05.2015<span class="value-title" title="07.05.2015"></span></span> až <span class="dtend">07.05.2015<span class="value-title" title="07.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1538180-rockove-legendy.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Rockové legendy', '{{event.name', 0]);">
+        <img src="/public/72/67/65/1538215_982541_Legendy_baner_100_100.jpg" width="100" height="100" alt="Rockové legendy" title="Rockové legendy" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1538180-rockove-legendy.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Rockové legendy', 'Rockové legendy', 0]);">Rockové legendy</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Velká Synagoga, Plzeň</span></span></p>
+    <p class="date">
+      <span class="dtstart">07.05.2015<span class="value-title" title="07.05.2015"></span></span> až <span class="dtend">07.05.2015<span class="value-title" title="07.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1492388-scorpions.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Scorpions', '{{event.name', 0]);">
+        <img src="/public/b/d3/b4/1494284_955075_Scorpions_100x100.jpg" width="100" height="100" alt="Scorpions" title="Scorpions" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1492388-scorpions.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Scorpions', 'Scorpions', 0]);">Scorpions</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Tipsport arena, Pardubice</span></span></p>
+    <p class="date">
+      <span class="dtstart">08.05.2015<span class="value-title" title="08.05.2015"></span></span> až <span class="dtend">08.05.2015<span class="value-title" title="08.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/pop/1540592-kazaky-evropske-turne-2015.html" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'KAZAKY - Evropské turné 2015', '{{event.name', 0]);">
+        <img src="/public/84/93/44/1540751_988427_kazaky_100x100px.jpg" width="100" height="100" alt="KAZAKY - Evropské turné 2015" title="KAZAKY - Evropské turné 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/pop/1540592-kazaky-evropske-turne-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'KAZAKY - Evropské turné 2015', 'KAZAKY - Evropské turné 2015', 0]);">KAZAKY - Evropské turné 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Lucerna - Velký sál, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">15.05.2015<span class="value-title" title="15.05.2015"></span></span> až <span class="dtend">15.05.2015<span class="value-title" title="15.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1469857-def-leppard.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Def Leppard', '{{event.name', 0]);">
+        <img src="/public/4d/2d/c8/1478805_943775_DL_Ostrava_100x100.jpg" width="100" height="100" alt="Def Leppard" title="Def Leppard" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1469857-def-leppard.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Def Leppard', 'Def Leppard', 0]);">Def Leppard</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">ČEZ Arena, Ostrava</span></span></p>
+    <p class="date">
+      <span class="dtstart">22.05.2015<span class="value-title" title="22.05.2015"></span></span> až <span class="dtend">22.05.2015<span class="value-title" title="22.05.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1544285-kosheen-uk-featuring-bohemian-symphony.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Kosheen (UK) featuring Bohemian Symphony', '{{event.name', 0]);">
+        <img src="/public/e6/34/57/1544311_987159__100x100_kosheen.jpg" width="100" height="100" alt="Kosheen (UK) featuring Bohemian Symphony" title="Kosheen (UK) featuring Bohemian Symphony" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1544285-kosheen-uk-featuring-bohemian-symphony.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Kosheen (UK) featuring Bohemian Symphony', 'Kosheen (UK) featuring Bohemian Symphony', 0]);">Kosheen (UK) featuring Bohemian Symphony</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Forum Karlín, Praha</span></span></p>
+    <p class="date">
+      <span class="dtstart">02.06.2015<span class="value-title" title="02.06.2015"></span></span> až <span class="dtend">02.06.2015<span class="value-title" title="02.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="circus" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/divadlo/fringe-cirkus-ledni-revue/1508343-cirk-la-putyka-liberec.html" onClick="_gaq.push(['_trackEvent', 'Fringe / Cirkus / Lední revue', 'Cirk La Putyka Liberec', '{{event.name', 0]);">
+        <img src="/public/a1/70/d2/1508379_963276_putyka.jpg" width="100" height="100" alt="Cirk La Putyka Liberec" title="Cirk La Putyka Liberec" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/divadlo/fringe-cirkus-ledni-revue/1508343-cirk-la-putyka-liberec.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Fringe / Cirkus / Lední revue', 'Cirk La Putyka Liberec', 'Cirk La Putyka Liberec', 0]);">Cirk La Putyka Liberec</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Home Credit Arena, Liberec</span></span></p>
+    <p class="date">
+      <span class="dtstart">05.06.2015<span class="value-title" title="05.06.2015"></span></span> až <span class="dtend">05.06.2015<span class="value-title" title="05.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="club scene, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/tanecni-elektronicka-hudba/1535178-kosheen.html" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Kosheen live in concert', '{{event.name', 0]);">
+        <img src="/public/73/61/43/1536310_980924_k100x100.jpg" width="100" height="100" alt="Kosheen live in concert" title="Kosheen live in concert" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/tanecni-elektronicka-hudba/1535178-kosheen.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Taneční / Elektronická hudba', 'Kosheen live in concert', 'Kosheen live in concert', 0]);">Kosheen live in concert</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Bobycentrum, Brno</span></span></p>
+    <p class="date">
+      <span class="dtstart">05.06.2015<span class="value-title" title="05.06.2015"></span></span> až <span class="dtend">05.06.2015<span class="value-title" title="05.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, club scene, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/vicezanrove/1522003-tanecvalmez.html" onClick="_gaq.push(['_trackEvent', 'Festivaly vícežánrové', 'TanecValmez', '{{event.name', 0]);">
+        <img src="/public/6f/6b/d4/1526993_974423_tnvl.jpg" width="100" height="100" alt="TanecValmez" title="TanecValmez" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/vicezanrove/1522003-tanecvalmez.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly vícežánrové', 'TanecValmez', 'TanecValmez', 0]);">TanecValmez</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Zámek Žerotínů, Valašské Meziříčí</span></span></p>
+    <p class="date">
+      <span class="dtstart">05.06.2015<span class="value-title" title="05.06.2015"></span></span> až <span class="dtend">05.06.2015<span class="value-title" title="05.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1512793-votvirak-2015.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Votvírák 2015', '{{event.name', 0]);">
+        <img src="/public/19/cb/97/1547911_989477_votvirak.jpg" width="100" height="100" alt="Votvírák 2015" title="Votvírák 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1512793-votvirak-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Votvírák 2015', 'Votvírák 2015', 0]);">Votvírák 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Letiště Milovice, Milovice</span></span></p>
+    <p class="date">
+      <span class="dtstart">12.06.2015<span class="value-title" title="12.06.2015"></span></span> až <span class="dtend">12.06.2015<span class="value-title" title="12.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="sports" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/sport/motorismus/1477371-legendy-motoristicka-slavnost.html" onClick="_gaq.push(['_trackEvent', 'F1/Motorismus', 'Legendy - motoristická slavnost', '{{event.name', 0]);">
+        <img src="/public/63/1c/6c/1549883_990953_LEGENDY2015___banner_100x100_V2.jpg" width="100" height="100" alt="Legendy - motoristická slavnost" title="Legendy - motoristická slavnost" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/sport/motorismus/1477371-legendy-motoristicka-slavnost.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'F1/Motorismus', 'Legendy - motoristická slavnost', 'Legendy - motoristická slavnost', 0]);">Legendy - motoristická slavnost</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Bohnice,</span></span></p>
+    <p class="date">
+      <span class="dtstart">13.06.2015<span class="value-title" title="13.06.2015"></span></span> až <span class="dtend">13.06.2015<span class="value-title" title="13.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/pop/1502528-roxette.html" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Roxette', '{{event.name', 0]);">
+        <img src="/public/ed/f9/3a/1502606_959046_roxette.jpg" width="100" height="100" alt="Roxette" title="Roxette" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/pop/1502528-roxette.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Roxette', 'Roxette', 0]);">Roxette</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">ČEZ Arena, Ostrava</span></span></p>
+    <p class="date">
+      <span class="dtstart">15.06.2015<span class="value-title" title="15.06.2015"></span></span> až <span class="dtend">15.06.2015<span class="value-title" title="15.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1448331-judas-priest.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Judas Priest', '{{event.name', 0]);">
+        <img src="/public/b1/16/46/1455975_927707_JP_Praha_100x100.jpg" width="100" height="100" alt="Judas Priest" title="Judas Priest" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1448331-judas-priest.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Judas Priest', 'Judas Priest', 0]);">Judas Priest</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">ČEZ Arena, Ostrava</span></span></p>
+    <p class="date">
+      <span class="dtstart">25.06.2015<span class="value-title" title="25.06.2015"></span></span> až <span class="dtend">25.06.2015<span class="value-title" title="25.06.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1474258-mighty-sounds-2015.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Mighty Sounds 2015', '{{event.name', 0]);">
+        <img src="/public/eb/35/e8/1474283_939767_Ticketpro_100x100.jpg" width="100" height="100" alt="Mighty Sounds 2015" title="Mighty Sounds 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1474258-mighty-sounds-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Mighty Sounds 2015', 'Mighty Sounds 2015', 0]);">Mighty Sounds 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Letiště Čápův Dvůr, Tábor</span></span></p>
+    <p class="date">
+      <span class="dtstart">03.07.2015<span class="value-title" title="03.07.2015"></span></span> až <span class="dtend">03.07.2015<span class="value-title" title="03.07.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, rock music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1544152-masters-of-rock-2015.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Masters of Rock 2015', '{{event.name', 0]);">
+        <img src="/public/7/2d/a9/1544186_987090_mor.jpg" width="100" height="100" alt="Masters of Rock 2015" title="Masters of Rock 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1544152-masters-of-rock-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Masters of Rock 2015', 'Masters of Rock 2015', 0]);">Masters of Rock 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">areál likérky R. Jelínek, Vizovice</span></span></p>
+    <p class="date">
+      <span class="dtstart">09.07.2015<span class="value-title" title="09.07.2015"></span></span> až <span class="dtend">09.07.2015<span class="value-title" title="09.07.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, rock music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1472910-the-legends-rock-fest-aneb-legendy-ozivaji-17-7-18-7-2015-.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'The Legends Rock Fest aneb Legendy ožívají', '{{event.name', 0]);">
+        <img src="/public/1/52/88/1473782_939336_legends_360x360.jpg" width="100" height="100" alt="The Legends Rock Fest aneb Legendy ožívají" title="The Legends Rock Fest aneb Legendy ožívají" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1472910-the-legends-rock-fest-aneb-legendy-ozivaji-17-7-18-7-2015-.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'The Legends Rock Fest aneb Legendy ožívají', 'The Legends Rock Fest aneb Legendy ožívají', 0]);">The Legends Rock Fest aneb Legendy ožívají</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Areál  U věže, Hořice</span></span></p>
+    <p class="date">
+      <span class="dtstart">17.07.2015<span class="value-title" title="17.07.2015"></span></span> až <span class="dtend">17.07.2015<span class="value-title" title="17.07.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1532312--90-festival-polsko-.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', '90 Festival', '{{event.name', 0]);">
+        <img src="/public/86/a1/61/1532338_992200__90_100.jpg" width="100" height="100" alt="90 Festival" title="90 Festival" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1532312--90-festival-polsko-.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', '90 Festival', '90 Festival', 0]);">90 Festival</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Bielsko-Biala, Polsko</span></span></p>
+    <p class="date">
+      <span class="dtstart">18.07.2015<span class="value-title" title="18.07.2015"></span></span> až <span class="dtend">18.07.2015<span class="value-title" title="18.07.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1536791-robert-plant.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Robert Plant', '{{event.name', 0]);">
+        <img src="/public/cb/65/7e/1539944_984013_plant100.jpg" width="100" height="100" alt="Robert Plant" title="Robert Plant" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1536791-robert-plant.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Robert Plant', 'Robert Plant', 0]);">Robert Plant</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Hala Rondo, Brno</span></span></p>
+    <p class="date">
+      <span class="dtstart">23.07.2015<span class="value-title" title="23.07.2015"></span></span> až <span class="dtend">23.07.2015<span class="value-title" title="23.07.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1477134-benatska-noc-2015.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Benátská!', '{{event.name', 0]);">
+        <img src="/public/10/e2/3d/1477173_981399_benatska100.jpg" width="100" height="100" alt="Benátská!" title="Benátská!" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1477134-benatska-noc-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Benátská!', 'Benátská!', 0]);">Benátská!</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">areál Vesec, Liberec</span></span></p>
+    <p class="date">
+      <span class="dtstart">23.07.2015<span class="value-title" title="23.07.2015"></span></span> až <span class="dtend">23.07.2015<span class="value-title" title="23.07.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, rock music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1491646-rockovy-festival-rock-of-sadska.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Rockový festival Rock of Sadská', '{{event.name', 0]);">
+        <img src="/public/85/e7/a1/1491707_952477_sadska_logo.jpg" width="100" height="100" alt="Rockový festival Rock of Sadská" title="Rockový festival Rock of Sadská" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1491646-rockovy-festival-rock-of-sadska.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Rockový festival Rock of Sadská', 'Rockový festival Rock of Sadská', 0]);">Rockový festival Rock of Sadská</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Jezero Sadská, Sadská</span></span></p>
+    <p class="date">
+      <span class="dtstart">15.08.2015<span class="value-title" title="15.08.2015"></span></span> až <span class="dtend">15.08.2015<span class="value-title" title="15.08.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/hudebni/1499852-finlandia-machac-2015.html" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Finlandia Mácháč 2015', '{{event.name', 0]);">
+        <img src="/public/88/4b/fe/1499876_956884_machac.jpg" width="100" height="100" alt="Finlandia Mácháč 2015" title="Finlandia Mácháč 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/hudebni/1499852-finlandia-machac-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly hudební', 'Finlandia Mácháč 2015', 'Finlandia Mácháč 2015', 0]);">Finlandia Mácháč 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Máchovo jezero - pláž Klůček, Doksy</span></span></p>
+    <p class="date">
+      <span class="dtstart">21.08.2015<span class="value-title" title="21.08.2015"></span></span> až <span class="dtend">21.08.2015<span class="value-title" title="21.08.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="festivals, rock music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/festivaly/vicezanrove/1487890-rock-for-churchill-2015.html" onClick="_gaq.push(['_trackEvent', 'Festivaly vícežánrové', 'Rock For Churchill', '{{event.name', 0]);">
+        <img src="/public/1/30/35/1487943_949694_avatar_100.jpg" width="100" height="100" alt="Rock For Churchill" title="Rock For Churchill" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/festivaly/vicezanrove/1487890-rock-for-churchill-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Festivaly vícežánrové', 'Rock For Churchill', 'Rock For Churchill', 0]);">Rock For Churchill</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Areál Myslivna, Vroutek</span></span></p>
+    <p class="date">
+      <span class="dtstart">28.08.2015<span class="value-title" title="28.08.2015"></span></span> až <span class="dtend">28.08.2015<span class="value-title" title="28.08.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="opera, classical music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/klasicka-hudba-operni-arie/1498063-dvorakova-praha-tonhalle-orchester-zurich.html" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Dvořákova Praha: Tonhalle-Orchester Zürich', '{{event.name', 0]);">
+        <img src="/public/20/f/d2/1500697_957694_dp2015_360x360_ticketpro.jpg" width="100" height="100" alt="Dvořákova Praha: Tonhalle-Orchester Zürich" title="Dvořákova Praha: Tonhalle-Orchester Zürich" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/klasicka-hudba-operni-arie/1498063-dvorakova-praha-tonhalle-orchester-zurich.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Klasická hudba / Operní árie', 'Dvořákova Praha: Tonhalle-Orchester Zürich', 'Dvořákova Praha: Tonhalle-Orchester Zürich', 0]);">Dvořákova Praha: Tonhalle-Orchester Zürich</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Rudolfinum, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">19.09.2015<span class="value-title" title="19.09.2015"></span></span> až <span class="dtend">19.09.2015<span class="value-title" title="19.09.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/swing-sanson/1543774-narozeninovy-koncert-lada-kerndl-70.html" onClick="_gaq.push(['_trackEvent', 'Swing / šanson', 'Narozeninový koncert – Laďa Kerndl 70', '{{event.name', 0]);">
+        <img src="/public/f/9d/91/1548892_990283_kerndl_100.jpg" width="100" height="100" alt="Narozeninový koncert – Laďa Kerndl 70" title="Narozeninový koncert – Laďa Kerndl 70" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/swing-sanson/1543774-narozeninovy-koncert-lada-kerndl-70.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Swing / šanson', 'Narozeninový koncert – Laďa Kerndl 70', 'Narozeninový koncert – Laďa Kerndl 70', 0]);">Narozeninový koncert – Laďa Kerndl 70</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Žofín, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">30.09.2015<span class="value-title" title="30.09.2015"></span></span> až <span class="dtend">30.09.2015<span class="value-title" title="30.09.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="exhibitions, gastronomy" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/spolecenske-akce/gastronomie/1541797-slavnost-jablka.html" onClick="_gaq.push(['_trackEvent', 'Gastronomie', 'Slavnost Jablka', '{{event.name', 0]);">
+        <img src="/public/96/c2/ca/1541822_987581_jablko_100_x_100.jpg" width="100" height="100" alt="Slavnost Jablka" title="Slavnost Jablka" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/spolecenske-akce/gastronomie/1541797-slavnost-jablka.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Gastronomie', 'Slavnost Jablka', 'Slavnost Jablka', 0]);">Slavnost Jablka</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Zámek Sychrov, Sychrov</span></span></p>
+    <p class="date">
+      <span class="dtstart">03.10.2015<span class="value-title" title="03.10.2015"></span></span> až <span class="dtend">03.10.2015<span class="value-title" title="03.10.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1407379-apocalyptica.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Apocalyptica', '{{event.name', 0]);">
+        <img src="/public/59/3a/ae/1410472_899711_apocalyptica.jpg" width="100" height="100" alt="Apocalyptica" title="Apocalyptica" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1407379-apocalyptica.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Apocalyptica', 'Apocalyptica', 0]);">Apocalyptica</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Forum Karlín, Praha</span></span></p>
+    <p class="date">
+      <span class="dtstart">10.10.2015<span class="value-title" title="10.10.2015"></span></span> až <span class="dtend">10.10.2015<span class="value-title" title="10.10.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1448317-deep-purple.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Deep Purple', '{{event.name', 0]);">
+        <img src="/public/3d/c7/e5/1465811_933573_dp.jpg" width="100" height="100" alt="Deep Purple" title="Deep Purple" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1448317-deep-purple.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Deep Purple', 'Deep Purple', 0]);">Deep Purple</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">ČEZ Arena, Ostrava</span></span></p>
+    <p class="date">
+      <span class="dtstart">27.10.2015<span class="value-title" title="27.10.2015"></span></span> až <span class="dtend">27.10.2015<span class="value-title" title="27.10.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, ballet" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/divadlo/balet-tanec/1426608-lord-of-the-dance-dangerous-games.html" onClick="_gaq.push(['_trackEvent', 'Balet / Tanec', 'Lord of The Dance - Dangerous Games', '{{event.name', 0]);">
+        <img src="/public/75/ad/fe/1426784_910425_lord.jpg" width="100" height="100" alt="Lord of The Dance - Dangerous Games" title="Lord of The Dance - Dangerous Games" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/divadlo/balet-tanec/1426608-lord-of-the-dance-dangerous-games.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Balet / Tanec', 'Lord of The Dance - Dangerous Games', 'Lord of The Dance - Dangerous Games', 0]);">Lord of The Dance - Dangerous Games</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">28.10.2015<span class="value-title" title="28.10.2015"></span></span> až <span class="dtend">28.10.2015<span class="value-title" title="28.10.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="rock music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/rock/1547863-krystof-srdcebeat-tour-2015.html" onClick="_gaq.push(['_trackEvent', 'Rock', 'Kryštof Srdcebeat Tour 2015', '{{event.name', 0]);">
+        <img src="/public/b1/b4/3f/1547886_989409_krystof.jpg" width="100" height="100" alt="Kryštof Srdcebeat Tour 2015" title="Kryštof Srdcebeat Tour 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/rock/1547863-krystof-srdcebeat-tour-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Rock', 'Kryštof Srdcebeat Tour 2015', 'Kryštof Srdcebeat Tour 2015', 0]);">Kryštof Srdcebeat Tour 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Home Credit Arena, Liberec</span></span></p>
+    <p class="date">
+      <span class="dtstart">31.10.2015<span class="value-title" title="31.10.2015"></span></span> až <span class="dtend">31.10.2015<span class="value-title" title="31.10.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="theater, musical" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/divadlo/muzikaly-hudebni-divadlo/1549744-mary-poppins.html" onClick="_gaq.push(['_trackEvent', 'Muzikály / Hudební divadlo', 'Mary Poppins', '{{event.name', 0]);">
+        <img src="/public/41/83/3d/1549817_990915_mary_100x100.jpg" width="100" height="100" alt="Mary Poppins" title="Mary Poppins" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/divadlo/muzikaly-hudebni-divadlo/1549744-mary-poppins.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Muzikály / Hudební divadlo', 'Mary Poppins', 'Mary Poppins', 0]);">Mary Poppins</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Divadlo Hybernia, Praha 1</span></span></p>
+    <p class="date">
+      <span class="dtstart">05.11.2015<span class="value-title" title="05.11.2015"></span></span> až <span class="dtend">05.11.2015<span class="value-title" title="05.11.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/1443043-suzi-quatro.html" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Suzi Quatro', '{{event.name', 0]);">
+        <img src="/public/af/a2/df/1445416_937531_Suzi_2015_100x100.jpg" width="100" height="100" alt="Suzi Quatro" title="Suzi Quatro" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/1443043-suzi-quatro.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Hudba', 'Suzi Quatro', 'Suzi Quatro', 0]);">Suzi Quatro</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">11.11.2015<span class="value-title" title="11.11.2015"></span></span> až <span class="dtend">11.11.2015<span class="value-title" title="11.11.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+<div vdnaclass="music, concerts" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="/jnp/hudba/pop/1531201-petra-janu-vera-spinarova-tour-2015.html" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Petra Janů & Věra Špinarová Tour 2015', '{{event.name', 0]);">
+        <img src="/public/af/92/e/1531275_977523_PJ_VS_tour15_100.jpg" width="100" height="100" alt="Petra Janů & Věra Špinarová Tour 2015" title="Petra Janů & Věra Špinarová Tour 2015" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="/jnp/hudba/pop/1531201-petra-janu-vera-spinarova-tour-2015.html" class="url summary" onClick="_gaq.push(['_trackEvent', 'Pop/Muzikálové melodie', 'Petra Janů & Věra Špinarová Tour 2015', 'Petra Janů & Věra Špinarová Tour 2015', 0]);">Petra Janů & Věra Špinarová Tour 2015</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">Různá místa v České republice</span></span></p>
+    <p class="date">
+      <span class="dtstart">12.11.2015<span class="value-title" title="12.11.2015"></span></span> až <span class="dtend">12.11.2015<span class="value-title" title="12.11.2015"></span></span>
+    </p>
+  </div>
+</div>
+
+
+
 <!-- end main content -->
 
   <div class="reset">&nbsp;</div>
@@ -589,15 +1756,13 @@ $( document ).ready(function() {
 
 </div>
 
-<!-- build:js(.) scripts/vendor.js -->
-<!-- bower:js -->
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<!-- endbower -->
-<!-- endbuild -->
-
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="js/app.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+<script type="text/javascript" src="js/bootstrap-select.js"></script>
+<script type="text/javascript" src="js/bootstrap-switch.js"></script>
+<script type="text/javascript" src="js/bootstrap-tagsinput.js"></script>
+<script type="text/jsx" src="js/vdnabundle.js"></script>
 <!-- endbuild -->
 
 

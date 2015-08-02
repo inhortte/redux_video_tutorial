@@ -1,0 +1,16 @@
+<div vdnaclass="{{event.vdnaclass}}" class="event vevent">
+  <div class="eventImage">
+    <div class="eventPoster">
+      <a href="{{event.url}}" ng-click="_gaq.push(['_trackEvent', '{{event.type}}', '{{event.name}}', '{{event.name', 0]);">
+        <img ng-src="{{event.img}}" width="100" height="100" alt="{{event.name}}" title="{{event.name}}" class="photo" /></a>
+    </div>
+  </div>
+  <div class="eventInfo">
+    <h3><a href="{{event.url}}" class="url summary" ng-click="_gaq.push(['_trackEvent', '{{event.type}}', '{{event.name}}', '{{event.name}}', 0]);">{{event.name}}</a></h3>
+
+    <p ><span class="location vcard"><span class="fn org">{{event.location}}</span></span></p>
+    <p class="date">
+      <span class="dtstart">{{event.date}}<span class="value-title" title="{{event.date}}"></span></span> až <span class="dtend">{{event.date}}<span class="value-title" title="{{event.date}}"></span></span>
+    </p>
+  </div>
+</div>

@@ -1,16 +1,20 @@
 {
   "name": "ticketpro",
-  "version": "0.0.0",
-  "dependencies": {},
+  "version": "0.1.0",
   "repository": {},
+  "browserify": {
+    "transform": [ "babelify", "reactify" ]
+  },
   "devDependencies": {
     "http-server": "^0.7.5",
-    "request": "*"
+    "request": "*",
+    "babelify": "*",
+    "reactify": "*"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-
+    "build": "browserify public/js/vdnamenu.js -o public/js/vdnabundle.js -d"
   }
 }
