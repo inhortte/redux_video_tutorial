@@ -501,6 +501,47 @@ var MyProfileInterest = React.createClass({
 });
 
 var MyProfileAddAnInterest = React.createClass({
+  render: function() {
+    var currentInterestKeys = Object.keys(this.props.interests);
+    var availableInterestKeys = Object.keys(data.staticInterests).filter(function(interestKey) {
+      return currentInterestKeys.indexOf(interestKey) == -1;
+    });
+    var baseDivStyles = ['form-group', 'form-group-sm'];
+    var availableInterestNodes = availableInterestKeys.map(function(interest) {
+      return (
+        <MyProfileAvailableInterest availableInterest={interest} />
+      );
+    });
+    if(this.props.collapse) {
+      baseDivStyles.push('collapse');
+    }
+    return (
+      <div className={baseDivStyles.join(' ')} id="addAnInterest">
+        <label className="col-sm-2 control-label">Add a like</label>
+        <div className="col-sm-6">
+          {availableInterestNodes}
+        </div>
+      </div>
+    );
+  }
+});
+
+var MyProfileAvailableInterest = React.createClass({
+  addInterest: function() {
+    data.addInterest(this.props.availableInterest);
+    reRender();
+  },
+  render: function() {
+    return (
+      <span className="btn btn-sm btn-default" ref="interestSpan" title={this.props.availableInterest} key={this.props.availableInterest} role="button" onClick={this.addInterest}>
+        {data.capitalize(this.props.availableInterest)}
+      </span>
+    );
+  }
+});
+
+/* It's quite a pity to have to comment this out...
+var MyProfileAddAnInterest = React.createClass({
   addLikeDone: function() {
     console.log($("#addInterestInput").val());
     if(data.addInterest($("#addInterestInput").val())) {
@@ -525,7 +566,6 @@ var MyProfileAddAnInterest = React.createClass({
       <div className={baseDivStyles.join(' ')} id="addAnInterest">
         <label className="col-sm-2 control-label">Add a like</label>
         <div className="col-sm-6">
-          {/* <input type="text" className="form-control" ref="addAnInterestInput" id="addAnInterestInput" /> */}
           <Autocomplete inputId="addInterestInput" defaultValue={''} defaultList={availableInterestKeys} className="form-control" addLikeDone={this.addLikeDone} />
         </div>
         <div className="col-sm-2">
@@ -535,6 +575,7 @@ var MyProfileAddAnInterest = React.createClass({
     );
   }
 });
+*/
 
 var MyProfileLikeDetails = React.createClass({
   removeInterest: function() {
