@@ -1,5 +1,6 @@
 var Moment = require('moment');
 var data = require('vdna/static_data');
+var variableData = require('vdna/variable_data');
 // var Autocomplete = require('react-autocomplete/lib/main.js');
 // var Combobox = Autocomplete.Combobox;
 // var ComboboxOption = Autocomplete.ComboboxOption;
@@ -855,6 +856,13 @@ var Notifications = React.createClass({
 });
 
 var Import = React.createClass({
+  facebookConnect: function() {
+    if(variableData.facebook.length > 0) {
+      console.log(JSON.stringify(variableData.facebook.shift()));
+    } else {
+      console.log('none left...');
+    }
+  },
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="import">
@@ -869,7 +877,8 @@ var Import = React.createClass({
                 <strong>Last sync:</strong> 25 interests (5 new)<br />
                 <strong>Last synced on:</strong> @DateTime.Now
               </div>
-              <a href="#" className="btn btn-sm btn-default pull-right">Connect</a>
+              <button className="btn btn-sm btn-default pull-right" onClick={this.facebookConnect}>Connect</button>
+              {/* <a href="#" className="btn btn-sm btn-default pull-right">Connect</a> */}
             </div>
             <div className="col-xs-6 col-lg-4 col-lg-offset-1">
               <p className="lead">Import your pins from Pinterest!</p>
