@@ -866,6 +866,8 @@ var Import = React.createClass({
       console.log('none left...');
     }
   },
+  updateFacebookSyncCount: function() {
+  },
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="import">
@@ -874,15 +876,7 @@ var Import = React.createClass({
             <h3>...your interests across apps and devices.</h3>
           </header>
           <div className="row">
-            <div className="col-xs-6 col-lg-4">
-              <p className="lead">Connect with Facebook!</p>
-              <div className="pull-left">
-                <strong>Last sync:</strong> 25 interests (5 new)<br />
-                <strong>Last synced on:</strong> @DateTime.Now
-              </div>
-              <button className="btn btn-sm btn-default pull-right" onClick={this.facebookConnect}>Connect</button>
-              {/* <a href="#" className="btn btn-sm btn-default pull-right">Connect</a> */}
-            </div>
+            <FacebookConnect facebookConnect={this.facebookConnect} />
             <div className="col-xs-6 col-lg-4 col-lg-offset-1">
               <p className="lead">Import your pins from Pinterest!</p>
               <div className="pull-left">
@@ -908,6 +902,21 @@ var Import = React.createClass({
           </div>
         </div>
       </section>
+    );
+  }
+});
+
+var FacebookConnect = React.createClass({
+  render: function() {
+    return (
+      <div className="col-xs-6 col-lg-4">
+        <p className="lead">Connect with Facebook!</p>
+        <div className="pull-left">
+          <strong>Last sync:</strong> 25 interests (5 new)<br />
+          <strong>Last synced on:</strong> @DateTime.Now
+        </div>
+        <button className="btn btn-sm btn-default pull-right" onClick={this.props.facebookConnect}>Connect</button>
+      </div>
     );
   }
 });
