@@ -858,7 +858,10 @@ var Notifications = React.createClass({
 var Import = React.createClass({
   facebookConnect: function() {
     if(variableData.facebook.length > 0) {
-      console.log(JSON.stringify(variableData.facebook.shift()));
+      var imported = variableData.facebook.shift();
+      console.log(JSON.stringify(imported));
+      data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      // Object.assign(data.staticInterests, imported); -- not supported now.
     } else {
       console.log('none left...');
     }
