@@ -202,8 +202,9 @@ function reRender() {
   );
 };
 
-function formatDate(rawDate) {
-  return Moment(rawDate).format("DD MMM YYYY");
+function formatDate(rawDate, add_time) {
+  var format = (add_time !== undefined && add_time) ? "DD MMM YYYY HH:mm" : "DD MMM YYYY";
+  return Moment(rawDate).format(format);
 };
 
 var tabList = [
@@ -876,7 +877,21 @@ var Import = React.createClass({
       console.log('none left...');
     }
   },
-  updateFacebookSyncCount: function() {
+  pinterestImport: function() {
+    console.log('PIN ME FUCKING UP!');
+    if(variableData.pinterest.length > 0) {
+      var imported = variableData.pinterest.shift();
+      variableData.totalPinterestSync += Object.keys(imported).length;
+      console.log(JSON.stringify(imported));
+      data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      this.setState({
+        pinterestAllSyncedInterests: variableData.totalPinterestSync,
+        pinterestLastSyncedInterests: Object.keys(imported).length,
+        pinterestLastSynced: Date.now()
+      });
+    } else {
+      console.log('none left...');
+    }
   },
   getInitialState: function() {
     return {
@@ -896,15 +911,8 @@ var Import = React.createClass({
             <h3>...your interests across apps and devices.</h3>
           </header>
           <div className="row">
-            <FacebookConnect facebookConnect={this.facebookConnect} allSyncedInterests={this.state.facebookAllSyncedInterests} lastSyncedInterests={this.state.facebookLastSyncedInterests} lastSynced={this.state.facebookLastSynced} />
-            <div className="col-xs-6 col-lg-4 col-lg-offset-1">
-              <p className="lead">Import your pins from Pinterest!</p>
-              <div className="pull-left">
-                <strong>Last sync:</strong> 25 interests (5 new)<br />
-                <strong>Last synced on:</strong> @DateTime.Now
-              </div>
-              <a href="#" className="btn btn-sm btn-default pull-right">Import</a>
-            </div>
+            <SpecificImport importFunction={this.facebookConnect} buttonTitle='Connect' allSyncedInterests={this.state.facebookAllSyncedInterests} lastSyncedInterests={this.state.facebookLastSyncedInterests} lastSynced={this.state.facebookLastSynced} title="Connect with Facebook!" bootstrapOffset='' />
+            <SpecificImport importFunction={this.pinterestImport} buttonTitle='Import' allSyncedInterests={this.state.pinterestAllSyncedInterests} lastSyncedInterests={this.state.pinterestLastSyncedInterests} lastSynced={this.state.pinterestLastSynced} title="Import your pins from Pinterest!" bootstrapOffset="col-lg-offset-1" />
           </div>
           <hr />
           <div className="row">
@@ -926,16 +934,17 @@ var Import = React.createClass({
   }
 });
 
-var FacebookConnect = React.createClass({
+var SpecificImport = React.createClass({
   render: function() {
+    var baseDivStyles = "col-xs-6 col-lg-4 " + this.props.bootstrapOffset;
     return (
-      <div className="col-xs-6 col-lg-4">
-        <p className="lead">Connect with Facebook!</p>
+      <div className={baseDivStyles}>
+        <p className="lead">{this.props.title}</p>
         <div className="pull-left">
           <strong>Last sync:</strong> {this.props.allSyncedInterests} interests ({this.props.lastSyncedInterests} new)<br />
-          <strong>Last synced on:</strong> {formatDate(this.props.lastSynced)}
+          <strong>Last synced on:</strong> {formatDate(this.props.lastSynced, true)}
         </div>
-        <button className="btn btn-sm btn-default pull-right" onClick={this.props.facebookConnect}>Connect</button>
+        <button className="btn btn-sm btn-default pull-right" onClick={this.props.importFunction}>{this.props.buttonTitle}</button>
       </div>
     );
   }
