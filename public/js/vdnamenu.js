@@ -433,11 +433,23 @@ var MyProfilePrivacy = React.createClass({
 var MyProfileInterests = React.createClass({
   showDetails: function(interest, details) {
     console.log(interest + ": " + JSON.stringify(details));
-    this.setState({currentInterest: interest, currentDetails: details});
+    if(this.state.currentInterest === interest) {
+      this.setState({ detailsCollapsed: !this.state.detailsCollapsed });
+    } else {
+      this.setState({
+        currentInterest: interest,
+        currentDetails: details,
+        detailsCollapsed: false
+      });
+    }
+  },
+  collapseDetails: function() {
+    this.setState({ detailsCollapsed: true });
   },
   getInitialState: function() {
     return {currentInterest: null,
             currentDetails: {},
+            detailsCollapsed: true,
             addInterestCollapsed: true};
   },
   componentDidMount: function() {
@@ -487,7 +499,7 @@ var MyProfileInterests = React.createClass({
           </div>
         </div>
         <MyProfileAddAnInterest interests={currentInterests} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
-        <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={false} />
+        <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={this.state.detailsCollapsed} collapseDetails={this.collapseDetails} />
       </div>
     );
   }
@@ -587,6 +599,7 @@ var MyProfileLikeDetails = React.createClass({
   removeInterest: function() {
     // data.unLikeAnInterest(this.props.category, this.props.currentInterest);
     data.unLikeAnInterest(this.props.currentInterest);
+    this.props.collapseDetails();
     reRender();
   },
   render: function() {
