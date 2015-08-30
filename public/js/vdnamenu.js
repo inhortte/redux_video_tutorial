@@ -439,7 +439,8 @@ var MyProfileInterests = React.createClass({
       this.setState({
         currentInterest: interest,
         currentDetails: details,
-        detailsCollapsed: false
+        detailsCollapsed: false,
+        addInterestCollapsed: true
       });
     }
   },
@@ -455,8 +456,8 @@ var MyProfileInterests = React.createClass({
   componentDidMount: function() {
     data.blinkNodes();
   },
-  showAddLike: function() {
-    this.setState({addInterestCollapsed: false});
+  showHideAddLike: function() {
+    this.setState({ addInterestCollapsed: !this.state.addInterestCollapsed });
   },
   hideAddLike: function() {
     this.setState({addInterestCollapsed: true});
@@ -476,11 +477,6 @@ var MyProfileInterests = React.createClass({
         <MyProfileInterest key={interest} interest={interest} showDetails={that.showDetails.bind(that, interest, that.props.interests[interest])} />
       );
     });
-    /*
-    var relatedInterests = Object.keys(this.props.interests).filter(function(interest) {
-      return !that.props.interests[interest]['selected'];
-    });
-     */
     var relatedInterests = this.state.currentInterest ? this.state.currentDetails['related'].split(/,/) : [];
     return (
       <div>
@@ -495,7 +491,7 @@ var MyProfileInterests = React.createClass({
           </div>
           <div className="col-sm-4 col-bottom">
             <button type="submit" className="btn btn-sm btn-default">Import</button>
-            <button id="addLike" onClick={this.showAddLike} type="submit" role="button" className="btn btn-sm btn-success" aria-expanded="false" aria-controls="addLike"><span className="glyphicon glyphicon-plus"></span> Add</button>
+            <button id="addLike" onClick={this.showHideAddLike} type="submit" role="button" className="btn btn-sm btn-success" aria-expanded="false" aria-controls="addLike"><span className="glyphicon glyphicon-plus"></span> Add</button>
           </div>
         </div>
         <MyProfileAddAnInterest interests={currentInterests} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
@@ -533,12 +529,21 @@ var MyProfileAddAnInterest = React.createClass({
     if(this.props.collapse) {
       baseDivStyles.push('collapse');
     }
+    var html;
+    if(!this.props.collapse) {
+      html =
+        <div className={baseDivStyles.join(' ')} id="addAnInterest">
+          <label className="col-sm-2 control-label">Add a like</label>
+          <div className="col-sm-6">
+            {availableInterestNodes}
+          </div>
+        </div>;
+    } else {
+      html = <div className={baseDivStyles.join(' ')} id="addAnInterest"></div>;
+    }
     return (
-      <div className={baseDivStyles.join(' ')} id="addAnInterest">
-        <label className="col-sm-2 control-label">Add a like</label>
-        <div className="col-sm-6">
-          {availableInterestNodes}
-        </div>
+      <div>
+        {html}
       </div>
     );
   }
