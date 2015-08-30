@@ -866,6 +866,7 @@ var Import = React.createClass({
       variableData.totalFacebookSync += Object.keys(imported).length;
       console.log(JSON.stringify(imported));
       data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      // Object.assign(data.staticInterests, imported);
       this.setState({
         facebookAllSyncedInterests: variableData.totalFacebookSync,
         facebookLastSyncedInterests: Object.keys(imported).length,
@@ -879,9 +880,10 @@ var Import = React.createClass({
   },
   getInitialState: function() {
     return {
-      facebookAllSyncedInterests: 0,
+      facebookAllSyncedInterests: variableData.totalFacebookSync,
       facebookLastSyncedInterests: 0,
       facebookLastSynced: Date.now()
+
     };
   },
   render: function() {
