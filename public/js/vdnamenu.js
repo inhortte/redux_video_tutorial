@@ -622,7 +622,7 @@ var MyProfileLikeDetails = React.createClass({
                     <li>
                       <small>
                         <strong>Source:</strong> Imported from {data.capitalize(this.props.currentDetails['source'])}<br />
-                        Added on {formateDate(this.props.currentDetails['added'])}
+                        Added on {formatDate(this.props.currentDetails['added'])}
                       </small>
                     </li>
                   </ul>
