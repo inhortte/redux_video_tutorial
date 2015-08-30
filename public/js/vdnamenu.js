@@ -882,8 +882,10 @@ var Import = React.createClass({
     return {
       facebookAllSyncedInterests: variableData.totalFacebookSync,
       facebookLastSyncedInterests: 0,
-      facebookLastSynced: Date.now()
-
+      facebookLastSynced: Date.now(),
+      pinterestAllSyncedInterests: variableData.totalPinterestSync,
+      pinterestLastSyncedInterests: 0,
+      pinterestLastSynced: Date.now()
     };
   },
   render: function() {
