@@ -202,6 +202,10 @@ function reRender() {
   );
 };
 
+function formatDate(rawDate) {
+  return Moment(rawDate).format("DD MMM YYYY");
+};
+
 var tabList = [
   { id: 1, href: 'profile', text: 'Edit My Profile', selected: true },
   { id: 2, href: 'notifications', text: 'View Notifications', selected: false },
@@ -617,7 +621,7 @@ var MyProfileLikeDetails = React.createClass({
                     <li>
                       <small>
                         <strong>Source:</strong> Imported from {data.capitalize(this.props.currentDetails['source'])}<br />
-                        Added on {Moment(this.props.currentDetails['added']).format("DD MMM YYYY")}
+                        Added on {formateDate(this.props.currentDetails['added'])}
                       </small>
                     </li>
                   </ul>
@@ -859,14 +863,26 @@ var Import = React.createClass({
   facebookConnect: function() {
     if(variableData.facebook.length > 0) {
       var imported = variableData.facebook.shift();
+      variableData.totalFacebookSync += Object.keys(imported).length;
       console.log(JSON.stringify(imported));
       data.staticInterests = data.mergeObjects(data.staticInterests, imported);
-      // Object.assign(data.staticInterests, imported); -- not supported now.
+      this.setState({
+        facebookAllSyncedInterests: variableData.totalFacebookSync,
+        facebookLastSyncedInterests: Object.keys(imported).length,
+        facebookLastSynced: Date.now()
+      });
     } else {
       console.log('none left...');
     }
   },
   updateFacebookSyncCount: function() {
+  },
+  getInitialState: function() {
+    return {
+      facebookAllSyncedInterests: 0,
+      facebookLastSyncedInterests: 0,
+      facebookLastSynced: Date.now()
+    };
   },
   render: function() {
     return (
@@ -876,7 +892,7 @@ var Import = React.createClass({
             <h3>...your interests across apps and devices.</h3>
           </header>
           <div className="row">
-            <FacebookConnect facebookConnect={this.facebookConnect} />
+            <FacebookConnect facebookConnect={this.facebookConnect} allSyncedInterests={this.state.facebookAllSyncedInterests} lastSyncedInterests={this.state.facebookLastSyncedInterests} lastSynced={this.state.facebookLastSynced} />
             <div className="col-xs-6 col-lg-4 col-lg-offset-1">
               <p className="lead">Import your pins from Pinterest!</p>
               <div className="pull-left">
@@ -912,8 +928,8 @@ var FacebookConnect = React.createClass({
       <div className="col-xs-6 col-lg-4">
         <p className="lead">Connect with Facebook!</p>
         <div className="pull-left">
-          <strong>Last sync:</strong> 25 interests (5 new)<br />
-          <strong>Last synced on:</strong> @DateTime.Now
+          <strong>Last sync:</strong> {this.props.allSyncedInterests} interests ({this.props.lastSyncedInterests} new)<br />
+          <strong>Last synced on:</strong> {formatDate(this.props.lastSynced)}
         </div>
         <button className="btn btn-sm btn-default pull-right" onClick={this.props.facebookConnect}>Connect</button>
       </div>
