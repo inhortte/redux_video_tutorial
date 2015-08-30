@@ -260,7 +260,7 @@ var VdnaMenu = React.createClass({
     return (
       <section className="vdna">
         <div className="vdna-body">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <Tabs tabList={this.state.tabList} changeTab={this.changeTab} />
               <div className="main-content col-xs-8 col-xs-offset-4 col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2">
@@ -615,7 +615,7 @@ var MyProfileLikeDetails = React.createClass({
       baseDivStyles.push('collapse');
     }
     var html;
-    if(this.props.currentInterest) {
+    if(this.props.currentInterest && !this.props.collapse) {
       html =
         <div className={baseDivStyles.join(' ')} id="likeDetails">
           <div className="col-sm-6 col-sm-offset-2">
@@ -693,7 +693,7 @@ var MyProfile = React.createClass({
   render: function() {
     return (
       <div role="tabpanel" className="tab-pane fade active in" id="profile">
-        <div className="container">
+        <div className="container-fluid">
 
           <MyProfileHeader />
 
@@ -715,7 +715,7 @@ var Notifications = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="notifications">
-        <div className="container">
+        <div className="container-fluid">
           <header className="page-header">
             <h1>Notifications <small>from</small> [site.com]</h1>
           </header>
@@ -919,7 +919,7 @@ var Import = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="import">
-        <div className="container">
+        <div className="container-fluid">
           <header className="page-header">
             <h3>...your interests across apps and devices.</h3>
           </header>
@@ -967,7 +967,7 @@ var Settings = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="settings">
-        <div className="container">
+        <div className="container-fluid">
           <header className="page-header">
             <h1>Settings <small>on</small> [site.com]</h1>
             <p>You are in control! Change your settings here.</p>
@@ -1014,7 +1014,7 @@ var Privacy = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="privacy">
-        <div className="container">
+        <div className="container-fluid">
           <header className="page-header">
             <h1>Privacy</h1>
           </header>
@@ -1034,7 +1034,7 @@ var About = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="about">
-        <div className="container">
+        <div className="container-fluid">
           <header className="page-header">
             <img src="/images/logo-zivter.png" alt="" />
           </header>
