@@ -406,15 +406,16 @@ var MyProfilePrivacy = React.createClass({
   componentDidMount: function() {
     $("#privacySettingSlider").slider({min:1,max:5,step:1,value:3});
     $("#privacySettingSlider").on("slide", function(n) {
+      data.setPrivacySlider(n.value);
       n.value === 1 ?
         $("#privacySettingSliderVal").text("20") :
-        n.value===2 ?
+        n.value === 2 ?
         $("#privacySettingSliderVal").text("40") :
-        n.value===3 ?
+        n.value === 3 ?
         $("#privacySettingSliderVal").text("60") :
-        n.value===4 ?
+        n.value === 4 ?
         $("#privacySettingSliderVal").text("80") :
-        n.value===5 && $("#privacySettingSliderVal").text("100");
+        n.value === 5 && $("#privacySettingSliderVal").text("100");
     });
   },
   render: function() {
