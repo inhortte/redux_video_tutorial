@@ -2,6 +2,102 @@ var Moment = require('moment');
 var data = require('vdna/static_data');
 var variableData = require('vdna/variable_data');
 
+//--------------------------- Mozilla cookie framework
+
+var docCookies = {
+  getItem: function (sKey) {
+    if (!sKey) { return null; }
+    return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+  },
+  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+    var sExpires = "";
+    if (vEnd) {
+      switch (vEnd.constructor) {
+        case Number:
+          sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+          break;
+        case String:
+          sExpires = "; expires=" + vEnd;
+          break;
+        case Date:
+          sExpires = "; expires=" + vEnd.toUTCString();
+          break;
+      }
+    }
+    document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+    return true;
+  },
+  removeItem: function (sKey, sPath, sDomain) {
+    if (!this.hasItem(sKey)) { return false; }
+    document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+    return true;
+  },
+  hasItem: function (sKey) {
+    if (!sKey) { return false; }
+    return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+  },
+  keys: function () {
+    var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+    for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+    return aKeys;
+  }
+};
+
+//---------------------------
+
+// --- helper monkeys
+
+var powOf2Arr = function(i) {
+  var arr = [];
+  for(var j = 0; j < i; j++) {
+    arr.push(Math.pow(2, j));
+  };
+  return arr;
+};
+
+// --- split into n (32 for now) bit trozos.
+var binStringSplit = function(n, binString) {
+  var remString = binString;
+  var trozos = [];
+  while(remString.length > n) {
+    trozos.unshift(remString.substr(remString.length - n));
+    remString = remString.substr(0, remString.length - n);
+  };
+  trozos.unshift(remString);
+  return trozos;
+};
+
+var binStringToDec = function(binString) {
+  var powArr = powOf2Arr(binString.length).reverse();
+  var acc = 0;
+  for(var i = 0; i < binString.length; i++) {
+    acc += powArr[i] * parseInt(binString.charAt(i));
+  };
+  return acc;
+};
+
+var binStringArrToDecArr = function(binStringArr) {
+  return binStringArr.map(function(binString) {
+    return binStringToDec(binString);
+  });
+};
+
+// Esto solo funciona con integrales positivos.
+var decToBinString = function(dec) {
+  if(dec === undefined) {
+    return "0";
+  }
+  var binString = "";
+  while(dec >= 1) {
+    binString = (dec % 2).toString() + binString;
+    dec = Math.floor(dec / 2);
+  };
+  return binString;
+};
+
+// --- end helper monkeys
+
 function reRender() {
   React.render(
     <VdnaMenu tabList={tabList} />,
