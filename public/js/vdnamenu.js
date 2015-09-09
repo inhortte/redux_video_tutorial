@@ -85,8 +85,10 @@ var VdnaMenu = React.createClass({
   }
 });
 
+/* -------- this does nothing!
 var OpenVdna = React.createClass({
   handleClick: function() {
+    console.log('openvdna!');
     $("#vdnamenu").show();
     $("#openVdna").hide();
   },
@@ -100,6 +102,7 @@ var OpenVdna = React.createClass({
     );
   }
 });
+ */
 
 var CloseVdna = React.createClass({
   handleClick: function() {
