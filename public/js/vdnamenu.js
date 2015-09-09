@@ -478,7 +478,12 @@ var MyProfileInterests = React.createClass({
         <MyProfileInterest key={interest} interest={interest} showDetails={that.showDetails.bind(that, interest, that.props.interests[interest])} />
       );
     });
-    var relatedInterests = this.state.currentInterest ? this.state.currentDetails['related'].split(/,/) : [];
+    var relatedInterests =
+          (this.state.currentInterest ?
+           this.state.currentDetails['related'].split(/,/) :
+           []).filter(function(relatedInterest) {
+             return(Object.keys(currentInterests).indexOf(relatedInterest) === -1);
+           });
     return (
       <div>
         <div className="form-group form-group-sm">
@@ -610,12 +615,23 @@ var MyProfileLikeDetails = React.createClass({
   },
   render: function() {
     var that = this;
-    var relatedInterestNodes = this.props.relatedInterests.map(function(interest) {
-      return (
-        // <MyProfileRelatedInterest category={that.props.category} relatedInterest={interest} />
-          <MyProfileRelatedInterest relatedInterest={interest} />
-      );
-    });
+    var relatedInterestsHtml;
+    if(this.props.relatedInterests.length > 0) {
+      var relatedInterestNodes = this.props.relatedInterests.map(function(interest) {
+        return (
+          // <MyProfileRelatedInterest category={that.props.category} relatedInterest={interest} />
+            <MyProfileRelatedInterest relatedInterest={interest} />
+        );
+      });
+      relatedInterestsHtml =
+        <p>
+          <strong>Related interests:</strong>
+          {relatedInterestNodes}
+        </p>;
+    } else {
+      relatedInterestsHtml = '';
+    }
+
     var baseDivStyles = ['form-group', 'form-group-sm'];
     if(this.props.collapse) {
       baseDivStyles.push('collapse');
@@ -648,10 +664,7 @@ var MyProfileLikeDetails = React.createClass({
                 </div>
               </div>
             </div>
-            <p>
-              <strong>Related interests:</strong>
-              {relatedInterestNodes}
-            </p>
+            {relatedInterestsHtml}
           </div>
           <div className="col-sm-4">
             <button type="submit" role="button" className="btn btn-sm btn-default remove-like" aria-expanded="true" aria-controls="removeLike" onClick={this.removeInterest}>Remove</button>
