@@ -284,6 +284,18 @@ var MyProfileInterests = React.createClass({
     this.setState({ detailsCollapsed: true });
   },
   getInitialState: function() {
+    // ---------------------------- is there a cookie?
+    if(docCookies.hasItem('vdna')) {
+      var cookieInterests = data.decArrToInterests(docCookies.getItem('vdna').split(/,/).map(function(part) {
+        return parseInt(part);
+      }));
+      console.log('cookie interests! ' + JSON.stringify(cookieInterests));
+      Object.keys(data.staticInterests).forEach(function(interest) {
+        data.staticInterests[interest]['selected'] = cookieInterests.indexOf(interest) !== -1;
+      });
+    }
+    // ----------------------------
+
     return {currentInterest: null,
             currentDetails: {},
             detailsCollapsed: true,
@@ -333,7 +345,7 @@ var MyProfileInterests = React.createClass({
           <div className="col-sm-4 col-bottom">
             <button type="submit" className="btn btn-sm btn-default">Import</button>
             <button id="addLike" onClick={this.showHideAddLike} type="submit" role="button" className="btn btn-sm btn-success" aria-expanded="false" aria-controls="addLike"><span className="glyphicon glyphicon-plus"></span> Add</button>
-            <CookieButtons />
+            <CookieButtons currentInterests={currentInterests} />
           </div>
         </div>
         <MyProfileAddAnInterest interests={currentInterests} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
@@ -357,11 +369,22 @@ var MyProfileInterest = React.createClass({
 });
 
 var CookieButtons = React.createClass({
+  saveCookie: function() {
+    var interestKeys = Object.keys(this.props.currentInterests);
+    var decArr = data.interestsToDecArr(interestKeys);
+    console.log("decMapping: " + decArr.toString());
+    docCookies.setItem('vdna', decArr.toString(), Infinity);
+    alert('Cookie saved.');
+  },
+  deleteCookie: function() {
+    docCookies.removeItem('vdna');
+    alert('Cookie deleted.');
+  },
   render: function() {
     return (
       <div>
-        <button type="submit" role="button" className="btn btn-sm btn-default">Save Cookie</button>
-        <button type="submit" role="button" className="btn btn-sm btn-default">Delete Cookie</button>
+        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.saveCookie}>Save Cookie</button>
+        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.deleteCookie}>Delete Cookie</button>
       </div>
     );
   }
