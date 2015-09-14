@@ -10,6 +10,34 @@ function reRender() {
   );
 };
 
+function addClickEvents() {
+  var that = this;
+  $("*[vdnaclass]").each(function(index, el) {
+    $(el).on('click', function(e) {
+      e.preventDefault();
+      var interestArr = $(el).attr('vdnaclass').split(/,/);
+      console.log('interestArr: ' + JSON.stringify(interestArr));
+      interestArr.forEach(function(interest) {
+        var trimmed = interest.trim();
+        if(data.staticInterests[trimmed]) {
+          data.staticInterests[trimmed]['clicks'] += 1;
+          data.staticInterests[trimmed]['selected'] = true;
+        } else {
+          var relatedInterests = interestArr.slice(0, interestArr.indexOf(interest)).add(interestArr.slice(interestArr.indexOf(interest) + 1));
+          data.staticInterests[trimmed] = {
+            source: 'ticketpro', clicks: 1, added: Date.now(), selected: true,
+            related: relatedInterests.map(function(interest) {
+              return interest.trim();
+            }).join(',')
+          };
+        }
+      });
+      reRender();
+      return false;
+    });
+  });
+}
+
 function formatDate(rawDate, add_time) {
   var format = (add_time !== undefined && add_time) ? "DD MMM YYYY HH:mm" : "DD MMM YYYY";
   return Moment(rawDate).format(format);
@@ -938,3 +966,4 @@ var About = React.createClass({
 });
 
 reRender();
+addClickEvents();
