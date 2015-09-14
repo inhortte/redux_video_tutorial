@@ -45,7 +45,7 @@ var VdnaMenu = React.createClass({
     var tabContent;
     switch(this.state.currentTab) {
       case 1:
-        tabContent = <MyProfile />;
+        tabContent = <MyProfile changeTab={this.changeTab} />;
         break;
       case 2:
         tabContent = <Notifications />;
@@ -63,7 +63,7 @@ var VdnaMenu = React.createClass({
         tabContent = <About />;
         break;
       default:
-        tabContent = <MyProfile />;
+        tabContent = <MyProfile changeTab={this.changeTab} />;
     }
     return (
       <section className="vdna">
@@ -343,7 +343,7 @@ var MyProfileInterests = React.createClass({
             </div>
           </div>
           <div className="col-sm-4 col-bottom">
-            <button type="submit" className="btn btn-sm btn-default">Import</button>
+            <button type="submit" className="btn btn-sm btn-default" onClick={this.props.changeTab.bind(null, 3)}>Import</button>
             <button id="addLike" onClick={this.showHideAddLike} type="submit" role="button" className="btn btn-sm btn-success" aria-expanded="false" aria-controls="addLike"><span className="glyphicon glyphicon-plus"></span> Add</button>
             <CookieButtons currentInterests={currentInterests} />
           </div>
@@ -555,7 +555,7 @@ var MyProfile = React.createClass({
             {/*<MyProfileCategories categories={Object.keys(data.staticData)} getCategoryOnChange={this.getCategoryOnChange} />*/}
             <MyProfilePrivacy />
             {/*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/}
-            <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} />
+            <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} />
 
             <InfoBalloon />
           </div>
