@@ -1,6 +1,7 @@
 var Moment = require('moment');
 var data = require('vdna/static_data');
 var variableData = require('vdna/variable_data');
+var docCookies = require('vdna/cookie');
 
 function reRender() {
   React.render(
@@ -137,7 +138,7 @@ var OnOff = React.createClass({
       <div style={{position: 'absolute', top: '10', right: '10'}}>
         <span>
           On/Off
-          <input id="power" type="checkbox" checked={this.state.power} onChange={this.handleChange} />
+          <input id="power" type="checkbox" checked={this.state.power} onChange={this.handleChange} className="switch" />
         </span>
       </div>
     );
@@ -283,6 +284,18 @@ var MyProfileInterests = React.createClass({
     this.setState({ detailsCollapsed: true });
   },
   getInitialState: function() {
+    // ---------------------------- is there a cookie?
+    if(docCookies.hasItem('vdna')) {
+      var cookieInterests = data.decArrToInterests(docCookies.getItem('vdna').split(/,/).map(function(part) {
+        return parseInt(part);
+      }));
+      console.log('cookie interests! ' + JSON.stringify(cookieInterests));
+      Object.keys(data.staticInterests).forEach(function(interest) {
+        data.staticInterests[interest]['selected'] = cookieInterests.indexOf(interest) !== -1;
+      });
+    }
+    // ----------------------------
+
     return {currentInterest: null,
             currentDetails: {},
             detailsCollapsed: true,
@@ -332,6 +345,7 @@ var MyProfileInterests = React.createClass({
           <div className="col-sm-4 col-bottom">
             <button type="submit" className="btn btn-sm btn-default">Import</button>
             <button id="addLike" onClick={this.showHideAddLike} type="submit" role="button" className="btn btn-sm btn-success" aria-expanded="false" aria-controls="addLike"><span className="glyphicon glyphicon-plus"></span> Add</button>
+            <CookieButtons currentInterests={currentInterests} />
           </div>
         </div>
         <MyProfileAddAnInterest interests={currentInterests} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
@@ -350,6 +364,28 @@ var MyProfileInterest = React.createClass({
       <span className="btn btn-sm btn-default" ref="interestSpan" title={this.props.interest} key={this.props.interest} role="button" onClick={this.handleClick}>
         {data.capitalize(this.props.interest)}
       </span>
+    );
+  }
+});
+
+var CookieButtons = React.createClass({
+  saveCookie: function() {
+    var interestKeys = Object.keys(this.props.currentInterests);
+    var decArr = data.interestsToDecArr(interestKeys);
+    console.log("decMapping: " + decArr.toString());
+    docCookies.setItem('vdna', decArr.toString(), Infinity);
+    alert('Cookie saved.');
+  },
+  deleteCookie: function() {
+    docCookies.removeItem('vdna');
+    alert('Cookie deleted.');
+  },
+  render: function() {
+    return (
+      <div>
+        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.saveCookie}>Save Cookie</button>
+        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.deleteCookie}>Delete Cookie</button>
+      </div>
     );
   }
 });
