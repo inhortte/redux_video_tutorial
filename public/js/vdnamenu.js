@@ -217,7 +217,7 @@ var MyProfileHeader = React.createClass({
             <span className="fa fa-2x fa-user"></span>
           </div>
           <div className="media-body">
-            <h1 className="media-heading">Your profile <small>at</small> [site.com]</h1>
+            <h1 className="media-heading">Your profile <small>at</small> ticketpro.cz</h1>
           </div>
         </div>
       </header>
@@ -294,6 +294,30 @@ var MyProfilePrivacy = React.createClass({
   }
 });
 
+// ----------- unused class. The code has been moved to MyProfileInterests and Settings.
+/*
+var CookieButtons = React.createClass({
+  saveCookie: function() {
+    var interestKeys = Object.keys(this.props.currentInterests);
+    var decArr = data.interestsToDecArr(interestKeys);
+    console.log("decMapping: " + decArr.toString());
+    docCookies.setItem('vdna', decArr.toString(), Infinity);
+    alert('Cookie saved.');
+  },
+  deleteCookie: function() {
+    docCookies.removeItem('vdna');
+    alert('Cookie deleted.');
+  },
+  render: function() {
+    return (
+      <div>
+        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.deleteCookie}>Delete Cookie</button>
+      </div>
+    );
+  }
+});
+*/
+
 var MyProfileInterests = React.createClass({
   showDetails: function(interest, details) {
     console.log(interest + ": " + JSON.stringify(details));
@@ -310,6 +334,15 @@ var MyProfileInterests = React.createClass({
   },
   collapseDetails: function() {
     this.setState({ detailsCollapsed: true });
+  },
+  getCurrentInterests: function() {
+    var that = this;
+    return Object.keys(this.props.interests).reduce(function(is, i) {
+      if(that.props.interests[i]['selected']) {
+        is[i] = that.props.interests[i];
+      }
+      return is;
+    }, {});
   },
   getInitialState: function() {
     // ---------------------------- is there a cookie?
@@ -332,20 +365,22 @@ var MyProfileInterests = React.createClass({
   componentDidMount: function() {
     data.blinkNodes();
   },
+  // ---------- Save the vdna cookie
+  componentDidUpdate: function() {
+    var interestKeys = Object.keys(this.getCurrentInterests());
+    var decArr = data.interestsToDecArr(interestKeys);
+    console.log("decMapping: " + decArr.toString());
+    docCookies.setItem('vdna', decArr.toString(), Infinity);
+  },
   showHideAddLike: function() {
-    this.setState({ addInterestCollapsed: !this.state.addInterestCollapsed });
+    this.setState({ addInterestCollapsed: !this.state.addInterestCollapsed,
+                    detailsCollapsed: true});
   },
   hideAddLike: function() {
     this.setState({addInterestCollapsed: true});
   },
   render: function() {
     var that = this;
-    var currentInterests = Object.keys(this.props.interests).reduce(function(is, i) {
-      if(that.props.interests[i]['selected']) {
-        is[i] = that.props.interests[i];
-      }
-      return is;
-    }, {});
     var interestNodes = Object.keys(this.props.interests).filter(function(interest) {
       return that.props.interests[interest]['selected'];
     }).map(function(interest) {
@@ -357,7 +392,7 @@ var MyProfileInterests = React.createClass({
           (this.state.currentInterest ?
            this.state.currentDetails['related'].split(/,/) :
            []).filter(function(relatedInterest) {
-             return(Object.keys(currentInterests).indexOf(relatedInterest) === -1);
+             return(Object.keys(that.getCurrentInterests()).indexOf(relatedInterest) === -1);
            });
     return (
       <div>
@@ -371,12 +406,11 @@ var MyProfileInterests = React.createClass({
             </div>
           </div>
           <div className="col-sm-4 col-bottom">
-            <button type="submit" className="btn btn-sm btn-default" onClick={this.props.changeTab.bind(null, 3)}>Import</button>
             <button id="addLike" onClick={this.showHideAddLike} type="submit" role="button" className="btn btn-sm btn-success" aria-expanded="false" aria-controls="addLike"><span className="glyphicon glyphicon-plus"></span> Add</button>
-            <CookieButtons currentInterests={currentInterests} />
+            <button type="submit" className="btn btn-sm btn-default" onClick={this.props.changeTab.bind(null, 3)}>Import</button>
           </div>
         </div>
-        <MyProfileAddAnInterest interests={currentInterests} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
+        <MyProfileAddAnInterest interests={this.getCurrentInterests()} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
         <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={this.state.detailsCollapsed} collapseDetails={this.collapseDetails} />
       </div>
     );
@@ -392,28 +426,6 @@ var MyProfileInterest = React.createClass({
       <span className="btn btn-sm btn-default" ref="interestSpan" title={this.props.interest} key={this.props.interest} role="button" onClick={this.handleClick}>
         {data.capitalize(this.props.interest)}
       </span>
-    );
-  }
-});
-
-var CookieButtons = React.createClass({
-  saveCookie: function() {
-    var interestKeys = Object.keys(this.props.currentInterests);
-    var decArr = data.interestsToDecArr(interestKeys);
-    console.log("decMapping: " + decArr.toString());
-    docCookies.setItem('vdna', decArr.toString(), Infinity);
-    alert('Cookie saved.');
-  },
-  deleteCookie: function() {
-    docCookies.removeItem('vdna');
-    alert('Cookie deleted.');
-  },
-  render: function() {
-    return (
-      <div>
-        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.saveCookie}>Save Cookie</button>
-        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.deleteCookie}>Delete Cookie</button>
-      </div>
     );
   }
 });
@@ -437,7 +449,7 @@ var MyProfileAddAnInterest = React.createClass({
     if(!this.props.collapse) {
       html =
         <div className={baseDivStyles.join(' ')} id="addAnInterest">
-          <label className="col-sm-2 control-label">Add a like</label>
+          <label className="col-sm-2 control-label">More on this page</label>
           <div className="col-sm-6">
             {availableInterestNodes}
           </div>
@@ -573,7 +585,6 @@ var MyProfile = React.createClass({
   render: function() {
     return (
       <div role="tabpanel" className="tab-pane fade active in" id="profile">
-        <OnOff />
         <div className="container-fluid">
 
           <MyProfileHeader />
@@ -581,47 +592,12 @@ var MyProfile = React.createClass({
           <div className="form-horizontal">
 
             {/*<MyProfileCategories categories={Object.keys(data.staticData)} getCategoryOnChange={this.getCategoryOnChange} />*/}
-            <MyProfilePrivacy />
+            {/*<MyProfilePrivacy />*/}
             {/*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/}
             <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} />
 
-            <InfoBalloon />
           </div>
         </div>
-      </div>
-    );
-  }
-});
-
-var InfoBalloon = React.createClass({
-  dismiss: function() {
-    this.setState({infoBalloon: false});
-  },
-  getInitialState: function() {
-    return({infoBalloon: true});
-  },
-  render: function() {
-    var oogleboobie = {
-      position: 'fixed',
-      top: 210,
-      right: 100,
-      width: 200,
-      background: '#fff',
-      border: '1px solid black',
-      padding: 10,
-      cursor: 'pointer',
-      zIndex: 1000
-    };
-    var html;
-    if(this.state.infoBalloon) {
-      html =
-        <span style={oogleboobie}>Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet<br /><small>(click to dismiss)</small></span>;
-    } else {
-      html = '';
-    }
-    return (
-      <div onClick={this.dismiss} >
-        {html}
       </div>
     );
   }
@@ -631,7 +607,6 @@ var Notifications = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="notifications">
-        <OnOff />
         <div className="container-fluid">
           <header className="page-header">
             <h1>Notifications <small>from</small> [site.com]</h1>
@@ -836,7 +811,6 @@ var Import = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="import">
-        <OnOff />
         <div className="container-fluid">
           <header className="page-header">
             <h3>...your interests across apps and devices.</h3>
@@ -882,6 +856,10 @@ var SpecificImport = React.createClass({
 });
 
 var Settings = React.createClass({
+  deleteCookie: function() {
+    docCookies.removeItem('vdna');
+    alert('Cookie deleted.');
+  },
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="settings">
@@ -902,7 +880,7 @@ var Settings = React.createClass({
             <div className="form-group form-group-sm">
               <label htmlFor="sorting" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Sorting</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <select class="selectpicker" id="sorting">
+                <select className="selectpicker" id="sorting">
                   <option>Your interests</option>
                   <option>Site default</option>
                 </select>
@@ -917,9 +895,9 @@ var Settings = React.createClass({
             </div>
             <hr />
             <div className="form-group form-group-sm">
-              <label htmlFor="delete" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Delete my profile <small>at</small> <i>[site.com]</i></label>
+              <label htmlFor="delete" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Delete my profile <small>at</small> <i>ticketpro.cz</i></label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <a href="#" className="btn btn-sm btn-danger">Delete</a>
+                <button className="btn btn-sm btn-danger" onClick={this.deleteCookie}>Delete</button>
               </div>
             </div>
           </div>
@@ -933,7 +911,6 @@ var Privacy = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="privacy">
-        <OnOff />
         <div className="container-fluid">
           <header className="page-header">
             <h1>Privacy</h1>
@@ -950,15 +927,51 @@ var Privacy = React.createClass({
   }
 });
 
+/*
+var InfoBalloon = React.createClass({
+  dismiss: function() {
+    this.setState({infoBalloon: false});
+  },
+  getInitialState: function() {
+    return({infoBalloon: true});
+  },
+  render: function() {
+    var oogleboobie = {
+      position: 'fixed',
+      top: 210,
+      right: 100,
+      width: 200,
+      background: '#fff',
+      border: '1px solid black',
+      padding: 10,
+      cursor: 'pointer',
+      zIndex: 1000
+    };
+    var html;
+    if(this.state.infoBalloon) {
+      html =
+        <span style={oogleboobie}>Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet<br /><small>(click to dismiss)</small></span>;
+    } else {
+      html = '';
+    }
+    return (
+      <div onClick={this.dismiss} >
+        {html}
+      </div>
+    );
+  }
+});
+ */
+
 var About = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="about">
-        <OnOff />
         <div className="container-fluid">
           <header className="page-header">
             <img src="/images/logo-zivter.png" alt="" />
           </header>
+        Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet.
         </div>
       </section>
     );
