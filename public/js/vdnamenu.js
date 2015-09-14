@@ -557,8 +557,43 @@ var MyProfile = React.createClass({
             {/*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/}
             <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} />
 
+            <InfoBalloon />
           </div>
         </div>
+      </div>
+    );
+  }
+});
+
+var InfoBalloon = React.createClass({
+  dismiss: function() {
+    this.setState({infoBalloon: false});
+  },
+  getInitialState: function() {
+    return({infoBalloon: true});
+  },
+  render: function() {
+    var oogleboobie = {
+      position: 'fixed',
+      top: 210,
+      right: 100,
+      width: 200,
+      background: '#fff',
+      border: '1px solid black',
+      padding: 10,
+      cursor: 'pointer',
+      zIndex: 1000
+    };
+    var html;
+    if(this.state.infoBalloon) {
+      html =
+        <span style={oogleboobie}>Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet<br /><small>(click to dismiss)</small></span>;
+    } else {
+      html = '';
+    }
+    return (
+      <div onClick={this.dismiss} >
+        {html}
       </div>
     );
   }
