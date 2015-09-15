@@ -48,7 +48,6 @@ var tabList = [
   { id: 2, href: 'notifications', text: 'View Notifications', selected: false },
   { id: 3, href: 'import', text: 'Import and Sync', selected: false },
   { id: 4, href: 'settings', text: 'Change Settings', selected: false },
-  { id: 5, href: 'privacy', text: 'Privacy', selected: false },
   { id: 6, href: 'about', text: 'About', selected: false }
 ];
 
@@ -971,7 +970,12 @@ var About = React.createClass({
           <header className="page-header">
             <img src="/images/logo-zivter.png" alt="" />
           </header>
-        Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet.
+          <p>Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet.</p>
+          <p>VDNA version: 0.1b<br />
+             Total available VDNA items: {Object.keys(data.staticInterests).length}.<br />
+             Filter stats: I am a Pine Marten.<br />
+             User interactions to date: lets say we'll eventually track the types of user interactions with the interface itself... analytics-wise. if they import or not, if they edit, if they delete/modify, etc.<br />
+          </p>
         </div>
       </section>
     );
