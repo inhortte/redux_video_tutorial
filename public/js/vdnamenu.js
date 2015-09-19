@@ -615,7 +615,7 @@ var MyProfile = React.createClass({
 
             {/*<MyProfileCategories categories={Object.keys(data.staticData)} getCategoryOnChange={this.getCategoryOnChange} />*/}
             <MyProfileCategories />
-            {/*<MyProfilePrivacy />*/}
+            <MyProfilePrivacy />
             {/*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/}
             <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} />
 
