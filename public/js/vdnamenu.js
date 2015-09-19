@@ -159,13 +159,15 @@ var OnOff = React.createClass({
   },
   componentDidMount: function() {
     this.setState({power: data.power});
+    // React.findDOMNode(this.refs.power).bootstrapSwitch();
+    console.log('yarg.');
   },
   render: function() {
     return (
       <div style={{position: 'absolute', top: '10', right: '10'}}>
         <span>
           On/Off
-          <input id="power" type="checkbox" checked={this.state.power} onChange={this.handleChange} className="switch" />
+          <input id="power" name="power" ref="power" type="checkbox" checked={this.state.power} onChange={this.handleChange} />
         </span>
       </div>
     );
