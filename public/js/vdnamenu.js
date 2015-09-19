@@ -226,6 +226,7 @@ var MyProfileHeader = React.createClass({
   }
 });
 
+/*
 var MyProfileCategories = React.createClass({
   handleChange: function() {
     console.log(React.findDOMNode(this.refs.category).value);
@@ -250,6 +251,26 @@ var MyProfileCategories = React.createClass({
           <select className="selectpicker" id="category" ref="category" onChange={this.handleChange}>
             {categoryNodes}
           </select>
+        </div>
+      </div>
+    );
+  }
+});
+*/
+
+var MyProfileCategories = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <div className="form-group form-group-sm">
+          <label className="col-sm-2 control-label">Category:</label>
+          <div className="col-sm-6">
+            <div className="panel">
+              <div className="panel-body">
+                Events
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -593,6 +614,7 @@ var MyProfile = React.createClass({
           <div className="form-horizontal">
 
             {/*<MyProfileCategories categories={Object.keys(data.staticData)} getCategoryOnChange={this.getCategoryOnChange} />*/}
+            <MyProfileCategories />
             {/*<MyProfilePrivacy />*/}
             {/*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/}
             <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} />
