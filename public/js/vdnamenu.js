@@ -68,6 +68,8 @@ var VdnaMenu = React.createClass({
       currentTab: tabId
     });
   },
+  componentDidMount: function() {
+  },
   render: function() {
     var tabContent;
     switch(this.state.currentTab) {
@@ -160,14 +162,14 @@ var OnOff = React.createClass({
   componentDidMount: function() {
     this.setState({power: data.power});
     // React.findDOMNode(this.refs.power).bootstrapSwitch();
-    console.log('yarg.');
+    // console.log('yarg.');
   },
   render: function() {
     return (
       <div style={{position: 'absolute', top: '10', right: '10'}}>
         <span>
           On/Off
-          <input id="power" name="power" ref="power" type="checkbox" checked={this.state.power} onChange={this.handleChange} />
+          <input id="power" name="power" ref="power" type="checkbox" className="switch" checked={this.state.power} onChange={this.handleChange} />
         </span>
       </div>
     );
@@ -885,6 +887,13 @@ var Settings = React.createClass({
     docCookies.removeItem('vdna');
     alert('Cookie deleted.');
   },
+  componentDidMount: function() {
+    $(".switch").bootstrapSwitch(
+      { size:"small",
+        onColor:"success",
+        offColor:"default"
+      });
+  },
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="settings">
@@ -898,7 +907,7 @@ var Settings = React.createClass({
             <div className="form-group form-group-sm">
               <label htmlFor="personalization" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Personalization</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <input type="checkbox" name="personalization" className="switch" />
+                <input type="checkbox" id="personalization" name="personalization" className="switch" />
               </div>
             </div>
             <hr />
@@ -1011,3 +1020,8 @@ var About = React.createClass({
 
 reRender();
 addClickEvents();
+// $(".switch").bootstrapSwitch(
+//  { size:"small",
+//    onColor:"success",
+//    offColor:"default"
+//  });
