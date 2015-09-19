@@ -801,6 +801,7 @@ var Import = React.createClass({
         facebookLastSyncedInterests: Object.keys(imported).length,
         facebookLastSynced: Date.now()
       });
+      data.facebookConnect = true;
     } else {
       console.log('none left...');
     }
@@ -817,6 +818,7 @@ var Import = React.createClass({
         pinterestLastSyncedInterests: Object.keys(imported).length,
         pinterestLastSynced: Date.now()
       });
+      data.pinterestConnect = true;
     } else {
       console.log('none left...');
     }
@@ -998,7 +1000,8 @@ var About = React.createClass({
           <p>VDNA version: 0.1b<br />
              Total available VDNA items: {Object.keys(data.staticInterests).length}.<br />
              Filter stats: I am a Pine Marten.<br />
-             User interactions to date: lets say we'll eventually track the types of user interactions with the interface itself... analytics-wise. if they import or not, if they edit, if they delete/modify, etc.<br />
+             Facebook Connect: {data.facebookConnect ? "YES" : "NO"}<br />
+             Pinterest Connect: {data.pinterestConnect ? "YES" : "NO"}
           </p>
         </div>
       </section>
