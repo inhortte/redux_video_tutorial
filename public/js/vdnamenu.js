@@ -893,6 +893,7 @@ var Settings = React.createClass({
         onColor:"success",
         offColor:"default"
       });
+    $("select.selectpicker").selectpicker({styleBase:"form-control"});
   },
   render: function() {
     return (
