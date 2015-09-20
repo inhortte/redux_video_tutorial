@@ -1001,6 +1001,85 @@ var Settings = React.createClass({
   }
 });
 
+var About = React.createClass({
+  fbLogout: function() {
+    FB.init({
+      appId      : '575682199200822',
+      xfbml      : true,
+      cookie     : true,
+      status     : true,
+      version    : 'v2.3'
+    });
+    FB.logout();
+  },
+  render: function() {
+    var fbLogoutHtml;
+    if(variableData.totalFacebookSync > 0) {
+      fbLogoutHtml =
+        <div>
+          <div className="col-xs-2 col-sm-3 col-md-4 col-lg-4">
+            <strong>{variableData.totalFacebookSync > 0 ? "YES" : "NO"}</strong>
+          </div>
+          <div className="col-xs-3 col-sm-4 col-md-4 col-lg-5">
+            <button className="btn btn-sm btn-danger" onClick={this.fbLogout}>Logout</button>
+          </div>
+        </div>;
+    } else {
+      fbLogoutHtml =
+        <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
+          <strong>{variableData.totalFacebookSync > 0 ? "YES" : "NO"}</strong>
+        </div>;
+    }
+    return (
+      <section role="tabpanel" className="tab-pane fade active in" id="about">
+        <div className="container-fluid">
+          <header className="page-header">
+            <img src="/images/logo-zivter.png" alt="" />
+          </header>
+          <p>Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet.</p>
+          <div className="form-horizontal">
+            <hr />
+            <div className="form-group form-group-sm">
+              <span htmlFor="vdnaVersion" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">VDNA version</span>
+              <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
+                0.1b
+              </div>
+            </div>
+            <hr />
+            <div className="form-group form-group-sm">
+              <span htmlFor="vdnaVersion" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Total available VDNA items</span>
+              <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
+                {Object.keys(data.staticInterests).length}
+              </div>
+            </div>
+            <hr />
+            <div className="form-group form-group-sm">
+              <span htmlFor="vdnaVersion" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Filter stats</span>
+              <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
+                No current information
+              </div>
+            </div>
+            <hr />
+            <div className="form-group form-group-sm">
+              <span htmlFor="vdnaVersion" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Facebook connect</span>
+              <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
+                {fbLogoutHtml}
+              </div>
+            </div>
+            <hr />
+            <div className="form-group form-group-sm">
+              <span htmlFor="vdnaVersion" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Pinterest connect</span>
+              <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
+                <strong>{variableData.totalPinterestSync > 0 ? "YES" : "NO"}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+});
+
 var Privacy = React.createClass({
   render: function() {
     return (
@@ -1021,67 +1100,5 @@ var Privacy = React.createClass({
   }
 });
 
-/*
-var InfoBalloon = React.createClass({
-  dismiss: function() {
-    this.setState({infoBalloon: false});
-  },
-  getInitialState: function() {
-    return({infoBalloon: true});
-  },
-  render: function() {
-    var oogleboobie = {
-      position: 'fixed',
-      top: 210,
-      right: 100,
-      width: 200,
-      background: '#fff',
-      border: '1px solid black',
-      padding: 10,
-      cursor: 'pointer',
-      zIndex: 1000
-    };
-    var html;
-    if(this.state.infoBalloon) {
-      html =
-        <span style={oogleboobie}>Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet<br /><small>(click to dismiss)</small></span>;
-    } else {
-      html = '';
-    }
-    return (
-      <div onClick={this.dismiss} >
-        {html}
-      </div>
-    );
-  }
-});
- */
-
-var About = React.createClass({
-  render: function() {
-    return (
-      <section role="tabpanel" className="tab-pane fade active in" id="about">
-        <div className="container-fluid">
-          <header className="page-header">
-            <img src="/images/logo-zivter.png" alt="" />
-          </header>
-          <p>Zifter is a private, anonymous plug-in that lets you personalise advertising and content on the internet.</p>
-          <p>VDNA version: 0.1b<br />
-             Total available VDNA items: {Object.keys(data.staticInterests).length}.<br />
-             Filter stats: I am a Pine Marten.<br />
-             Facebook Connect: {variableData.totalFacebookSync > 0 ? "YES" : "NO"}<br />
-             Pinterest Connect: {variableData.totalPinterestSync > 0 ? "YES" : "NO"}
-          </p>
-        </div>
-      </section>
-    );
-  }
-});
-
 reRender();
 addClickEvents();
-// $(".switch").bootstrapSwitch(
-//  { size:"small",
-//    onColor:"success",
-//    offColor:"default"
-//  });
