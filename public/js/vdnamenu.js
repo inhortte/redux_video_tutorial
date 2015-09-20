@@ -794,12 +794,38 @@ var Notifications = React.createClass({
 
 var Import = React.createClass({
   facebookConnect: function() {
+    // ---------- This needs to be elsewhere.
+    // facebook plugin
+    // -----------
+
+    $.getScript('//connect.facebook.net/en_UK/all.js', function() {
+      FB.init({
+        appId      : '575682199200822',
+        xfbml      : true,
+        cookie     : true,
+        status     : true,
+        version    : 'v2.3'
+      });
+      FB.login(function(res) {
+        // console.log(res);
+        FB.api('/me/likes', {
+          access_token: res.authResponse.accessToken
+        }, function(res) {
+          var vdnaclasses = res.data.slice(0,25).map(function(cl) {
+            return cl.name;
+          });
+          console.log(JSON.stringify(vdnaclasses));
+          // vdna.setCategories(vdnaclasses);
+        });
+      }, {scope: 'user_likes'});
+    });
+
+    /*
     if(variableData.facebook.length > 0) {
       var imported = variableData.facebook.shift();
       variableData.totalFacebookSync += Object.keys(imported).length;
       console.log(JSON.stringify(imported));
       data.staticInterests = data.mergeObjects(data.staticInterests, imported);
-      // Object.assign(data.staticInterests, imported);
       this.setState({
         facebookAllSyncedInterests: variableData.totalFacebookSync,
         facebookLastSyncedInterests: Object.keys(imported).length,
@@ -809,6 +835,7 @@ var Import = React.createClass({
     } else {
       console.log('none left...');
     }
+     */
   },
   pinterestImport: function() {
     console.log('PIN ME FUCKING UP!');
