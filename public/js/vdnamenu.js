@@ -373,12 +373,27 @@ var MyProfileInterests = React.createClass({
   getInitialState: function() {
     // ---------------------------- is there a cookie?
     if(docCookies.hasItem('vdna')) {
-      var cookieInterests = data.decArrToInterests(docCookies.getItem('vdna').split(/,/).map(function(part) {
+      var cookieEncodedInterests = docCookies.getItem('vdna').split(/,/);
+      var cookieInterestArr, extraInterests = [];
+      if(cookieEncodedInterests.length > 2) {
+        cookieInterestArr = cookieEncodedInterests.slice(0, 2);
+        extraInterests = cookieEncodedInterests.slice(2)[0].split(/:::/);
+      } else {
+        cookieInterestArr = cookieEncodedInterests;
+      }
+      var cookieInterests = data.decArrToInterests(cookieInterestArr.map(function(part) {
         return parseInt(part);
-      }));
-      console.log('cookie interests! ' + JSON.stringify(cookieInterests));
-      Object.keys(data.staticInterests).forEach(function(interest) {
-        data.staticInterests[interest]['selected'] = cookieInterests.indexOf(interest) !== -1;
+      })).concat(extraInterests);
+      console.log('cookie and extra interests: ' + JSON.stringify(cookieInterests));
+
+      cookieInterests.forEach(function(interest) {
+        if(data.staticInterests[interest] !== undefined) {
+          data.staticInterests[interest]['selected'] = true;
+        } else {
+          data.staticInterests[interest.toLowerCase()] = {
+            source: 'facebook', clicks: 0, added: Date.now(), selected: true, related: ''
+          };
+        }
       });
     }
     // ----------------------------
@@ -395,8 +410,13 @@ var MyProfileInterests = React.createClass({
   componentDidUpdate: function() {
     var interestKeys = Object.keys(this.getCurrentInterests());
     var decArr = data.interestsToDecArr(interestKeys);
-    console.log("decMapping: " + decArr.toString());
-    docCookies.setItem('vdna', decArr.toString(), Infinity);
+    var decMapping = decArr.toString();
+    var extraInterests = data.tallyExtraInterests(interestKeys);
+    if(extraInterests.length > 0) {
+      decMapping += ',' + extraInterests;
+    }
+    console.log('dec & extra mapping: ' + decMapping);
+    docCookies.setItem('vdna', decMapping, Infinity);
   },
   showHideAddLike: function() {
     this.setState({ addInterestCollapsed: !this.state.addInterestCollapsed,
@@ -418,7 +438,7 @@ var MyProfileInterests = React.createClass({
           (this.state.currentInterest ?
            this.state.currentDetails['related'].split(/,/) :
            []).filter(function(relatedInterest) {
-             return(Object.keys(that.getCurrentInterests()).indexOf(relatedInterest) === -1);
+             return(relatedInterest.length > 0 && Object.keys(that.getCurrentInterests()).indexOf(relatedInterest) === -1);
            });
     return (
       <div>
@@ -515,6 +535,7 @@ var MyProfileLikeDetails = React.createClass({
   render: function() {
     var that = this;
     var relatedInterestsHtml;
+    console.log('Passed related interests: ' + JSON.stringify(this.props.relatedInterests));
     if(this.props.relatedInterests.length > 0) {
       var relatedInterestNodes = this.props.relatedInterests.map(function(interest) {
         return (
@@ -793,13 +814,12 @@ var Notifications = React.createClass({
 });
 
 var Import = React.createClass({
-  facebookConnect: function() {
+  importFacebookVariableData: function() {
     if(variableData.facebook.length > 0) {
       var imported = variableData.facebook.shift();
       variableData.totalFacebookSync += Object.keys(imported).length;
-      console.log(JSON.stringify(imported));
+      console.log('data to be imported: ' + JSON.stringify(imported));
       data.staticInterests = data.mergeObjects(data.staticInterests, imported);
-      // Object.assign(data.staticInterests, imported);
       this.setState({
         facebookAllSyncedInterests: variableData.totalFacebookSync,
         facebookLastSyncedInterests: Object.keys(imported).length,
@@ -809,6 +829,41 @@ var Import = React.createClass({
     } else {
       console.log('none left...');
     }
+  },
+  facebookConnect: function() {
+    // ---------- This needs to be elsewhere.
+    // facebook plugin
+    // -----------
+
+    var that = this;
+    $.getScript('//connect.facebook.net/en_UK/all.js', function() {
+      FB.init({
+        appId      : '575682199200822',
+        xfbml      : true,
+        cookie     : true,
+        status     : true,
+        version    : 'v2.3'
+      });
+      FB.login(function(res) {
+        // console.log(res);
+        FB.api('/me/likes', {
+          access_token: res.authResponse.accessToken
+        }, function(res) {
+          // ------------ Only take the first 10 likes (for now)
+          var facebookLikes = res.data.slice(0,5).map(function(cl) {
+            return cl.name;
+          });
+          console.log('facebookLikes: ' + JSON.stringify(facebookLikes));
+          // variableData.facebookImportReset();
+          var newInterests = {};
+          facebookLikes.forEach(function(like) {
+            variableData.importNewLike(like);
+          });
+          variableData.pushNewLikes();
+          that.importFacebookVariableData();
+        });
+      }, {scope: 'user_likes'});
+    });
   },
   pinterestImport: function() {
     console.log('PIN ME FUCKING UP!');
@@ -1014,8 +1069,8 @@ var About = React.createClass({
           <p>VDNA version: 0.1b<br />
              Total available VDNA items: {Object.keys(data.staticInterests).length}.<br />
              Filter stats: I am a Pine Marten.<br />
-             Facebook Connect: {data.facebookConnect ? "YES" : "NO"}<br />
-             Pinterest Connect: {data.pinterestConnect ? "YES" : "NO"}
+             Facebook Connect: {variableData.totalFacebookSync > 0 ? "YES" : "NO"}<br />
+             Pinterest Connect: {variableData.totalPinterestSync > 0 ? "YES" : "NO"}
           </p>
         </div>
       </section>
