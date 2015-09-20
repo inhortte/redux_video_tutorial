@@ -374,21 +374,26 @@ var MyProfileInterests = React.createClass({
     // ---------------------------- is there a cookie?
     if(docCookies.hasItem('vdna')) {
       var cookieEncodedInterests = docCookies.getItem('vdna').split(/,/);
-      var cookieInterestsArr, extraInterests = [];
+      var cookieInterestArr, extraInterests = [];
       if(cookieEncodedInterests.length > 2) {
-        cookieInterestsArr = cookieEncodedInterests.slice(0, 2);
-        extraInterests = cookieEncodedInterests.slice(2).split(/:::/);
+        cookieInterestArr = cookieEncodedInterests.slice(0, 2);
+        extraInterests = cookieEncodedInterests.slice(2)[0].split(/:::/);
+      } else {
+        cookieInterestArr = cookieEncodedInterests;
       }
-      var cookieInterests = data.decArrToInterests(cookieInterestsArr.map(function(part) {
+      var cookieInterests = data.decArrToInterests(cookieInterestArr.map(function(part) {
         return parseInt(part);
       })).concat(extraInterests);
-      console.log('cookie and extra interests! ' + JSON.stringify(cookieInterests));
+      console.log('cookie and extra interests: ' + JSON.stringify(cookieInterests));
 
-      // we could create new interests in data.staticInterests for extraInterests, but not now!
-      // wait .... isn't this already happening when facebook imports things?
-      // yes it is -> see the Import React Class.
-      Object.keys(data.staticInterests).forEach(function(interest) {
-        data.staticInterests[interest]['selected'] = cookieInterests.indexOf(interest) !== -1;
+      cookieInterests.forEach(function(interest) {
+        if(data.staticInterests[interest] !== undefined) {
+          data.staticInterests[interest]['selected'] = true;
+        } else {
+          data.staticInterests[interest.toLowerCase()] = {
+            source: 'facebook', clicks: 0, added: Date.now(), selected: true, related: ''
+          };
+        }
       });
     }
     // ----------------------------
