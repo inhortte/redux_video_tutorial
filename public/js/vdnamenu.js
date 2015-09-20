@@ -373,10 +373,20 @@ var MyProfileInterests = React.createClass({
   getInitialState: function() {
     // ---------------------------- is there a cookie?
     if(docCookies.hasItem('vdna')) {
-      var cookieInterests = data.decArrToInterests(docCookies.getItem('vdna').split(/,/).map(function(part) {
+      var cookieEncodedInterests = docCookies.getItem('vdna').split(/,/);
+      var cookieInterestsArr, extraInterests = [];
+      if(cookieEncodedInterests.length > 2) {
+        cookieInterestsArr = cookieEncodedInterests.slice(0, 2);
+        extraInterests = cookieEncodedInterests.slice(2).split(/:::/);
+      }
+      var cookieInterests = data.decArrToInterests(cookieInterestsArr.map(function(part) {
         return parseInt(part);
-      }));
-      console.log('cookie interests! ' + JSON.stringify(cookieInterests));
+      })).concat(extraInterests);
+      console.log('cookie and extra interests! ' + JSON.stringify(cookieInterests));
+
+      // we could create new interests in data.staticInterests for extraInterests, but not now!
+      // wait .... isn't this already happening when facebook imports things?
+      // yes it is -> see the Import React Class.
       Object.keys(data.staticInterests).forEach(function(interest) {
         data.staticInterests[interest]['selected'] = cookieInterests.indexOf(interest) !== -1;
       });
@@ -395,8 +405,13 @@ var MyProfileInterests = React.createClass({
   componentDidUpdate: function() {
     var interestKeys = Object.keys(this.getCurrentInterests());
     var decArr = data.interestsToDecArr(interestKeys);
-    console.log("decMapping: " + decArr.toString());
-    docCookies.setItem('vdna', decArr.toString(), Infinity);
+    var decMapping = decArr.toString();
+    var extraInterests = data.tallyExtraInterests(interestKeys);
+    if(extraInterests.length > 0) {
+      decMapping += ',' + extraInterests;
+    }
+    console.log('dec & extra mapping: ' + decMapping);
+    docCookies.setItem('vdna', decMapping, Infinity);
   },
   showHideAddLike: function() {
     this.setState({ addInterestCollapsed: !this.state.addInterestCollapsed,
