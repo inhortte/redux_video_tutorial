@@ -152,6 +152,7 @@ var CloseVdna = React.createClass({
 
 var OnOff = React.createClass({
   handleChange: function() {
+    console.log('power change');
     data.power = !data.power;
     this.setState({power: data.power});
     data.blinkNodes();
@@ -161,15 +162,16 @@ var OnOff = React.createClass({
   },
   componentDidMount: function() {
     this.setState({power: data.power});
-    // React.findDOMNode(this.refs.power).bootstrapSwitch();
-    // console.log('yarg.');
+    $(React.findDOMNode(this.refs.power)).on('click', function(e) {
+      console.log('CLICKED!!!!!!!!!!!!!!!');
+    });
   },
   render: function() {
     return (
       <div style={{position: 'absolute', top: '10', right: '10'}}>
-        <span>
-          On/Off
-          <input id="power" name="power" ref="power" type="checkbox" className="switch" checked={this.state.power} onChange={this.handleChange} />
+        Power
+        <span onClick={this.handleChange}>
+          <input id="power" name="power" ref="power" type="checkbox" className="switch" checked={this.state.power} onChange={this.handleChange} onClick={this.handleChange} />
         </span>
       </div>
     );
@@ -901,17 +903,18 @@ var Settings = React.createClass({
         <OnOff />
         <div className="container-fluid">
           <header className="page-header">
-            <h1>Settings <small>on</small> [site.com]</h1>
+            <h1>Settings <small>on</small> ticketpro.cz</h1>
             <p>You are in control! Change your settings here.</p>
           </header>
           <div className="form-horizontal">
+            <hr />
             <div className="form-group form-group-sm">
               <label htmlFor="personalization" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Personalization</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
                 <input type="checkbox" id="personalization" name="personalization" className="switch" />
               </div>
             </div>
-            <hr />
+            <br /><hr />
             <div className="form-group form-group-sm">
               <label htmlFor="sorting" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Sorting</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
@@ -921,20 +924,21 @@ var Settings = React.createClass({
                 </select>
               </div>
             </div>
-            <hr />
+            <br /><hr />
             <div className="form-group form-group-sm">
               <label htmlFor="autosave" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Autosave</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
                 <input type="checkbox" name="autosave" className="switch" />
               </div>
             </div>
-            <hr />
+            <br /><hr />
             <div className="form-group form-group-sm">
               <label htmlFor="delete" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Delete my profile <small>at</small> <i>ticketpro.cz</i></label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
                 <button className="btn btn-sm btn-danger" onClick={this.deleteCookie}>Delete</button>
               </div>
             </div>
+            <hr />
           </div>
         </div>
       </section>
