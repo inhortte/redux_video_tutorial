@@ -418,7 +418,7 @@ var MyProfileInterests = React.createClass({
           (this.state.currentInterest ?
            this.state.currentDetails['related'].split(/,/) :
            []).filter(function(relatedInterest) {
-             return(Object.keys(that.getCurrentInterests()).indexOf(relatedInterest) === -1);
+             return(relatedInterest.length > 0 && Object.keys(that.getCurrentInterests()).indexOf(relatedInterest) === -1);
            });
     return (
       <div>
@@ -515,6 +515,7 @@ var MyProfileLikeDetails = React.createClass({
   render: function() {
     var that = this;
     var relatedInterestsHtml;
+    console.log('Passed related interests: ' + JSON.stringify(this.props.relatedInterests));
     if(this.props.relatedInterests.length > 0) {
       var relatedInterestNodes = this.props.relatedInterests.map(function(interest) {
         return (
@@ -793,11 +794,28 @@ var Notifications = React.createClass({
 });
 
 var Import = React.createClass({
+  importFacebookVariableData: function() {
+    if(variableData.facebook.length > 0) {
+      var imported = variableData.facebook.shift();
+      variableData.totalFacebookSync += Object.keys(imported).length;
+      console.log('data to be imported: ' + JSON.stringify(imported));
+      data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      this.setState({
+        facebookAllSyncedInterests: variableData.totalFacebookSync,
+        facebookLastSyncedInterests: Object.keys(imported).length,
+        facebookLastSynced: Date.now()
+      });
+      data.facebookConnect = true;
+    } else {
+      console.log('none left...');
+    }
+  },
   facebookConnect: function() {
     // ---------- This needs to be elsewhere.
     // facebook plugin
     // -----------
 
+    var that = this;
     $.getScript('//connect.facebook.net/en_UK/all.js', function() {
       FB.init({
         appId      : '575682199200822',
@@ -811,31 +829,21 @@ var Import = React.createClass({
         FB.api('/me/likes', {
           access_token: res.authResponse.accessToken
         }, function(res) {
-          var vdnaclasses = res.data.slice(0,25).map(function(cl) {
+          // ------------ Only take the first 10 likes (for now)
+          var facebookLikes = res.data.slice(0,5).map(function(cl) {
             return cl.name;
           });
-          console.log(JSON.stringify(vdnaclasses));
-          // vdna.setCategories(vdnaclasses);
+          console.log('facebookLikes: ' + JSON.stringify(facebookLikes));
+          // variableData.facebookImportReset();
+          var newInterests = {};
+          facebookLikes.forEach(function(like) {
+            variableData.importNewLike(like);
+          });
+          variableData.pushNewLikes();
+          that.importFacebookVariableData();
         });
       }, {scope: 'user_likes'});
     });
-
-    /*
-    if(variableData.facebook.length > 0) {
-      var imported = variableData.facebook.shift();
-      variableData.totalFacebookSync += Object.keys(imported).length;
-      console.log(JSON.stringify(imported));
-      data.staticInterests = data.mergeObjects(data.staticInterests, imported);
-      this.setState({
-        facebookAllSyncedInterests: variableData.totalFacebookSync,
-        facebookLastSyncedInterests: Object.keys(imported).length,
-        facebookLastSynced: Date.now()
-      });
-      data.facebookConnect = true;
-    } else {
-      console.log('none left...');
-    }
-     */
   },
   pinterestImport: function() {
     console.log('PIN ME FUCKING UP!');
@@ -1041,8 +1049,8 @@ var About = React.createClass({
           <p>VDNA version: 0.1b<br />
              Total available VDNA items: {Object.keys(data.staticInterests).length}.<br />
              Filter stats: I am a Pine Marten.<br />
-             Facebook Connect: {data.facebookConnect ? "YES" : "NO"}<br />
-             Pinterest Connect: {data.pinterestConnect ? "YES" : "NO"}
+             Facebook Connect: {variableData.totalFacebookSync > 0 ? "YES" : "NO"}<br />
+             Pinterest Connect: {variableData.totalPinterestSync > 0 ? "YES" : "NO"}
           </p>
         </div>
       </section>
