@@ -13,6 +13,7 @@
     "request": "*",
     "babelify": "*",
     "reactify": "*",
+    "react": "*",
     "moment": "*",
     "bootstrap": "*",
     "livereactload": "*"
