@@ -168,8 +168,7 @@ var OnOff = React.createClass({
   },
   render: function() {
     return (
-      <div style={{position: 'absolute', top: '10', right: '10'}}>
-        Power
+      <div>
         <span onClick={this.handleChange}>
           <input id="power" name="power" ref="power" type="checkbox" className="switch" checked={this.state.power} onChange={this.handleChange} onClick={this.handleChange} />
         </span>
@@ -408,15 +407,17 @@ var MyProfileInterests = React.createClass({
   },
   // ---------- Save the vdna cookie
   componentDidUpdate: function() {
-    var interestKeys = Object.keys(this.getCurrentInterests());
-    var decArr = data.interestsToDecArr(interestKeys);
-    var decMapping = decArr.toString();
-    var extraInterests = data.tallyExtraInterests(interestKeys);
-    if(extraInterests.length > 0) {
-      decMapping += ',' + extraInterests;
+    if(data.autosave) {
+      var interestKeys = Object.keys(this.getCurrentInterests());
+      var decArr = data.interestsToDecArr(interestKeys);
+      var decMapping = decArr.toString();
+      var extraInterests = data.tallyExtraInterests(interestKeys);
+      if(extraInterests.length > 0) {
+        decMapping += ',' + extraInterests;
+      }
+      console.log('dec & extra mapping: ' + decMapping);
+      docCookies.setItem('vdna', decMapping, Infinity);
     }
-    console.log('dec & extra mapping: ' + decMapping);
-    docCookies.setItem('vdna', decMapping, Infinity);
   },
   showHideAddLike: function() {
     this.setState({ addInterestCollapsed: !this.state.addInterestCollapsed,
@@ -944,6 +945,15 @@ var Settings = React.createClass({
     docCookies.removeItem('vdna');
     alert('Cookie deleted.');
   },
+  swapAutosave: function() {
+    data.autosave = !data.autosave;
+    console.log('swapping autosave to: ' + data.autosave);
+    this.setState({autosave: data.autosave});
+    data.blinkNodes();
+  },
+  getInitialState: function() {
+    return {autosave: data.autosave};
+  },
   componentDidMount: function() {
     $(".switch").bootstrapSwitch(
       { size:"small",
@@ -955,7 +965,7 @@ var Settings = React.createClass({
   render: function() {
     return (
       <section role="tabpanel" className="tab-pane fade active in" id="settings">
-        <OnOff />
+        {/* <OnOff /> */}
         <div className="container-fluid">
           <header className="page-header">
             <h1>Settings <small>on</small> ticketpro.cz</h1>
@@ -966,7 +976,8 @@ var Settings = React.createClass({
             <div className="form-group form-group-sm">
               <label htmlFor="personalization" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Personalization</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <input type="checkbox" id="personalization" name="personalization" className="switch" />
+                <OnOff />
+                {/* <input type="checkbox" id="personalization" name="personalization" className="switch" /> */}
               </div>
             </div>
             <br /><hr />
@@ -983,7 +994,9 @@ var Settings = React.createClass({
             <div className="form-group form-group-sm">
               <label htmlFor="autosave" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Autosave</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <input type="checkbox" name="autosave" className="switch" />
+                <span onClick={this.swapAutosave}>
+                  <input type="checkbox" name="autosave" className="switch" checked={this.state.autosave} onChange={this.swapAutosave} />
+                </span>
               </div>
             </div>
             <br /><hr />
