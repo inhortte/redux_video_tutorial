@@ -951,8 +951,16 @@ var Settings = React.createClass({
     this.setState({autosave: data.autosave});
     data.blinkNodes();
   },
+  sortChange: function(e) {
+    data.sorting = parseInt(e.target.value);
+    this.setState({sorting: data.sorting});
+    data.blinkNodes();
+  },
   getInitialState: function() {
-    return {autosave: data.autosave};
+    return {
+      autosave: data.autosave,
+      sorting: data.sorting
+    };
   },
   componentDidMount: function() {
     $(".switch").bootstrapSwitch(
@@ -984,9 +992,10 @@ var Settings = React.createClass({
             <div className="form-group form-group-sm">
               <label htmlFor="sorting" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Sorting</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <select className="selectpicker" id="sorting">
-                  <option>Your interests</option>
-                  <option>Site default</option>
+                <select className="selectpicker" id="sorting" value={this.state.sorting} onChange={this.sortChange} >
+                  <option value={0}>Your interests</option>
+                  <option value={1}>Site default</option>
+                  <option value={2}>Truncate to 10</option>
                 </select>
               </div>
             </div>
