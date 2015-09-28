@@ -36,7 +36,7 @@ function addClickEvents() {
       return false;
     });
   });
-}
+};
 
 function formatDate(rawDate, add_time) {
   var format = (add_time !== undefined && add_time) ? "DD MMM YYYY HH:mm" : "DD MMM YYYY";
@@ -1124,3 +1124,4 @@ var Privacy = React.createClass({
 
 reRender();
 addClickEvents();
+variableData.gatherVdna();
