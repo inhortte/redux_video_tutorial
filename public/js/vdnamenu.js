@@ -1,6 +1,6 @@
 var Moment = require('moment');
 var data = require('vdna/static_data');
-var variableData = require('vdna/variable_data');
+// var variableData = require('vdna/variable_data');
 var docCookies = require('vdna/cookie');
 
 function reRender() {
@@ -36,7 +36,7 @@ function addClickEvents() {
       return false;
     });
   });
-}
+};
 
 function formatDate(rawDate, add_time) {
   var format = (add_time !== undefined && add_time) ? "DD MMM YYYY HH:mm" : "DD MMM YYYY";
@@ -69,6 +69,7 @@ var VdnaMenu = React.createClass({
     });
   },
   componentDidMount: function() {
+    // data.gatherVdna();
   },
   render: function() {
     var tabContent;
@@ -115,25 +116,6 @@ var VdnaMenu = React.createClass({
   }
 });
 
-/* -------- this does nothing!
-var OpenVdna = React.createClass({
-  handleClick: function() {
-    console.log('openvdna!');
-    $("#vdnamenu").show();
-    $("#openVdna").hide();
-  },
-  render: function() {
-    return (
-      <div>
-	<span data-toggle="tooltip" title="Click to open VDNA" id="openVdna" className="btn btn-sm btn-primary openVdna" onClick={this.handleClick}>
-          Open vDNA
-        </span>
-      </div>
-    );
-  }
-});
- */
-
 var CloseVdna = React.createClass({
   handleClick: function() {
     $("#vdnamenu").hide();
@@ -154,8 +136,13 @@ var OnOff = React.createClass({
   handleChange: function() {
     console.log('power change');
     data.power = !data.power;
+    if(data.power) {
+      data.sorting = 1;
+    } else {
+      data.sorting = 0;
+    }
     this.setState({power: data.power});
-    data.blinkNodes();
+    data.showVdnaDivs();
   },
   getInitialState: function() {
     return {power: data.power};
@@ -403,7 +390,7 @@ var MyProfileInterests = React.createClass({
             addInterestCollapsed: true};
   },
   componentDidMount: function() {
-    data.blinkNodes();
+    data.showVdnaDivs();
   },
   // ---------- Save the vdna cookie
   componentDidUpdate: function() {
@@ -816,13 +803,13 @@ var Notifications = React.createClass({
 
 var Import = React.createClass({
   importFacebookVariableData: function() {
-    if(variableData.facebook.length > 0) {
-      var imported = variableData.facebook.shift();
-      variableData.totalFacebookSync += Object.keys(imported).length;
+    if(data.facebook.length > 0) {
+      var imported = data.facebook.shift();
+      data.totalFacebookSync += Object.keys(imported).length;
       console.log('data to be imported: ' + JSON.stringify(imported));
       data.staticInterests = data.mergeObjects(data.staticInterests, imported);
       this.setState({
-        facebookAllSyncedInterests: variableData.totalFacebookSync,
+        facebookAllSyncedInterests: data.totalFacebookSync,
         facebookLastSyncedInterests: Object.keys(imported).length,
         facebookLastSynced: Date.now()
       });
@@ -858,9 +845,9 @@ var Import = React.createClass({
           // variableData.facebookImportReset();
           var newInterests = {};
           facebookLikes.forEach(function(like) {
-            variableData.importNewLike(like);
+            data.importNewLike(like);
           });
-          variableData.pushNewLikes();
+          data.pushNewLikes();
           that.importFacebookVariableData();
         });
       }, {scope: 'user_likes'});
@@ -868,13 +855,13 @@ var Import = React.createClass({
   },
   pinterestImport: function() {
     console.log('PIN ME FUCKING UP!');
-    if(variableData.pinterest.length > 0) {
-      var imported = variableData.pinterest.shift();
-      variableData.totalPinterestSync += Object.keys(imported).length;
+    if(data.pinterest.length > 0) {
+      var imported = data.pinterest.shift();
+      data.totalPinterestSync += Object.keys(imported).length;
       console.log(JSON.stringify(imported));
       data.staticInterests = data.mergeObjects(data.staticInterests, imported);
       this.setState({
-        pinterestAllSyncedInterests: variableData.totalPinterestSync,
+        pinterestAllSyncedInterests: data.totalPinterestSync,
         pinterestLastSyncedInterests: Object.keys(imported).length,
         pinterestLastSynced: Date.now()
       });
@@ -885,10 +872,10 @@ var Import = React.createClass({
   },
   getInitialState: function() {
     return {
-      facebookAllSyncedInterests: variableData.totalFacebookSync,
+      facebookAllSyncedInterests: data.totalFacebookSync,
       facebookLastSyncedInterests: 0,
       facebookLastSynced: Date.now(),
-      pinterestAllSyncedInterests: variableData.totalPinterestSync,
+      pinterestAllSyncedInterests: data.totalPinterestSync,
       pinterestLastSyncedInterests: 0,
       pinterestLastSynced: Date.now()
     };
@@ -949,12 +936,16 @@ var Settings = React.createClass({
     data.autosave = !data.autosave;
     console.log('swapping autosave to: ' + data.autosave);
     this.setState({autosave: data.autosave});
-    data.blinkNodes();
+    data.showVdnaDivs();
   },
   sortChange: function(e) {
-    data.sorting = parseInt(e.target.value);
-    this.setState({sorting: data.sorting});
-    data.blinkNodes();
+    if(data.sorting > 0) {
+      data.sorting = parseInt(e.target.value);
+      this.setState({sorting: data.sorting});
+      data.showVdnaDivs();
+    } else {
+      this.setState({sorting: 1});
+    }
   },
   getInitialState: function() {
     return {
@@ -993,9 +984,10 @@ var Settings = React.createClass({
               <label htmlFor="sorting" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Sorting</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
                 <select className="selectpicker" id="sorting" value={this.state.sorting} onChange={this.sortChange} >
-                  <option value={0}>Your interests</option>
-                  <option value={1}>Site default</option>
-                  <option value={2}>Truncate to 10</option>
+                  <option value={1}>Your interests</option>
+                  <option value={2}>Site default</option>
+                  <option value={3}>Your interests (truncated to 10)</option>
+                  <option value={4}>Site default (truncated to 10)</option>
                 </select>
               </div>
             </div>
@@ -1036,11 +1028,11 @@ var About = React.createClass({
   },
   render: function() {
     var fbLogoutHtml;
-    if(variableData.totalFacebookSync > 0) {
+    if(data.totalFacebookSync > 0) {
       fbLogoutHtml =
         <div>
           <div className="col-xs-2 col-sm-3 col-md-4 col-lg-4">
-            <strong>{variableData.totalFacebookSync > 0 ? "YES" : "NO"}</strong>
+            <strong>{data.totalFacebookSync > 0 ? "YES" : "NO"}</strong>
           </div>
           <div className="col-xs-3 col-sm-4 col-md-4 col-lg-5">
             <button className="btn btn-sm btn-danger" onClick={this.fbLogout}>Logout</button>
@@ -1049,7 +1041,7 @@ var About = React.createClass({
     } else {
       fbLogoutHtml =
         <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-          <strong>{variableData.totalFacebookSync > 0 ? "YES" : "NO"}</strong>
+          <strong>{data.totalFacebookSync > 0 ? "YES" : "NO"}</strong>
         </div>;
     }
     return (
@@ -1092,7 +1084,7 @@ var About = React.createClass({
             <div className="form-group form-group-sm">
               <span htmlFor="vdnaVersion" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Pinterest connect</span>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <strong>{variableData.totalPinterestSync > 0 ? "YES" : "NO"}</strong>
+                <strong>{data.totalPinterestSync > 0 ? "YES" : "NO"}</strong>
               </div>
             </div>
           </div>
@@ -1122,5 +1114,6 @@ var Privacy = React.createClass({
   }
 });
 
+data.gatherVdna();
 reRender();
-addClickEvents();
+// addClickEvents();
