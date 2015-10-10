@@ -489,6 +489,7 @@ var MyProfileAvailableInterest = React.createClass({
   addInterest: function() {
     data.addInterest(this.props.availableInterest);
     // reRender();
+    data.gatherVdna();
     data.showVdnaDivs();
     this.props.setVdnaCount();
   },
@@ -938,6 +939,7 @@ var Settings = React.createClass({
       this.setState({sorting: 1});
     }
   },
+  // This on/off thing is annoying
   onOff: function() {
     this.setState({sorting: data.sorting});
   },
