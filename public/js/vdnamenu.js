@@ -55,7 +55,8 @@ var VdnaMenu = React.createClass({
   getInitialState: function() {
     return {
       tabList: this.props.tabList,
-      currentTab: 1
+      currentTab: 1,
+      vdnaCount: 0
     };
   },
   changeTab: function(tabId) {
@@ -68,6 +69,10 @@ var VdnaMenu = React.createClass({
       currentTab: tabId
     });
   },
+  setVdnaCount: function() {
+    var vdnaCount = $("*[vdnaclass]").size();
+    this.setState({vdnaCount: vdnaCount});
+  },
   componentDidMount: function() {
     // data.gatherVdna();
   },
@@ -75,7 +80,7 @@ var VdnaMenu = React.createClass({
     var tabContent;
     switch(this.state.currentTab) {
       case 1:
-        tabContent = <MyProfile changeTab={this.changeTab} />;
+        tabContent = <MyProfile changeTab={this.changeTab} vdnaCount={this.state.vdnaCount} setVdnaCount={this.setVdnaCount} />;
         break;
       case 2:
         tabContent = <Notifications />;
@@ -84,7 +89,7 @@ var VdnaMenu = React.createClass({
         tabContent = <Import />;
         break;
       case 4:
-        tabContent = <Settings />;
+        tabContent = <Settings setVdnaCount={this.setVdnaCount} />;
         break;
       case 5:
         tabContent = <Privacy />;
@@ -257,7 +262,7 @@ var MyProfileCategories = React.createClass({
           <div className="col-sm-6">
             <div className="panel">
               <div className="panel-body">
-                Events
+                Events (Total: {this.props.vdnaCount})
               </div>
             </div>
           </div>
@@ -279,9 +284,12 @@ var MyProfileCategory = React.createClass({
 
 var MyProfilePrivacy = React.createClass({
   componentDidMount: function() {
+    var that = this;
     $("#privacySettingSlider").slider({min:1,max:5,step:1,value:3});
     $("#privacySettingSlider").on("slide", function(n) {
       data.setPrivacySlider(n.value);
+      rerender();
+      this.props.setVdnaCount();
       n.value === 1 ?
         $("#privacySettingSliderVal").text("20") :
         n.value === 2 ?
@@ -305,30 +313,6 @@ var MyProfilePrivacy = React.createClass({
     );
   }
 });
-
-// ----------- unused class. The code has been moved to MyProfileInterests and Settings.
-/*
-var CookieButtons = React.createClass({
-  saveCookie: function() {
-    var interestKeys = Object.keys(this.props.currentInterests);
-    var decArr = data.interestsToDecArr(interestKeys);
-    console.log("decMapping: " + decArr.toString());
-    docCookies.setItem('vdna', decArr.toString(), Infinity);
-    alert('Cookie saved.');
-  },
-  deleteCookie: function() {
-    docCookies.removeItem('vdna');
-    alert('Cookie deleted.');
-  },
-  render: function() {
-    return (
-      <div>
-        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.deleteCookie}>Delete Cookie</button>
-      </div>
-    );
-  }
-});
-*/
 
 var MyProfileInterests = React.createClass({
   showDetails: function(interest, details) {
@@ -391,6 +375,7 @@ var MyProfileInterests = React.createClass({
   },
   componentDidMount: function() {
     data.showVdnaDivs();
+    this.props.setVdnaCount();
   },
   // ---------- Save the vdna cookie
   componentDidUpdate: function() {
@@ -444,8 +429,8 @@ var MyProfileInterests = React.createClass({
             <button type="submit" className="btn btn-sm btn-default" onClick={this.props.changeTab.bind(null, 3)}>Import</button>
           </div>
         </div>
-        <MyProfileAddAnInterest interests={this.getCurrentInterests()} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
-        <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={this.state.detailsCollapsed} collapseDetails={this.collapseDetails} />
+        <MyProfileAddAnInterest interests={this.getCurrentInterests()} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} setVdnaCount={this.props.setVdnaCount} />
+        <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={this.state.detailsCollapsed} collapseDetails={this.collapseDetails} setVdnaCount={this.props.setVdnaCount} />
       </div>
     );
   }
@@ -466,6 +451,7 @@ var MyProfileInterest = React.createClass({
 
 var MyProfileAddAnInterest = React.createClass({
   render: function() {
+    var that = this;
     var currentInterestKeys = Object.keys(this.props.interests);
     var availableInterestKeys = Object.keys(data.staticInterests).filter(function(interestKey) {
       return currentInterestKeys.indexOf(interestKey) == -1;
@@ -473,7 +459,7 @@ var MyProfileAddAnInterest = React.createClass({
     var baseDivStyles = ['form-group', 'form-group-sm'];
     var availableInterestNodes = availableInterestKeys.map(function(interest) {
       return (
-        <MyProfileAvailableInterest availableInterest={interest} />
+        <MyProfileAvailableInterest availableInterest={interest} setVdnaCount={that.props.setVdnaCount} />
       );
     });
     if(this.props.collapse) {
@@ -502,7 +488,10 @@ var MyProfileAddAnInterest = React.createClass({
 var MyProfileAvailableInterest = React.createClass({
   addInterest: function() {
     data.addInterest(this.props.availableInterest);
-    reRender();
+    // reRender();
+    data.gatherVdna();
+    data.showVdnaDivs();
+    this.props.setVdnaCount();
   },
   render: function() {
     return (
@@ -528,7 +517,7 @@ var MyProfileLikeDetails = React.createClass({
       var relatedInterestNodes = this.props.relatedInterests.map(function(interest) {
         return (
           // <MyProfileRelatedInterest category={that.props.category} relatedInterest={interest} />
-            <MyProfileRelatedInterest relatedInterest={interest} />
+            <MyProfileRelatedInterest relatedInterest={interest} setVdnaCount={that.props.setVdnaCount} />
         );
       });
       relatedInterestsHtml =
@@ -593,6 +582,7 @@ var MyProfileRelatedInterest = React.createClass({
   addInterest: function() {
     // data.addRelatedInterest(this.props.category, this.props.relatedInterest);
     data.addRelatedInterest(this.props.relatedInterest);
+    this.props.setVdnaCount(); // -- endless loop
     reRender();
   },
   render: function() {
@@ -627,10 +617,10 @@ var MyProfile = React.createClass({
           <div className="form-horizontal">
 
             {/*<MyProfileCategories categories={Object.keys(data.staticData)} getCategoryOnChange={this.getCategoryOnChange} />*/}
-            <MyProfileCategories />
-            <MyProfilePrivacy />
+            <MyProfileCategories vdnaCount={this.props.vdnaCount} />
+            <MyProfilePrivacy setVdnaCount={this.props.setVdnaCount} />
             {/*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/}
-            <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} />
+            <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} setVdnaCount={this.props.setVdnaCount} />
 
           </div>
         </div>
@@ -942,10 +932,16 @@ var Settings = React.createClass({
     if(data.sorting > 0) {
       data.sorting = parseInt(e.target.value);
       this.setState({sorting: data.sorting});
+      data.gatherVdna();
       data.showVdnaDivs();
+      this.props.setVdnaCount();
     } else {
       this.setState({sorting: 1});
     }
+  },
+  // This on/off thing is annoying
+  onOff: function() {
+    this.setState({sorting: data.sorting});
   },
   getInitialState: function() {
     return {
@@ -975,7 +971,7 @@ var Settings = React.createClass({
             <div className="form-group form-group-sm">
               <label htmlFor="personalization" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Personalization</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <OnOff />
+                <OnOff onOff={this.onOff} />
                 {/* <input type="checkbox" id="personalization" name="personalization" className="switch" /> */}
               </div>
             </div>
