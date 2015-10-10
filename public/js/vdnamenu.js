@@ -55,7 +55,8 @@ var VdnaMenu = React.createClass({
   getInitialState: function() {
     return {
       tabList: this.props.tabList,
-      currentTab: 1
+      currentTab: 1,
+      vdnaCount: 0
     };
   },
   changeTab: function(tabId) {
@@ -68,6 +69,10 @@ var VdnaMenu = React.createClass({
       currentTab: tabId
     });
   },
+  setVdnaCount: function() {
+    var vdnaCount = $("*[vdnaclass]").size();
+    this.setState({vdnaCount: vdnaCount});
+  },
   componentDidMount: function() {
     // data.gatherVdna();
   },
@@ -75,7 +80,7 @@ var VdnaMenu = React.createClass({
     var tabContent;
     switch(this.state.currentTab) {
       case 1:
-        tabContent = <MyProfile changeTab={this.changeTab} />;
+        tabContent = <MyProfile changeTab={this.changeTab} vdnaCount={this.state.vdnaCount} setVdnaCount={this.setVdnaCount} />;
         break;
       case 2:
         tabContent = <Notifications />;
@@ -84,7 +89,7 @@ var VdnaMenu = React.createClass({
         tabContent = <Import />;
         break;
       case 4:
-        tabContent = <Settings />;
+        tabContent = <Settings setVdnaCount={this.setVdnaCount} />;
         break;
       case 5:
         tabContent = <Privacy />;
@@ -257,7 +262,7 @@ var MyProfileCategories = React.createClass({
           <div className="col-sm-6">
             <div className="panel">
               <div className="panel-body">
-                Events
+                Events (Total: {this.props.vdnaCount})
               </div>
             </div>
           </div>
@@ -305,30 +310,6 @@ var MyProfilePrivacy = React.createClass({
     );
   }
 });
-
-// ----------- unused class. The code has been moved to MyProfileInterests and Settings.
-/*
-var CookieButtons = React.createClass({
-  saveCookie: function() {
-    var interestKeys = Object.keys(this.props.currentInterests);
-    var decArr = data.interestsToDecArr(interestKeys);
-    console.log("decMapping: " + decArr.toString());
-    docCookies.setItem('vdna', decArr.toString(), Infinity);
-    alert('Cookie saved.');
-  },
-  deleteCookie: function() {
-    docCookies.removeItem('vdna');
-    alert('Cookie deleted.');
-  },
-  render: function() {
-    return (
-      <div>
-        <button type="submit" role="button" className="btn btn-sm btn-default" onClick={this.deleteCookie}>Delete Cookie</button>
-      </div>
-    );
-  }
-});
-*/
 
 var MyProfileInterests = React.createClass({
   showDetails: function(interest, details) {
@@ -391,6 +372,7 @@ var MyProfileInterests = React.createClass({
   },
   componentDidMount: function() {
     data.showVdnaDivs();
+    this.props.setVdnaCount();
   },
   // ---------- Save the vdna cookie
   componentDidUpdate: function() {
@@ -445,7 +427,7 @@ var MyProfileInterests = React.createClass({
           </div>
         </div>
         <MyProfileAddAnInterest interests={this.getCurrentInterests()} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
-        <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={this.state.detailsCollapsed} collapseDetails={this.collapseDetails} />
+        <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={this.state.detailsCollapsed} collapseDetails={this.collapseDetails} setVdnaCount={this.props.setVdnaCount} />
       </div>
     );
   }
@@ -528,7 +510,7 @@ var MyProfileLikeDetails = React.createClass({
       var relatedInterestNodes = this.props.relatedInterests.map(function(interest) {
         return (
           // <MyProfileRelatedInterest category={that.props.category} relatedInterest={interest} />
-            <MyProfileRelatedInterest relatedInterest={interest} />
+            <MyProfileRelatedInterest relatedInterest={interest} setVdnaCount={that.props.setVdnaCount} />
         );
       });
       relatedInterestsHtml =
@@ -593,6 +575,7 @@ var MyProfileRelatedInterest = React.createClass({
   addInterest: function() {
     // data.addRelatedInterest(this.props.category, this.props.relatedInterest);
     data.addRelatedInterest(this.props.relatedInterest);
+    this.props.setVdnaCount(); // -- endless loop
     reRender();
   },
   render: function() {
@@ -627,10 +610,10 @@ var MyProfile = React.createClass({
           <div className="form-horizontal">
 
             {/*<MyProfileCategories categories={Object.keys(data.staticData)} getCategoryOnChange={this.getCategoryOnChange} />*/}
-            <MyProfileCategories />
-            <MyProfilePrivacy />
+            <MyProfileCategories vdnaCount={this.props.vdnaCount} />
+            <MyProfilePrivacy setVdnaCount={this.props.setVdnaCount} />
             {/*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/}
-            <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} />
+            <MyProfileInterests interests={this.state.interests} setInterests={this.setInterests} changeTab={this.props.changeTab} setVdnaCount={this.props.setVdnaCount} />
 
           </div>
         </div>
@@ -943,6 +926,7 @@ var Settings = React.createClass({
       data.sorting = parseInt(e.target.value);
       this.setState({sorting: data.sorting});
       data.showVdnaDivs();
+      this.props.setVdnaCount();
     } else {
       this.setState({sorting: 1});
     }
