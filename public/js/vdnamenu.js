@@ -284,9 +284,12 @@ var MyProfileCategory = React.createClass({
 
 var MyProfilePrivacy = React.createClass({
   componentDidMount: function() {
+    var that = this;
     $("#privacySettingSlider").slider({min:1,max:5,step:1,value:3});
     $("#privacySettingSlider").on("slide", function(n) {
       data.setPrivacySlider(n.value);
+      rerender();
+      this.props.setVdnaCount();
       n.value === 1 ?
         $("#privacySettingSliderVal").text("20") :
         n.value === 2 ?
@@ -426,7 +429,7 @@ var MyProfileInterests = React.createClass({
             <button type="submit" className="btn btn-sm btn-default" onClick={this.props.changeTab.bind(null, 3)}>Import</button>
           </div>
         </div>
-        <MyProfileAddAnInterest interests={this.getCurrentInterests()} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} />
+        <MyProfileAddAnInterest interests={this.getCurrentInterests()} collapse={this.state.addInterestCollapsed} hideAddLike={this.hideAddLike} setVdnaCount={this.props.setVdnaCount} />
         <MyProfileLikeDetails currentInterest={this.state.currentInterest} currentDetails={this.state.currentDetails} relatedInterests={relatedInterests} collapse={this.state.detailsCollapsed} collapseDetails={this.collapseDetails} setVdnaCount={this.props.setVdnaCount} />
       </div>
     );
@@ -448,6 +451,7 @@ var MyProfileInterest = React.createClass({
 
 var MyProfileAddAnInterest = React.createClass({
   render: function() {
+    var that = this;
     var currentInterestKeys = Object.keys(this.props.interests);
     var availableInterestKeys = Object.keys(data.staticInterests).filter(function(interestKey) {
       return currentInterestKeys.indexOf(interestKey) == -1;
@@ -455,7 +459,7 @@ var MyProfileAddAnInterest = React.createClass({
     var baseDivStyles = ['form-group', 'form-group-sm'];
     var availableInterestNodes = availableInterestKeys.map(function(interest) {
       return (
-        <MyProfileAvailableInterest availableInterest={interest} />
+        <MyProfileAvailableInterest availableInterest={interest} setVdnaCount={that.props.setVdnaCount} />
       );
     });
     if(this.props.collapse) {
@@ -484,7 +488,9 @@ var MyProfileAddAnInterest = React.createClass({
 var MyProfileAvailableInterest = React.createClass({
   addInterest: function() {
     data.addInterest(this.props.availableInterest);
-    reRender();
+    // reRender();
+    data.showVdnaDivs();
+    this.props.setVdnaCount();
   },
   render: function() {
     return (
@@ -925,11 +931,15 @@ var Settings = React.createClass({
     if(data.sorting > 0) {
       data.sorting = parseInt(e.target.value);
       this.setState({sorting: data.sorting});
+      data.gatherVdna();
       data.showVdnaDivs();
       this.props.setVdnaCount();
     } else {
       this.setState({sorting: 1});
     }
+  },
+  onOff: function() {
+    this.setState({sorting: data.sorting});
   },
   getInitialState: function() {
     return {
@@ -959,7 +969,7 @@ var Settings = React.createClass({
             <div className="form-group form-group-sm">
               <label htmlFor="personalization" className="col-xs-7 col-sm-5 col-md-4 col-lg-3 control-label">Personalization</label>
               <div className="col-xs-5 col-sm-7 col-md-8 col-lg-9">
-                <OnOff />
+                <OnOff onOff={this.onOff} />
                 {/* <input type="checkbox" id="personalization" name="personalization" className="switch" /> */}
               </div>
             </div>
