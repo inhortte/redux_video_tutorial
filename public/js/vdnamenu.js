@@ -157,7 +157,7 @@ var OnOff = React.createClass({
     return (
       <div>
         <span onClick={this.handleChange}>
-          <input id="power" name="power" ref="power" type="checkbox" className="switch" checked={this.state.power} onChange={this.handleChange} onClick={this.handleChange} />
+          <input id="power" name="power" ref="power" type="checkbox" className="switch" checked={this.state.power} onChange={this.handleChange} />
         </span>
       </div>
     );
