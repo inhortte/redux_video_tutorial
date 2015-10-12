@@ -488,7 +488,6 @@ var MyProfileAddAnInterest = React.createClass({
 var MyProfileAvailableInterest = React.createClass({
   addInterest: function() {
     data.addInterest(this.props.availableInterest);
-    // reRender();
     data.gatherVdna();
     data.showVdnaDivs();
     this.props.setVdnaCount();
@@ -512,7 +511,6 @@ var MyProfileLikeDetails = React.createClass({
   render: function() {
     var that = this;
     var relatedInterestsHtml;
-    console.log('Passed related interests: ' + JSON.stringify(this.props.relatedInterests));
     if(this.props.relatedInterests.length > 0) {
       var relatedInterestNodes = this.props.relatedInterests.map(function(interest) {
         return (
@@ -582,7 +580,9 @@ var MyProfileRelatedInterest = React.createClass({
   addInterest: function() {
     // data.addRelatedInterest(this.props.category, this.props.relatedInterest);
     data.addRelatedInterest(this.props.relatedInterest);
-    this.props.setVdnaCount(); // -- endless loop
+    data.gatherVdna();
+    data.showVdnaDivs();
+    this.props.setVdnaCount();
     reRender();
   },
   render: function() {
@@ -1110,6 +1110,7 @@ var Privacy = React.createClass({
   }
 });
 
+data.gatherOriginalVdna();
 data.gatherVdna();
 reRender();
 // addClickEvents();
