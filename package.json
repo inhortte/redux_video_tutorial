@@ -22,7 +22,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "build": "browserify public/js/vdnamenu.js -o public/js/vdnabundle.js",
-    "watch": "watchify public/js/vdnamenu.js -o public/js/vdnabundle.js -d -v"
+    "build": "browserify public/js/vdnamenu.js -t babelify -o public/js/vdnabundle.js",
+    "watch": "watchify public/js/vdnamenu.js -t babelify -o public/js/vdnabundle.js -d -v"
   }
 }

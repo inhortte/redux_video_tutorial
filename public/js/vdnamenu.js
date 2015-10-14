@@ -74,7 +74,7 @@ var VdnaMenu = React.createClass({
     this.setState({vdnaCount: vdnaCount});
   },
   componentDidMount: function() {
-    // data.gatherVdna();
+    console.log('something is happening here');
   },
   render: function() {
     var tabContent;
