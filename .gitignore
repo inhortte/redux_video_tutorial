@@ -8,5 +8,6 @@ dist
 public/bower_components*
 public/public
 public/static
+public/js/bundle
 *~
 vdnabundle.js
