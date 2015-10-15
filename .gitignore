@@ -1,6 +1,7 @@
 node_modules/**
 !node_modules/vdna/
 !node_modules/vdna/**
+node_modules/vdna/static_data.js
 dist
 .tmp
 .sass-cache

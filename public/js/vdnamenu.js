@@ -797,7 +797,8 @@ var Import = React.createClass({
       var imported = data.facebook.shift();
       data.totalFacebookSync += Object.keys(imported).length;
       console.log('data to be imported: ' + JSON.stringify(imported));
-      data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      // data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      Object.assign(data.staticInterests, imported);
       this.setState({
         facebookAllSyncedInterests: data.totalFacebookSync,
         facebookLastSyncedInterests: Object.keys(imported).length,
@@ -849,7 +850,8 @@ var Import = React.createClass({
       var imported = data.pinterest.shift();
       data.totalPinterestSync += Object.keys(imported).length;
       console.log(JSON.stringify(imported));
-      data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      //data.staticInterests = data.mergeObjects(data.staticInterests, imported);
+      Object.assign(data.staticInterests, imported);
       this.setState({
         pinterestAllSyncedInterests: data.totalPinterestSync,
         pinterestLastSyncedInterests: Object.keys(imported).length,
