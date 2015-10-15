@@ -2,12 +2,14 @@ node_modules/**
 !node_modules/vdna/
 !node_modules/vdna/**
 node_modules/vdna/static_data.js
+public/js/**
+!public/js/cookie.js
+!public/js/thurk.js
 dist
 .tmp
 .sass-cache
 public/bower_components*
 public/public
 public/static
-public/js/bundle
 *~
 vdnabundle.js
