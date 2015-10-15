@@ -1,7 +1,7 @@
-var Moment = require('moment');
-var data = require('vdna/static_data');
-// var variableData = require('vdna/variable_data');
-var docCookies = require('vdna/cookie');
+let Moment = require('moment');
+let data = require('vdna/static_data');
+let docCookies = require('vdna/cookie');
+let thurk = require('./thurk');
 
 function reRender() {
   React.render(
@@ -1115,6 +1115,7 @@ var Privacy = React.createClass({
   }
 });
 
+thurk.gretel();
 data.gatherOriginalVdna();
 data.gatherVdna();
 reRender();
