@@ -1831,4 +1831,4 @@ data.gatherOriginalVdna();
 data.gatherVdna();
 reRender();
 /* <OpenVdna /> */ /*<strong>Category:</strong> {data.capitalize(this.props.currentDetails['category'])}<br />*/ /*<MyProfileCategories categories={Object.keys(data.staticData)} getCategoryOnChange={this.getCategoryOnChange} />*/ /*<MyProfileInterests category={this.state.category} interests={this.state.interests} setInterests={this.setInterests} />*/ /* <OnOff /> */ /* <input type="checkbox" id="personalization" name="personalization" className="switch" /> */
-//# sourceMappingURL=vdnamenu.js.map
+//# sourceMappingURL=flycheck_vdnamenu.js.map
