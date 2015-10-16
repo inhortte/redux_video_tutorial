@@ -22,7 +22,8 @@
     "gulp-browserify": "*",
     "gulp-sourcemaps": "*",
     "source-map-support": "*",
-    "run-sequence": "*"
+    "run-sequence": "*",
+    "del": "*"
   },
   "engines": {
     "node": ">=0.10.0"
