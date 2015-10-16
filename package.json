@@ -16,7 +16,13 @@
     "react": "*",
     "moment": "*",
     "bootstrap": "*",
-    "livereactload": "*"
+    "livereactload": "*",
+    "gulp": "*",
+    "gulp-babel": "*",
+    "gulp-browserify": "*",
+    "gulp-sourcemaps": "*",
+    "source-map-support": "*",
+    "run-sequence": "*"
   },
   "engines": {
     "node": ">=0.10.0"

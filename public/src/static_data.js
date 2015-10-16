@@ -285,6 +285,12 @@ module.exports = {
     });
   },
 
+  unselectAllStaticInterests() {
+    for (let interest of Object.keys(this.staticInterests)) {
+      this.staticInterests[interest]['selected'] = false;
+    }
+  },
+
   addInterest(interest) {
     if(typeof this.staticInterests[interest] === 'object') {
       this.staticInterests[interest]['selected'] = true;

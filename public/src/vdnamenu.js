@@ -1,7 +1,6 @@
-var Moment = require('moment');
-var data = require('vdna/static_data');
-// var variableData = require('vdna/variable_data');
-var docCookies = require('vdna/cookie');
+let Moment = require('moment');
+let data = require('./static_data');
+let docCookies = require('./cookie');
 
 function reRender() {
   React.render(
@@ -342,7 +341,10 @@ var MyProfileInterests = React.createClass({
   },
   getInitialState: function() {
     // ---------------------------- is there a cookie?
+    // Well, if there is, Sonny, we'd better set all of the
+    // static_data 'selected'z to false.
     if(docCookies.hasItem('vdna')) {
+      data.unselectAllStaticInterests();
       var cookieEncodedInterests = docCookies.getItem('vdna').split(/,/);
       var cookieInterestArr, extraInterests = [];
       if(cookieEncodedInterests.length > 2) {
@@ -1115,4 +1117,3 @@ var Privacy = React.createClass({
 data.gatherOriginalVdna();
 data.gatherVdna();
 reRender();
-// addClickEvents();
