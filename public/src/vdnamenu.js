@@ -9,6 +9,7 @@ function reRender() {
   );
 };
 
+/* -- I have no solution for this at the moment.
 function addClickEvents() {
   var that = this;
   $("*[vdnaclass]").each(function(index, el) {
@@ -36,6 +37,7 @@ function addClickEvents() {
     });
   });
 };
+*/
 
 function formatDate(rawDate, add_time) {
   var format = (add_time !== undefined && add_time) ? "DD MMM YYYY HH:mm" : "DD MMM YYYY";

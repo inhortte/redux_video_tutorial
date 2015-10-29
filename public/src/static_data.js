@@ -114,7 +114,7 @@ module.exports = {
   truncateLength: 10, // Static for now.
 
   reverseBinMapping() {
-    return Object.keys(this.arbitraryBinMapping).reduce((rMap, key) => {
+    return Object.getOwnPropertyNames(this.arbitraryBinMapping).reduce((rMap, key) => {
       rMap[this.arbitraryBinMapping[key]] = key;
       return rMap;
     }, {});
@@ -122,7 +122,7 @@ module.exports = {
 
   // --- everything must be split into two 32 bit thurks.
   arbitraryDecMapping() {
-    return Object.keys(this.arbitraryBinMapping).reduce((dMap, key) => {
+    return Object.getOwnPropertyNames(this.arbitraryBinMapping).reduce((dMap, key) => {
       dMap[key] = this.binStringArrToDecArr(this.binStringSplit(32, this.arbitraryBinMapping[key]));
       return dMap;
     }, {});
@@ -227,7 +227,7 @@ module.exports = {
   // ---------------------
   decArrToInterests(decArr, mapping) {
     let _mapping = mapping === undefined ? this.arbitraryDecMapping() : mapping;
-    return Object.keys(_mapping).reduce((interests, interest) => {
+    return Object.getOwnPropertyNames(_mapping).reduce((interests, interest) => {
       let interestDecArr = _mapping[interest];
       if(interestDecArr.length == decArr.length) {
         let match = true;
@@ -247,7 +247,7 @@ module.exports = {
   },
 
   getSelectedInterests() {
-    return Object.keys(this.staticInterests).filter(interest => {
+    return Object.getOwnPropertyNames(this.staticInterests).filter(interest => {
       return this.staticInterests[interest]['selected'];
     }).reduce((is, i) => {
       is[i] = this.staticInterests[i];
@@ -255,38 +255,8 @@ module.exports = {
     }, {});
   },
 
-  /* No longer used */
-  blinkNodes() {
-    console.log('blinkNodes!!!!!!');
-    var that = this;
-    var minVdnaWeight = (5 - this.privacySlider) * 2;
-    var truncate = this.sorting === 2;
-    var selectedInterests = this.getSelectedInterests();
-    var selectedInterestKeys = Object.keys(selectedInterests);
-    console.log(JSON.stringify(selectedInterestKeys));
-
-    var shownIndex = 0;
-    $("*[vdnaclass]").each(function(index, el) {
-      var vdnaWeight = parseInt($(el).attr('vdnaweight'));
-      var show = $(el).attr('vdnaclass').split(/,/).reduce(function(showOrHide, keyword) {
-        return showOrHide || (selectedInterestKeys.indexOf(keyword) > -1);
-      }, false) && (vdnaWeight >= minVdnaWeight) && (!truncate || shownIndex < that.truncateLength);
-      if(show) {
-        $(el).show();
-        shownIndex += 1;
-      } else {
-        if(that.power) {
-          $(el).hide();
-        } else {
-          $(el).show();
-          shownIndex += 1;
-        }
-      }
-    });
-  },
-
   unselectAllStaticInterests() {
-    for (let interest of Object.keys(this.staticInterests)) {
+    for (let interest of Object.getOwnPropertyNames(this.staticInterests)) {
       this.staticInterests[interest]['selected'] = false;
     }
   },
@@ -325,7 +295,7 @@ module.exports = {
 
   /* Replaced by Object.assign(...) */
   mergeObjects(obj1, obj2) {
-    Object.keys(obj2).forEach(function(key) {
+    Object.getOwnPropertyNames(obj2).forEach(function(key) {
       obj1[key] = obj2[key];
     });
     return obj1;
@@ -386,7 +356,7 @@ module.exports = {
   },
 
   pushNewLikes() {
-    if(Object.keys(this.newLikes).length > 0) {
+    if(Object.getOwnPropertyNames(this.newLikes).length > 0) {
       this.facebook.unshift(this.newLikes);
       this.newLikes = {};
     }
@@ -441,13 +411,13 @@ module.exports = {
   },
 
   gatherVdna() {
-    if(Object.keys(this.originalVdnaDivs) === 0) {
+    if(Object.getOwnPropertyNames(this.originalVdnaDivs) === 0) {
       this.gatherOriginalVdna();
     }
 
     let minVdnaWeight = (5 - this.privacySlider) * 2;
     let selectedInterests = this.getSelectedInterests();
-    let selectedInterestKeys = Object.keys(selectedInterests);
+    let selectedInterestKeys = Object.getOwnPropertyNames(selectedInterests);
     $("*[vdnaroot]").each((index, vdnaRootEl) => {
       let vdnaRootName = $(vdnaRootEl).attr("vdnaroot");
       console.log("VdnaRoot: " + vdnaRootName);
