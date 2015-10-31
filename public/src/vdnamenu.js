@@ -287,7 +287,8 @@ var MyProfileCategory = React.createClass({
 
 var MyProfilePrivacy = React.createClass({
   setSliderVal: function() {
-    let val = parseInt($("#privacySettingSlider").val());
+    // let val = parseInt($("#privacySettingSlider").val());
+    let val = data.privacySlider;
     val === 1 ?
             $("#privacySettingSliderVal").text("20") :
             val === 2 ?
@@ -308,11 +309,11 @@ var MyProfilePrivacy = React.createClass({
   componentDidMount: function() {
     var that = this;
     $("#privacySettingSlider").slider({min:1,max:5,step:1,value:3});
-    $("#privacySettingSlider").on("slide", function(n) {
-      data.setPrivacySlider(val);
+    $("#privacySettingSlider").on("slide", function(e) {
+      data.setPrivacySlider(e.value);
       reRender();
       that.props.setVdnaCount();
-      this.setSliderVal();
+      that.setSliderVal();
     });
   },
   render: function() {
