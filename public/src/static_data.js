@@ -285,6 +285,9 @@ module.exports = {
   },
 
   setPrivacySlider(val) {
+    if(typeof val !== 'number') {
+      val = parseInt(val);
+    }
     if(val !== this.privacySlider) {
       this.privacySlider = val;
       console.log('privacy slider set to: ' + val);

@@ -93,7 +93,7 @@ var VdnaMenu = React.createClass({
         tabContent = <Settings setVdnaCount={this.setVdnaCount} />;
         break;
       case 5:
-        tabContent = <Privacy />;
+        tabContent = <Privacy setVdnaCount={this.setVdnaCount} />;
         break;
       case 6:
         tabContent = <About />;
@@ -273,6 +273,7 @@ var MyProfileCategories = React.createClass({
   }
 });
 
+/*
 var MyProfileCategory = React.createClass({
   render: function() {
     return (
@@ -282,31 +283,43 @@ var MyProfileCategory = React.createClass({
     );
   }
 });
+*/
 
 var MyProfilePrivacy = React.createClass({
+  setSliderVal: function() {
+    let val = parseInt($("#privacySettingSlider").val());
+    val === 1 ?
+            $("#privacySettingSliderVal").text("20") :
+            val === 2 ?
+                    $("#privacySettingSliderVal").text("40") :
+                    val === 3 ?
+                            $("#privacySettingSliderVal").text("60") :
+                            val === 4 ?
+                                    $("#privacySettingSliderVal").text("80") :
+                                    val === 5 && $("#privacySettingSliderVal").text("100");
+  },
+  handleClick: function() {
+    let val = $("#privacySettingSlider").val();
+    console.log('CLICK!' + val);
+    data.setPrivacySlider(val);
+    reRender();
+    this.setSliderVal();
+  },
   componentDidMount: function() {
     var that = this;
     $("#privacySettingSlider").slider({min:1,max:5,step:1,value:3});
     $("#privacySettingSlider").on("slide", function(n) {
-      data.setPrivacySlider(n.value);
-      rerender();
-      this.props.setVdnaCount();
-      n.value === 1 ?
-        $("#privacySettingSliderVal").text("20") :
-        n.value === 2 ?
-        $("#privacySettingSliderVal").text("40") :
-        n.value === 3 ?
-        $("#privacySettingSliderVal").text("60") :
-        n.value === 4 ?
-        $("#privacySettingSliderVal").text("80") :
-        n.value === 5 && $("#privacySettingSliderVal").text("100");
+      data.setPrivacySlider(val);
+      reRender();
+      that.props.setVdnaCount();
+      this.setSliderVal();
     });
   },
   render: function() {
     return (
       <div className="form-group form-group-sm">
         <label htmlFor="inputEmail3" className="col-sm-2 control-label">Privacy</label>
-        <div className="col-sm-6">
+        <div className="col-sm-6" onClick={this.handleClick}>
           <input id="privacySettingSlider" type="text" />
         </div>
         <div className="col-sm-2">Sharing <span id="privacySettingSliderVal">60</span>%</div>
@@ -391,7 +404,7 @@ var MyProfileInterests = React.createClass({
       if(extraInterests.length > 0) {
         decMapping += ',' + extraInterests;
       }
-      console.log('dec & extra mapping: ' + decMapping);
+      // console.log('dec & extra mapping: ' + decMapping);
       docCookies.setItem('vdna', decMapping, Infinity);
     }
   },
