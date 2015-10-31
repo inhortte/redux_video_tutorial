@@ -7,6 +7,23 @@
 //     ...
 // -----------------------------------
 
+var tabList = [
+  { id: 1, href: 'profile', text: 'Edit My Profile', selected: true },
+  { id: 2, href: 'notifications', text: 'View Notifications', selected: false },
+  { id: 3, href: 'import', text: 'Import and Sync', selected: false },
+  { id: 4, href: 'settings', text: 'Change Settings', selected: false },
+  { id: 6, href: 'about', text: 'About', selected: false }
+];
+
+/*
+function reRender() {
+  React.render(
+    <VdnaMenu tabList={tabList} />,
+    document.getElementById('vdnamenu')
+  );
+};
+*/
+
 Array.prototype.add = function(arr) {
   var res = [];
   for(var i = 0; i < this.length || i < arr.length; i++) {
@@ -385,6 +402,7 @@ module.exports = {
   },
 
   showVdnaDivs() {
+    var that = this;
     $("*[vdnaroot]").each((index, vdnaRootEl) => {
       $(vdnaRootEl).html('');
       let vdnaRootName = $(vdnaRootEl).attr("vdnaroot");
@@ -394,6 +412,30 @@ module.exports = {
         return parseInt(div.substr(div.indexOf('vdnaweight') + 12, 2));
       })));
       this._appendDivs(vdnaRootName, this.sorting);
+    });
+    $("*[vdnaclass]").each(function(index, el) {
+      console.log('got one!');
+      $(el).on('click', function(e) {
+        e.preventDefault();
+        var interestArr = $(el).attr('vdnaclass').split(/,/);
+        console.log('interestArr: ' + JSON.stringify(interestArr));
+        interestArr.forEach(function(interest) {
+          var trimmed = interest.trim();
+          if(that.staticInterests[trimmed]) {
+            that.staticInterests[trimmed]['clicks'] += 1;
+            that.staticInterests[trimmed]['selected'] = true;
+          } else {
+            var relatedInterests = interestArr.slice(0, interestArr.indexOf(interest)).add(interestArr.slice(interestArr.indexOf(interest) + 1));
+            that.staticInterests[trimmed] = {
+              source: 'ticketpro', clicks: 1, added: Date.now(), selected: true,
+              related: relatedInterests.map(function(interest) {
+                return interest.trim();
+              }).join(',')
+            };
+          }
+        });
+        return false;
+      });
     });
   },
 
@@ -433,6 +475,7 @@ module.exports = {
         this.vdnaDivs[vdnaRootName][0].push(vdnaClassElStr);
         let vdnaClassEl = $.parseHTML(vdnaClassElStr);
         let vdnaWeight = parseInt($(vdnaClassEl).attr('vdnaweight'));
+        let vdnaClasses = $(vdnaClassEl).attr('vdnaclass').split(/,/).map(c => c.trim()).join(',');
         let show = $(vdnaClassEl).attr('vdnaclass')
                                  .split(/,/)
                                  .reduce(function(showOrHide, interest) {
