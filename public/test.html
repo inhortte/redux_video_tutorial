@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Vdna test</title>
+
+<!--- vdna styles --->
+<link href="styles/vdnazoltan.css" type="text/css" rel="stylesheet" />
+<link href="styles/vdnajames.css" type="text/css" rel="stylesheet" />
+
+<!-- VDNA thurk ---------------->
+<script src="bower_components/react/react.js"></script>
+<!-- <script src="bower_components/react/JSXTransformer.js"></script> -->
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="vendor/modernizr-2.6.2.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#openVdna").click(function() {
+    $("#vdnamenu").toggle(0);
+  });
+});
+</script>
+<!-- end VDNA thurk ------------------------->
+
+</head>
+
+<body>
+
+<!-- vdna logo --- -->
+<div id="openVdna">
+  <span data-toggle="tooltip" title="Click to open VDNA" class="btn btn-sm btn-primary openVdna">
+    Open vDNA
+  </span>
+</div>
+<div id="vdnamenu" style="display: none;"></div>
+<!--------------------->
+
+<ul vdnaroot="martens">
+  <li>Henderson</li>
+  <li>Gretel</li>
+  <li>Ollie</li>
+</ul>
+
+<ul vdnaroot="minks">
+  <li>Rinaldo</li>
+  <li>Voluumia</li>
+  <li>Pluto</li>
+</ul>
+
+<ul vdnaroot="ferrets">
+  <li>Malvada</li>
+  <li>Pinkie</li>
+  <li>Tumor</li>
+  <li>Broca</li>
+</ul>
+
+<script type="text/javascript" src="js/bundle/vdnamenu.js"></script>
+
+</body>
+</html>

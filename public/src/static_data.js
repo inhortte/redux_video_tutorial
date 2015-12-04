@@ -87,31 +87,31 @@ module.exports = {
   },
 
   arbitraryBinMapping: {
-    "music": "1000000000000000000000000000000000000",
-    "french actors": "10000000000000000000000000000000000000",
-    "actors": "100000000000000000000000000000000000000",
-    "la rioja": "1000000000000000000000000000000000000000",
-    "castille y león": "10000000000000000000000000000000000000000",
-    "spain": "100000000000000000000000000000000000000000",
-    "spirituality": "1000000000000000000000000000000000000000000",
-    "rio": "10000000000000000000000000000000000000000000",
-    "czech film": "100000000000000000000000000000000000000000000",
-    "rock music": "1000000000000000000000000000000000000000000000",
-    "jazz": "10000000000000000000000000000000000000000000000",
-    "technology": "100000000000000000000000000000000000000000000000",
-    "health": "1000000000000000000000000000000000000000000000000",
-    "dental": "10000000000000000000000000000000000000000000000000",
-    "comics": "100000000000000000000000000000000000000000000000000",
-    "humor": "1000000000000000000000000000000000000000000000000000",
-    "literature": "10000000000000000000000000000000000000000000000000000",
-    "science": "100000000000000000000000000000000000000000000000000000",
-    "drama": "1000000000000000000000000000000000000000000000000000000",
-    "theater": "10000000000000000000000000000000000000000000000000000000",
-    "film": "100000000000000000000000000000000000000000000000000000000",
-    "concerts": "1000000000000000000000000000000000000000000000000000000000",
-    "contemporary art": "10000000000000000000000000000000000000000000000000000000000",
-    "opera": "100000000000000000000000000000000000000000000000000000000000",
-    "fitness": "1000000000000000000000000000000000000000000000000000000000000"
+    "music":            "1",
+    "french actors":    "10",
+    "actors":           "100",
+    "la rioja":         "1000",
+    "castille y león":  "10000",
+    "spain":            "100000",
+    "spirituality":     "1000000",
+    "rio":              "10000000",
+    "czech film":       "100000000",
+    "rock music":       "1000000000",
+    "jazz":             "10000000000",
+    "technology":       "100000000000",
+    "health":           "1000000000000",
+    "dental":           "10000000000000",
+    "comics":           "100000000000000",
+    "humor":            "1000000000000000",
+    "literature":       "10000000000000000",
+    "science":          "100000000000000000",
+    "drama":            "1000000000000000000",
+    "theater":          "10000000000000000000",
+    "film":             "100000000000000000000",
+    "concerts":         "1000000000000000000000",
+    "contemporary art": "10000000000000000000000",
+    "opera":            "100000000000000000000000",
+    "fitness":          "1000000000000000000000000"
   },
 
   privacySlider: 3,
@@ -203,6 +203,7 @@ module.exports = {
     return keywordArr.map(keyword => {
       return mapping[keyword];
     }).reduce((culmination, binString) => {
+      console.log('binString: ' + binString);
       let dec;
       if(binString === undefined) {
         dec = dec;
@@ -448,11 +449,22 @@ module.exports = {
   gatherOriginalVdna() {
     $("*[vdnaroot]").each((index, vdnaRootEl) => {
       let vdnaRootName = $(vdnaRootEl).attr("vdnaroot");
+      console.log('DEATH! -> ' + vdnaRootName);
       this.originalVdnaDivs[vdnaRootName] = [];
+
+      // original code -- only save child elements with a 'vdnaclass' attribute
+      /*
       $(vdnaRootEl).find("*[vdnaclass]").each((index, vdnaClassEl) => {
         this.originalVdnaDivs[vdnaRootName].push(vdnaClassEl.outerHTML);
       });
+      */
+
+      // new code -- save all child elements
+      $(vdnaRootEl).find("*").each((index, vdnaEl) => {
+        this.originalVdnaDivs[vdnaRootName].push(vdnaEl.outerHTML);
+      });
     });
+    console.log(this.originalVdnaDivs);
   },
 
   gatherVdna() {

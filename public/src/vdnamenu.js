@@ -440,6 +440,9 @@ var MyProfileInterests = React.createClass({
               <div className="panel-body">
                {interestNodes}
               </div>
+              <div>
+                {data.interestsToDecArr(Object.keys(this.props.interests))}
+              </div>
             </div>
           </div>
           <div className="col-sm-4 col-bottom">
@@ -1131,5 +1134,5 @@ var Privacy = React.createClass({
 });
 
 data.gatherOriginalVdna();
-data.gatherVdna();
-reRender();
+// data.gatherVdna();
+// reRender();
