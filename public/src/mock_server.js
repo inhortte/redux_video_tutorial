@@ -21,7 +21,7 @@ function getTwoCategories(state) {
   do {
     catTwo = state[getRandomInt(state.length)]
   } while(catOne === catTwo)
-  return [ catOne, catTwo ]
+    return [ catOne, catTwo ]
 }
 
 // --- redux is really not needed at this point
@@ -44,6 +44,15 @@ staticInterests.forEach(function(interest) {
     text: interest
   })
 })
+
+module.exports = {
+  sendOneCategory: function() {
+    return getOneCategory(staticInterests)
+  },
+  sendTwoCategories: function() {
+    return getTwoCategories(staticInterests)
+  }
+}
 
 // ---------- test
 console.log(getOneCategory(staticInterests))

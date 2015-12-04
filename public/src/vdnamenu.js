@@ -1136,5 +1136,6 @@ var Privacy = React.createClass({
 });
 
 data.gatherOriginalVdna();
+data.assignCategories(data.originalVdnaDivs)
 // data.gatherVdna();
 // reRender();

@@ -39,7 +39,7 @@ gulp.task('msBrowserify', function(cb) {
             .pipe(browserify({
               insertGlobals: true
             }))
-            .pipe(gulp.dest('public/js/ms_bundle'));
+            .pipe(gulp.dest('public/js/bundle'));
 });
 gulp.task('build', function(cb) {
   runSequence('babel', 'browserify', cb);

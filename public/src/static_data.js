@@ -1,3 +1,5 @@
+let mock = require('./mock_server')
+
 Array.prototype.add = function(arr) {
   var res = [];
   for(var i = 0; i < this.length || i < arr.length; i++) {
@@ -370,6 +372,12 @@ module.exports = {
   originalVdnaDivs: {},
   vdnaDivs: {},
 
+  _addAttributeToFirstTag(attr, html) {
+    let re = /^(<[\w\s]+)(>.*)$/
+    let matches = re.exec(html)
+    return matches[1] + ' ' + attr + matches[2]
+  },
+
   _appendDivs(vdnaRootName, numero) {
     for (let div of this.vdnaDivs[vdnaRootName][numero]) {
       $("div[vdnaroot='" + vdnaRootName + "']").append(div);
@@ -436,6 +444,19 @@ module.exports = {
       $(vdnaRootEl).find("*").each((index, vdnaEl) => {
         this.originalVdnaDivs[vdnaRootName].push(vdnaEl.outerHTML);
       });
+    });
+  },
+
+  // ---- { rootNode: [ div, div, div, ....] }
+  assignCategories(json) {
+    let that = this
+    let rootNodes = Object.keys(json)
+    rootNodes.map(function(rootNode) {
+      console.log('inside map - considering rootNode ' + rootNode);
+      json[rootNode].forEach(function(div) {
+        let category = mock.sendOneCategory()
+        console.log('and the modified html is ' + that._addAttributeToFirstTag('vdnaclass="' + category + '"', div))
+      })
     });
   },
 
