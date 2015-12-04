@@ -1,9 +1,11 @@
+let React = require('react')
+let ReactDOM = require('react-dom')
 let Moment = require('moment');
 let data = require('./static_data');
 let docCookies = require('./cookie');
 
 function reRender() {
-  React.render(
+  ReactDOM.render(
     <VdnaMenu tabList={tabList} />,
     document.getElementById('vdnamenu')
   );

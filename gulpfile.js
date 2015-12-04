@@ -12,8 +12,9 @@ var noLimpies = ['cookie.js', 'thurk.js'];
 
 var babelPaths = {
   vdna: [path.join(srcDir, '*.js')],
-  dest: jsDir
-  //sourceRoot: path.join(__dirname, 'public/js')
+  mock_server: srcDir + '/mock_server.js',
+  dest: jsDir,
+  ms_dest: jsDir
 };
 gulp.task('clean', function() {
   del([
@@ -23,6 +24,23 @@ gulp.task('clean', function() {
     '!' + path.join(jsDir, 'thurk.js')
   ]);
 });
+gulp.task('ms', function(cb) {
+  runSequence('msBabel', 'msBrowserify', cb);
+});
+gulp.task('msBabel', function(cb) {
+  return gulp.src(babelPaths.mock_server)
+            .pipe(babel({
+              presets: ['es2015']
+            }))
+            .pipe(gulp.dest(babelPaths.ms_dest));
+});
+gulp.task('msBrowserify', function(cb) {
+  return gulp.src('public/js/mock_server.js')
+            .pipe(browserify({
+              insertGlobals: true
+            }))
+            .pipe(gulp.dest('public/js/ms_bundle'));
+});
 gulp.task('build', function(cb) {
   runSequence('babel', 'browserify', cb);
 });
@@ -30,9 +48,8 @@ gulp.task('babel', function() {
   return gulp.src(babelPaths.vdna)
              .pipe(sourcemaps.init())
              .pipe(babel({
-               sourceMaps: 'inline'
+               presets: ['es2015', 'react']
              }))
-    // .pipe(sourcemaps.write('.', { sourceRoot: babelPaths.sourceRoot }))
              .pipe(gulp.dest(babelPaths.dest));
 });
 gulp.task('browserify', function() {

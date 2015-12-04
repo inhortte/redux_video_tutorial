@@ -3,28 +3,32 @@
   "version": "0.1.0",
   "repository": {},
   "browserify": {
-    "transform": [ "babelify", "reactify" ]
+    "transform": [
+      "babelify"
+    ]
   },
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
-    "http-server": "^0.7.5",
-    "request": "*",
+    "babel-core": "^6.1.21",
+    "babel-loader": "^6.1.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
     "babelify": "*",
-    "reactify": "*",
-    "react": "*",
-    "react-redux": "*",
-    "moment": "*",
     "bootstrap": "*",
-    "livereactload": "*",
+    "del": "*",
     "gulp": "*",
-    "gulp-babel": "*",
+    "gulp-babel": "^6.1.1",
     "gulp-browserify": "*",
     "gulp-sourcemaps": "*",
-    "source-map-support": "*",
+    "http-server": "^0.7.5",
+    "livereactload": "*",
+    "moment": "*",
+    "react": "*",
+    "react-dom": "*",
+    "redux": "*",
+    "request": "*",
     "run-sequence": "*",
-    "del": "*"
+    "source-map-support": "*"
   },
   "engines": {
     "node": ">=0.10.0"

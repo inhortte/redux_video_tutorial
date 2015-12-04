@@ -1,29 +1,3 @@
-// -----------------------------------
-// { categoryName:
-//   { interestName:
-//     { source: 'facebook',
-//       clicks: 5,
-//       added: Date.now() },
-//     ...
-// -----------------------------------
-
-var tabList = [
-  { id: 1, href: 'profile', text: 'Edit My Profile', selected: true },
-  { id: 2, href: 'notifications', text: 'View Notifications', selected: false },
-  { id: 3, href: 'import', text: 'Import and Sync', selected: false },
-  { id: 4, href: 'settings', text: 'Change Settings', selected: false },
-  { id: 6, href: 'about', text: 'About', selected: false }
-];
-
-/*
-function reRender() {
-  React.render(
-    <VdnaMenu tabList={tabList} />,
-    document.getElementById('vdnamenu')
-  );
-};
-*/
-
 Array.prototype.add = function(arr) {
   var res = [];
   for(var i = 0; i < this.length || i < arr.length; i++) {
@@ -449,7 +423,6 @@ module.exports = {
   gatherOriginalVdna() {
     $("*[vdnaroot]").each((index, vdnaRootEl) => {
       let vdnaRootName = $(vdnaRootEl).attr("vdnaroot");
-      console.log('DEATH! -> ' + vdnaRootName);
       this.originalVdnaDivs[vdnaRootName] = [];
 
       // original code -- only save child elements with a 'vdnaclass' attribute
@@ -464,7 +437,6 @@ module.exports = {
         this.originalVdnaDivs[vdnaRootName].push(vdnaEl.outerHTML);
       });
     });
-    console.log(this.originalVdnaDivs);
   },
 
   gatherVdna() {
