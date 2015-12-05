@@ -28,7 +28,8 @@
     "redux": "*",
     "request": "*",
     "run-sequence": "*",
-    "expect": "^1.13.0"
+    "expect": "^1.13.0",
+    "deep-freeze": "*"
   },
   "engines": {
     "node": ">=0.10.0"

@@ -2,36 +2,13 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import expect, { createSpy, spyOn, isSpy } from 'expect'
+var deepFreeze = require('deep-freeze')
 
 const staticInterests = [ 'music', 'french actors', 'actors', 'spirituality', 'czech film', 'rock music', 'world music', 'jazz', 'technology', 'health', 'dental', 'comics', 'humor', 'literature', 'science', 'drama', 'theater', 'film', 'concerts', 'contemporary art', 'opera', 'fitness' ]
-
-// -------------- html testing helpers --- after react, this is not used
-
-const appendDivToBody = (text) => {
-  let el = document.createElement("div")
-  let textEl = document.createTextNode(text)
-  el.appendChild(textEl)
-  document.body.appendChild(el)
-}
-
-// -----------------------------------
 
 // from ZERO to n - 1
 const getRandomInt = (n) => {
   return Math.floor(Math.random() * n);
-}
-
-const getOneCategory = (state) => {
-  return [ state[getRandomInt(state.length)] ]
-}
-
-const getTwoCategories = (state) => {
-  let catOne = getOneCategory(state)[0]
-  let catTwo
-  do {
-    catTwo = state[getRandomInt(state.length)]
-  } while(catOne === catTwo)
-    return [ catOne, catTwo ]
 }
 
 const addAttributesToFirstTag = (attr, html) => {
@@ -61,6 +38,35 @@ const createStore = (reducer) => {
 }
 
 // ------------------------------
+
+/*
+ Simply append the first Category to the end of the passed list
+ I keep forgetting these are just INDEXES to staticInterests.
+*/
+const addToCategoryList = (catList) => {
+  return [...catList, 0]
+}
+
+const removeFromCategoryList = (index, catList) => {
+  return [...catList.slice(0, index), ...catList.slice(index + 1)]
+}
+
+const incrementInCategoryList = (index, catList) => {
+  let max = catList.length - 1
+  return [
+    ...catList.slice(0, index),
+    catList[index] === max ? max : catList[index] + 1,
+    ...catList.slice(index + 1)
+  ]
+}
+
+const decrementInCategoryList = (index, catList) => {
+  return [
+    ...catList.slice(0, index),
+    catList[index] === 0 ? 0 : catList[index] - 1,
+    ...catList.slice(index + 1)
+  ]
+}
 
 const category = (state = 0, action) => {
   switch(action.type) {
@@ -121,7 +127,7 @@ staticInterests.forEach(function(interest) {
 })
 */
 
-/* i'm not sure what to do with this at the moment
+/* this is what this js file is SUPPOSED to do
 module.exports = {
   addCategories: function(div) {
     let categories = getRandomInt(3) === 0 ? getTwoCategories(staticInterests) : getOneCategory(staticInterests)
@@ -138,8 +144,6 @@ module.exports = {
 */
 
 // ---------- test
-console.log(JSON.stringify(getOneCategory(staticInterests)))
-console.log(JSON.stringify(getTwoCategories(staticInterests)))
 
 expect(
   staticInterests[category(0, { type: 'NEXT_CATEGORY' })]
@@ -147,4 +151,49 @@ expect(
 expect(
   staticInterests[category(5, { type: 'PREVIOUS_CATEGORY' })]
 ).toEqual('czech film')
+
+// ------ for a list of cats
+
+const testAddToCategoryList = () => {
+  const catsBefore = []
+  const catsAfter = [0]
+  deepFreeze(catsBefore)
+  expect(
+    addToCategoryList(catsBefore)
+  ).toEqual(catsAfter)
+}
+testAddToCategoryList()
+
+const testRemoveFromCategoryList = () => {
+  const catsBefore = ['music', 'drama']
+  const catsAfter = ['music']
+  deepFreeze(catsBefore)
+  expect(
+    removeFromCategoryList(1, catsBefore)
+  ).toEqual(catsAfter)
+}
+testRemoveFromCategoryList()
+
+// I'm not testing edge cases right now (ie, when something in catsBefore is the maximum)
+const testIncrementInCategoryList = () => {
+  const catsBefore = [0, 1, 8, 7]
+  const catsAfter = [0, 1, 9, 7]
+  deepFreeze(catsBefore)
+  expect(
+    incrementInCategoryList(2, catsBefore)
+  ).toEqual(catsAfter)
+}
+const testDecrementInCategoryList = () => {
+  const catsBefore = [0, 1, 8, 7]
+  const catsAfter = [0, 0, 8, 7]
+  deepFreeze(catsBefore)
+  expect(
+    decrementInCategoryList(1, catsBefore)
+  ).toEqual(catsAfter)
+}
+testIncrementInCategoryList()
+testDecrementInCategoryList()
+
+// --------------
+
 console.log('tests passed')

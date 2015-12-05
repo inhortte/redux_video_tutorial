@@ -41,6 +41,10 @@ gulp.task('msBrowserify', function(cb) {
             }))
             .pipe(gulp.dest('public/js/bundle'));
 });
+gulp.task('watchMs', function() {
+  gulp.watch('public/src/mock_server.js', ['ms']);
+});
+
 gulp.task('build', function(cb) {
   runSequence('babel', 'browserify', cb);
 });
