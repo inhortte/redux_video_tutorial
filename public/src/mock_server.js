@@ -62,8 +62,7 @@ const createStore = (reducer) => {
 
 // ------------------------------
 
-// --- redux is really not needed at this point (it's only used for ADD_CATEGORY)
-const store = (state = 0, action) => {
+const category = (state = 0, action) => {
   switch(action.type) {
     case 'PREVIOUS_CATEGORY':
       return state === 0 ? 0 : state - 1
@@ -76,7 +75,13 @@ const store = (state = 0, action) => {
   }
 }
 
-const Store = ({
+/*
+ A "dumb" component contains no business logic.
+ It only specifies how the current application state
+ transforms into renderable output, as well as how
+ callbacks (passed as props) are bound to event handlers.
+*/
+const Category = ({
   value, nextInterest, previousInterest, randomInterest
 }) => (
   <div>
@@ -87,12 +92,12 @@ const Store = ({
   </div>
 )
 
-const categories = createStore(store)
+// The redux store
+const categories = createStore(category)
 
 const render = () => {
-
   ReactDOM.render(
-    <Store
+    <Category
       value={staticInterests[categories.getState()]}
       nextInterest={() => categories.dispatch({ type: 'NEXT_CATEGORY' })}
       previousInterest={() => categories.dispatch({ type: 'PREVIOUS_CATEGORY' })}
@@ -104,8 +109,6 @@ const render = () => {
 
 categories.subscribe(render)
 render()
-
-// categories.dispatch({ type: 'ADD_CATEGORY', text: 'leprosy' })
 
 /* the state will be the index of a single category now, not the whole array
  Add each category to 'categories', which is THE redux store
@@ -139,9 +142,9 @@ console.log(JSON.stringify(getOneCategory(staticInterests)))
 console.log(JSON.stringify(getTwoCategories(staticInterests)))
 
 expect(
-  staticInterests[store(0, { type: 'NEXT_CATEGORY' })]
+  staticInterests[category(0, { type: 'NEXT_CATEGORY' })]
 ).toEqual('french actors')
 expect(
-  staticInterests[store(5, { type: 'PREVIOUS_CATEGORY' })]
+  staticInterests[category(5, { type: 'PREVIOUS_CATEGORY' })]
 ).toEqual('czech film')
 console.log('tests passed')
