@@ -1,11 +1,20 @@
-import { createStore } from 'redux'
+// import { createStore } from 'redux'
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
-const ADD_CATEGORY          = 'ADD_CATEGORY'
-const SELECT_ONE_CATEGORY   = 'SELECT_ONE_CATEGORY'
-const SELECT_TWO_CATEGORIES = 'SELECT_TWO_CATEGORIES'
+const staticInterests = [ 'music', 'french actors', 'actors', 'spirituality', 'czech film', 'rock music', 'world music', 'jazz', 'technology', 'health', 'dental', 'comics', 'humor', 'literature', 'science', 'drama', 'theater', 'film', 'concerts', 'contemporary art', 'opera', 'fitness' ]
 
-let staticInterests = [ 'music', 'french actors', 'actors', 'spirituality', 'czech film', 'rock music', 'world music', 'jazz', 'technology', 'health', 'dental', 'comics', 'humor', 'literature', 'science', 'drama', 'theater', 'film', 'concerts', 'contemporary art', 'opera', 'fitness' ]
+// -------------- html testing helpers --- after react, this is not used
+
+const appendDivToBody = (text) => {
+  let el = document.createElement("div")
+  let textEl = document.createTextNode(text)
+  el.appendChild(textEl)
+  document.body.appendChild(el)
+}
+
+// -----------------------------------
 
 // from ZERO to n - 1
 const getRandomInt = (n) => {
@@ -31,25 +40,75 @@ const addAttributesToFirstTag = (attr, html) => {
     return matches[1] + ' ' + attr + matches[2]
 }
 
+// --- reimplementing createStore
+
+const createStore = (reducer) => {
+  let state
+  let listeners = []
+  const getState = () => state
+  const dispatch = (action) => {
+    state = reducer(state, action)
+    listeners.forEach((listener) => listener())
+  }
+  const subscribe = (listener) => {
+    listeners.push(listener)
+    return () => {
+      listeners.filter(l => l !== listener)
+    }
+  }
+  dispatch({})
+  return { getState, dispatch, subscribe }
+}
+
+// ------------------------------
+
 // --- redux is really not needed at this point (it's only used for ADD_CATEGORY)
-const store = (state = [], action) => {
+const store = (state = 0, action) => {
   switch(action.type) {
-    case ADD_CATEGORY:
-      return state.concat(action.text.trim())
-    case SELECT_ONE_CATEGORY:
-      return [ state[getRandomInt(state.length)] ]
-    case SELECT_TWO_CATEGORIES:
-      return getTwoCategories(state)
+    case 'PREVIOUS_CATEGORY':
+      return state === 0 ? 0 : state - 1
+    case 'NEXT_CATEGORY':
+      return (state === staticInterests.length - 1) ? staticInterests.length - 1 : state + 1
+    case 'RANDOM_CATEGORY':
+      return getRandomInt(staticInterests.length)
     default:
       return state
   }
 }
 
-let categories = createStore(store, [])
+const Store = ({
+  value, nextInterest, previousInterest, randomInterest
+}) => (
+  <div>
+    <p>{value}</p>
+    <button onClick={previousInterest}>-</button>
+    <button onClick={nextInterest}>+</button>
+    <button onClick={randomInterest}>?</button>
+  </div>
+)
 
-/*
+const categories = createStore(store)
+
+const render = () => {
+
+  ReactDOM.render(
+    <Store
+      value={staticInterests[categories.getState()]}
+      nextInterest={() => categories.dispatch({ type: 'NEXT_CATEGORY' })}
+      previousInterest={() => categories.dispatch({ type: 'PREVIOUS_CATEGORY' })}
+      randomInterest={() => categories.dispatch({ type: 'RANDOM_CATEGORY' })}
+    />,
+    document.getElementById("mockServer")
+  )
+}
+
+categories.subscribe(render)
+render()
+
+// categories.dispatch({ type: 'ADD_CATEGORY', text: 'leprosy' })
+
+/* the state will be the index of a single category now, not the whole array
  Add each category to 'categories', which is THE redux store
-*/
 staticInterests.forEach(function(interest) {
   let thurk = categories.dispatch({
     type: ADD_CATEGORY,
@@ -57,7 +116,9 @@ staticInterests.forEach(function(interest) {
   })
   // console.log(thurk)
 })
+*/
 
+/* i'm not sure what to do with this at the moment
 module.exports = {
   addCategories: function(div) {
     let categories = getRandomInt(3) === 0 ? getTwoCategories(staticInterests) : getOneCategory(staticInterests)
@@ -71,18 +132,16 @@ module.exports = {
     return getTwoCategories(staticInterests)
   }
 }
+*/
 
 // ---------- test
 console.log(JSON.stringify(getOneCategory(staticInterests)))
 console.log(JSON.stringify(getTwoCategories(staticInterests)))
 
 expect(
-  store([], { type: ADD_CATEGORY, text: 'actors' })
-).toInclude('actors')
+  staticInterests[store(0, { type: 'NEXT_CATEGORY' })]
+).toEqual('french actors')
 expect(
-  store(staticInterests, { type: SELECT_ONE_CATEGORY }).length
-).toEqual(1)
-expect(
-  store(staticInterests, { type: SELECT_TWO_CATEGORIES }).length
-).toEqual(2)
+  staticInterests[store(5, { type: 'PREVIOUS_CATEGORY' })]
+).toEqual('czech film')
 console.log('tests passed')
