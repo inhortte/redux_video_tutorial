@@ -28,7 +28,7 @@
     "redux": "*",
     "request": "*",
     "run-sequence": "*",
-    "source-map-support": "*"
+    "expect": "^1.13.0"
   },
   "engines": {
     "node": ">=0.10.0"

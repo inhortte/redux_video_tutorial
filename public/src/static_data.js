@@ -298,67 +298,6 @@ module.exports = {
     return obj1;
   },
 
-  facebook: [
-    {
-      cnet:        { source: 'facebook', clicks: 0, added: Date.now(), selected: true,
-                     related: 'technology,helth,science' },
-      "jazz dock": { source: 'facebook', clicks: 0, added: Date.now(), selected: true,
-                     related: 'music,jazz,concerts' }
-    },
-    {
-      "new scientist": { source: 'facebook', clicks: 0, added: Date.now(), selected: true,
-                         related: 'science,literature' },
-      "divadlo archa": { source: 'facebook', clicks: 0, added: Date.now(), selected: true,
-                         related: 'music,theater,concerts' }
-    },
-    {
-      hiking:    { source: 'facebook', clicks: 0, added: Date.now(), selected: true,
-                   related: 'health,fitness' },
-      recycling: { source: 'facebook', clicks: 0, added: Date.now(), selected: true,
-                   related: 'technology' }
-    }
-  ],
-  newLikes: {},
-  totalFacebookSync: 0,
-
-  pinterest: [
-    {
-      mammals: { source: 'pintrest', clicks: 0, added: Date.now(), selected: true,
-                 related: 'science' },
-      spain:   { source: 'pintrest', clicks: 0, added: Date.now(), selected: true,
-                 related: 'literature,film,music' }
-    },
-    {
-      prague:  { source: 'pintrest', clicks: 0, added: Date.now(), selected: true,
-                 related: 'literature,film,music' },
-      ferrets: { source: 'pintrest', clicks: 0, added: Date.now(), selected: true,
-                 related: 'humor,science' }
-    },
-    {
-      "avant garde":   { source: 'pintrest', clicks: 0, added: Date.now(), selected: true,
-                         related: 'music,drama,theater,film' },
-      synchronicities: { source: 'pintrest', clicks: 0, added: Date.now(), selected: true,
-                         related: 'spirituality,literature,film' }
-    }
-  ],
-  totalPinterestSync: 0,
-
-  facebookImportReset() {
-    this.facebook = [];
-    this.totalFacebookSync = 0;
-  },
-
-  importNewLike(like) {
-    this.newLikes[like.toLowerCase()] = { source: 'facebook', clicks: 0, added: Date.now(), selected: true, related: '' };
-  },
-
-  pushNewLikes() {
-    if(Object.getOwnPropertyNames(this.newLikes).length > 0) {
-      this.facebook.unshift(this.newLikes);
-      this.newLikes = {};
-    }
-  },
-
   /* -------------------------------------------------
    find all divs marked with the attribute vdnaroot.
    create an array with all children marked with the
@@ -372,11 +311,13 @@ module.exports = {
   originalVdnaDivs: {},
   vdnaDivs: {},
 
+  // ---- it seems like this should be done on the server (moved to server)
   _addAttributeToFirstTag(attr, html) {
     let re = /^(<[\w\s]+)(>.*)$/
     let matches = re.exec(html)
     return matches[1] + ' ' + attr + matches[2]
   },
+  // ------
 
   _appendDivs(vdnaRootName, numero) {
     for (let div of this.vdnaDivs[vdnaRootName][numero]) {
@@ -454,8 +395,8 @@ module.exports = {
     rootNodes.map(function(rootNode) {
       console.log('inside map - considering rootNode ' + rootNode);
       json[rootNode].forEach(function(div) {
-        let category = mock.sendOneCategory()
-        console.log('and the modified html is ' + that._addAttributeToFirstTag('vdnaclass="' + category + '"', div))
+        let newDiv = mock.addCategories(div)
+        console.log('And the html with cats is: ' + newDiv)
       })
     });
   },

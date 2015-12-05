@@ -53,7 +53,7 @@ gulp.task('babel', function() {
              .pipe(gulp.dest(babelPaths.dest));
 });
 gulp.task('browserify', function() {
-  return gulp.src('public/js/vdnamenu.js')
+  return gulp.src(['public/js/vdnamenu.js', 'public/js/mock_server.js'])
              .pipe(browserify({
                insertGlobals: true,
                debug: true
