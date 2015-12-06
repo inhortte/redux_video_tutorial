@@ -1,10 +1,10 @@
 // import { createStore } from 'redux'
+import Immutable from 'immutable'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import expect, { createSpy, spyOn, isSpy } from 'expect'
-var deepFreeze = require('deep-freeze')
 
-const staticInterests = [ 'music', 'french actors', 'actors', 'spirituality', 'czech film', 'rock music', 'world music', 'jazz', 'technology', 'health', 'dental', 'comics', 'humor', 'literature', 'science', 'drama', 'theater', 'film', 'concerts', 'contemporary art', 'opera', 'fitness' ]
+const cats = Immutable.List.of('music', 'french actors', 'actors', 'spirituality', 'czech film', 'rock music', 'world music', 'jazz', 'technology', 'health', 'dental', 'comics', 'humor', 'literature', 'science', 'drama', 'theater', 'film', 'concerts', 'contemporary art', 'opera', 'fitness')
 
 // from ZERO to n - 1
 const getRandomInt = (n) => {
@@ -37,45 +37,50 @@ const createStore = (reducer) => {
   return { getState, dispatch, subscribe }
 }
 
-// ------------------------------
+// ------------------------------ most of this is from the video tutorial
 
 /*
  Simply append the first Category to the end of the passed list
- I keep forgetting these are just INDEXES to staticInterests.
+ I keep forgetting these are just INDEXES to cats.
 */
 const addToCategoryList = (catList) => {
-  return [...catList, 0]
+  return catList.push(0)
 }
 
 const removeFromCategoryList = (index, catList) => {
-  return [...catList.slice(0, index), ...catList.slice(index + 1)]
+  return catList.splice(index, 1)
 }
 
 const incrementInCategoryList = (index, catList) => {
-  let max = catList.length - 1
-  return [
-    ...catList.slice(0, index),
-    catList[index] === max ? max : catList[index] + 1,
-    ...catList.slice(index + 1)
-  ]
+  let max = catList.size - 1
+  return catList.update(index, (value) => {
+    return value === max ? max : value + 1
+  })
 }
 
 const decrementInCategoryList = (index, catList) => {
-  return [
-    ...catList.slice(0, index),
-    catList[index] === 0 ? 0 : catList[index] - 1,
-    ...catList.slice(index + 1)
-  ]
+  return catList.update(index, (value) => {
+    return value === 0 ? 0 : value - 1
+  })
 }
+
+/*
+ Toggle todo takes a todo object and flips its 'completed' field
+*/
+const toggleTodo = (todo) => {
+//  return Object.assign({}, todo, { complete: !todo.complete })
+}
+
+// ---------------------------------------------------------------------
 
 const category = (state = 0, action) => {
   switch(action.type) {
     case 'PREVIOUS_CATEGORY':
       return state === 0 ? 0 : state - 1
     case 'NEXT_CATEGORY':
-      return (state === staticInterests.length - 1) ? staticInterests.length - 1 : state + 1
+      return (state === cats.size - 1) ? cats.size - 1 : state + 1
     case 'RANDOM_CATEGORY':
-      return getRandomInt(staticInterests.length)
+      return getRandomInt(cats.size)
     default:
       return state
   }
@@ -104,7 +109,7 @@ const categories = createStore(category)
 const render = () => {
   ReactDOM.render(
     <Category
-      value={staticInterests[categories.getState()]}
+      value={cats.get([categories.getState()])}
       nextInterest={() => categories.dispatch({ type: 'NEXT_CATEGORY' })}
       previousInterest={() => categories.dispatch({ type: 'PREVIOUS_CATEGORY' })}
       randomInterest={() => categories.dispatch({ type: 'RANDOM_CATEGORY' })}
@@ -118,27 +123,26 @@ render()
 
 /* the state will be the index of a single category now, not the whole array
  Add each category to 'categories', which is THE redux store
-staticInterests.forEach(function(interest) {
-  let thurk = categories.dispatch({
+cats.forEach(function(interest) {
+  return categories.dispatch({
     type: ADD_CATEGORY,
     text: interest
   })
-  // console.log(thurk)
 })
 */
 
-/* this is what this js file is SUPPOSED to do
+/* this is what this js file is SUPPOSED to do (move to socket.io)
 module.exports = {
   addCategories: function(div) {
-    let categories = getRandomInt(3) === 0 ? getTwoCategories(staticInterests) : getOneCategory(staticInterests)
+    let categories = getRandomInt(3) === 0 ? getTwoCategories(cats) : getOneCategory(cats)
     return addAttributesToFirstTag('vdnaclass="' + categories.join(',') + '"', div)
   },
 
   sendOneCategory: function() {
-    return getOneCategory(staticInterests)
+    return getOneCategory(cats)
   },
   sendTwoCategories: function() {
-    return getTwoCategories(staticInterests)
+    return getTwoCategories(cats)
   }
 }
 */
@@ -146,54 +150,67 @@ module.exports = {
 // ---------- test
 
 expect(
-  staticInterests[category(0, { type: 'NEXT_CATEGORY' })]
+  cats.get(category(0, { type: 'NEXT_CATEGORY' }))
 ).toEqual('french actors')
 expect(
-  staticInterests[category(5, { type: 'PREVIOUS_CATEGORY' })]
+  cats.get(category(5, { type: 'PREVIOUS_CATEGORY' }))
 ).toEqual('czech film')
+console.log('Next/Prev category tests passed')
 
 // ------ for a list of cats
 
 const testAddToCategoryList = () => {
-  const catsBefore = []
-  const catsAfter = [0]
-  deepFreeze(catsBefore)
+  const catsBefore = Immutable.List.of()
+  const catsAfter = Immutable.List.of(0)
   expect(
-    addToCategoryList(catsBefore)
-  ).toEqual(catsAfter)
+    addToCategoryList(catsBefore).toArray()
+  ).toEqual(catsAfter.toArray())
 }
 testAddToCategoryList()
 
 const testRemoveFromCategoryList = () => {
-  const catsBefore = ['music', 'drama']
-  const catsAfter = ['music']
-  deepFreeze(catsBefore)
+  const catsBefore = Immutable.List.of(0, 5)
+  const catsAfter = Immutable.List.of(5)
   expect(
-    removeFromCategoryList(1, catsBefore)
-  ).toEqual(catsAfter)
+    removeFromCategoryList(0, catsBefore).toArray()
+  ).toEqual(catsAfter.toArray())
 }
 testRemoveFromCategoryList()
+console.log('add / remove tests passed')
 
 // I'm not testing edge cases right now (ie, when something in catsBefore is the maximum)
 const testIncrementInCategoryList = () => {
-  const catsBefore = [0, 1, 8, 7]
-  const catsAfter = [0, 1, 9, 7]
-  deepFreeze(catsBefore)
+  const catsBefore = Immutable.List.of(0, 1, 8, 7)
+  const catsAfter = Immutable.List.of(0, 1, 9, 7)
   expect(
-    incrementInCategoryList(2, catsBefore)
-  ).toEqual(catsAfter)
+    incrementInCategoryList(2, catsBefore).toArray()
+  ).toEqual(catsAfter.toArray())
 }
 const testDecrementInCategoryList = () => {
-  const catsBefore = [0, 1, 8, 7]
-  const catsAfter = [0, 0, 8, 7]
-  deepFreeze(catsBefore)
+  const catsBefore = Immutable.List.of(0, 1, 8, 7)
+  const catsAfter = Immutable.List.of(0, 0, 8, 7)
   expect(
-    decrementInCategoryList(1, catsBefore)
-  ).toEqual(catsAfter)
+    decrementInCategoryList(1, catsBefore).toArray()
+  ).toEqual(catsAfter.toArray())
 }
 testIncrementInCategoryList()
 testDecrementInCategoryList()
+console.log('increment / decrement tests passed')
 
-// --------------
+// -------------- video tutorial todo hovno
+
+const testToggleTodo = () => {
+  const todoBefore = {
+    id: 0, text: 'Brush a pine marten', complete: false
+  }
+  const todoAfter = {
+    id: 0, text: 'Brush a pine marten', complete: true
+  }
+  deepFreeze(todoBefore)
+  expect(
+    toggleTodo(todoBefore)
+  ).toEqual(todoAfter)
+}
+//testToggleTodo()
 
 console.log('tests passed')
