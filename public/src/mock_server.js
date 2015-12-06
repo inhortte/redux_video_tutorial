@@ -85,8 +85,13 @@ const todos = (state = Immutable.List.of(), action) => {
 
 // ---------------------------------------------------------------------
 
-const category = (state = 0, action) => {
+/*
+ The state is a list of indexes into cats
+*/
+const category = (state = Immutable.List(), action) => {
   switch(action.type) {
+    case 'ADD_CATEGORY':
+      return state.push(0)
     case 'PREVIOUS_CATEGORY':
       return state === 0 ? 0 : state - 1
     case 'NEXT_CATEGORY':
@@ -97,6 +102,9 @@ const category = (state = 0, action) => {
       return state
   }
 }
+
+// The redux store - obviously none of this is working.
+const categories = createStore(category)
 
 /*
  A "dumb" component contains no business logic.
@@ -115,16 +123,33 @@ const Category = ({
   </div>
 )
 
-// The redux store
-const categories = createStore(category)
+const catList = categories.getState().map((catIndex) => {
+  return (
+    <Category
+      value={cats.get(categories.getState().get(catIndex))}
+      nextInterest={() => categories.dispatch({ type: 'NEXT_CATEGORY', index: catIndex })}
+      previousInterest={() => categories.dispatch({ type: 'PREVIOUS_CATEGORY', index: catIndex })}
+      randomInterest={() => categories.dispatch({ type: 'RANDOM_CATEGORY', index: catIndex })}
+    />
+  )
+}).join("\n")
+
+console.log(catList)
+
+const CategoryList = () => (
+  <div>
+    {catList}
+  </div>
+)
 
 const render = () => {
+  let catIndex = 0
   ReactDOM.render(
     <Category
-      value={cats.get([categories.getState()])}
-      nextInterest={() => categories.dispatch({ type: 'NEXT_CATEGORY' })}
-      previousInterest={() => categories.dispatch({ type: 'PREVIOUS_CATEGORY' })}
-      randomInterest={() => categories.dispatch({ type: 'RANDOM_CATEGORY' })}
+      value={cats.get(categories.getState().get(catIndex))}
+      nextInterest={() => categories.dispatch({ type: 'NEXT_CATEGORY', index: catIndex })}
+      previousInterest={() => categories.dispatch({ type: 'PREVIOUS_CATEGORY', index: catIndex })}
+      randomInterest={() => categories.dispatch({ type: 'RANDOM_CATEGORY', index: catIndex })}
     />,
     document.getElementById("mockServer")
   )
