@@ -68,7 +68,19 @@ const decrementInCategoryList = (index, catList) => {
  Toggle todo takes a todo object and flips its 'completed' field
 */
 const toggleTodo = (todo) => {
-//  return Object.assign({}, todo, { complete: !todo.complete })
+  return todo.update('complete', (value) => !value)
+}
+
+const todos = (state = Immutable.List.of(), action) => {
+  switch(action.type) {
+    case 'ADD_TODO':
+      return state.push(Immutable.Map({ text: action.text }).merge({
+        id: state.size,
+        complete: false
+      }))
+    default:
+      return state
+  }
 }
 
 // ---------------------------------------------------------------------
@@ -200,17 +212,62 @@ console.log('increment / decrement tests passed')
 // -------------- video tutorial todo hovno
 
 const testToggleTodo = () => {
-  const todoBefore = {
+  const todoBefore = Immutable.Map({
     id: 0, text: 'Brush a pine marten', complete: false
-  }
-  const todoAfter = {
+  })
+  const todoAfter = Immutable.Map({
     id: 0, text: 'Brush a pine marten', complete: true
-  }
-  deepFreeze(todoBefore)
+  })
   expect(
-    toggleTodo(todoBefore)
-  ).toEqual(todoAfter)
+    toggleTodo(todoBefore).toObject()
+  ).toEqual(todoAfter.toObject())
 }
-//testToggleTodo()
+testToggleTodo()
+
+const testAddTodo = () => {
+  const todo = Immutable.Map({
+    text: 'Brush a pine marten'
+  })
+  const stateBefore = Immutable.List.of()
+  const action = {
+    type: 'ADD_TODO',
+    text: todo.get('text')
+  }
+  const stateAfter = Immutable.List.of(Immutable.Map(todo).merge({
+    id: 0,
+    complete: false
+  }))
+  expect(
+    Immutable.is(todos(stateBefore, action), stateAfter)
+  ).toEqual(true)
+}
+testAddTodo()
+
+const testAddAnotherTodo = () => {
+  const todo = Immutable.Map({
+    text: 'Kill Christián'
+  })
+  const stateBefore = Immutable.List.of(Immutable.Map({
+    id: 0,
+    text: 'Brush a pine marten',
+    complete: false
+  }))
+  const action = {
+    type: 'ADD_TODO',
+    text: todo.get('text')
+  }
+  const stateAfter = Immutable.List.of(Immutable.Map({
+    id: 0,
+    text: 'Brush a pine marten',
+    complete: false
+  }), Immutable.Map(todo).merge({
+    id: 1,
+    complete: false
+  }))
+  expect(
+    Immutable.is(todos(stateBefore, action), stateAfter)
+  ).toEqual(true)
+}
+testAddAnotherTodo()
 
 console.log('tests passed')
