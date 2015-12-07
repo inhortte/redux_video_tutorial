@@ -1,8 +1,13 @@
 // import { createStore } from 'redux'
 import Immutable from 'immutable'
+import $ from 'jquery'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import expect, { createSpy, spyOn, isSpy } from 'expect'
+
+// ----- socket.io
+const socket = require('socket.io-client')('http://localhost:9187')
+// ---------------
 
 const cats = Immutable.List.of('music', 'french actors', 'actors', 'spirituality', 'czech film', 'rock music', 'world music', 'jazz', 'technology', 'health', 'dental', 'comics', 'humor', 'literature', 'science', 'drama', 'theater', 'film', 'concerts', 'contemporary art', 'opera', 'fitness')
 
@@ -11,11 +16,22 @@ const getRandomInt = (n) => {
   return Math.floor(Math.random() * n);
 }
 
-const addAttributesToFirstTag = (attr, html) => {
-  let re = /^(<[\w\s]+)(>.*)$/
-  let matches = re.exec(html)
-    return matches[1] + ' ' + attr + matches[2]
+// ---------------- the actual implementation required by james
+
+const gatherOriginalVdna = () => {
+  let vdnaDivs = {}
+  $("*[vdnaroot]").each((index, vdnaRootEl) => {
+    let vdnaRootName = $(vdnaRootEl).attr("vdnaroot");
+    vdnaDivs[vdnaRootName] = [];
+
+    $(vdnaRootEl).find("*").each((index, vdnaEl) => {
+      vdnaDivs[vdnaRootName].push(vdnaEl.outerHTML);
+    });
+  });
+  return Immutable.fromJS(vdnaDivs)
 }
+
+// -----------------------------------------------------------
 
 // --- reimplementing createStore
 
@@ -64,20 +80,31 @@ const decrementInCategoryList = (index, catList) => {
   })
 }
 
-/*
- Toggle todo takes a todo object and flips its 'completed' field
-*/
-const toggleTodo = (todo) => {
-  return todo.update('complete', (value) => !value)
+const todo = (state, action) => {
+  switch(action.type) {
+    case 'ADD_TODO':
+      return Immutable.Map({
+        id: action.id,
+        text: action.text,
+        complete: false
+      })
+    case 'TOGGLE_TODO':
+      if(state.get('id') === action.id) {
+        return state.update('complete', (v) => !v)
+      } else {
+        return state
+      }
+    default:
+      return state
+  }
 }
 
 const todos = (state = Immutable.List.of(), action) => {
   switch(action.type) {
     case 'ADD_TODO':
-      return state.push(Immutable.Map({ text: action.text }).merge({
-        id: state.size,
-        complete: false
-      }))
+      return state.push(todo(undefined, Immutable.Map(action).merge({ id: state.size }).toObject()))
+    case 'TOGGLE_TODO':
+      return state.map(t => todo(t, action))
     default:
       return state
   }
@@ -86,25 +113,50 @@ const todos = (state = Immutable.List.of(), action) => {
 // ---------------------------------------------------------------------
 
 /*
- The state is a list of indexes into cats
+ The state is { id: x, index: y }
 */
-const category = (state = Immutable.List(), action) => {
+const category = (state, action) => {
   switch(action.type) {
     case 'ADD_CATEGORY':
-      return state.push(0)
-    case 'PREVIOUS_CATEGORY':
-      return state === 0 ? 0 : state - 1
+      return Immutable.Map({ id: action.id, index: 0 })
     case 'NEXT_CATEGORY':
-      return (state === cats.size - 1) ? cats.size - 1 : state + 1
+      console.log('state: ' + state)
+      console.log('action: ' + JSON.stringify(action))
+      let max = cats.size - 1
+      if(state.get('id') === action.id) {
+        return state.update('index', v => v === max ? max : v + 1)
+      }
+      return state
+    case 'PREVIOUS_CATEGORY':
+      if(state.get('id') === action.id) {
+        return state.update('index', v => v === 0 ? 0 : v - 1)
+      }
+      return state
     case 'RANDOM_CATEGORY':
-      return getRandomInt(cats.size)
+      if(state.get('id') === action.id) {
+        return getRandomInt(cats.size)
+      }
+      return state
     default:
       return state
   }
 }
 
-// The redux store - obviously none of this is working.
-const categories = createStore(category)
+/*
+   The state is a list of indexes into cats
+ */
+const categories = (state = Immutable.List(), action) => {
+  switch(action.type) {
+    case 'ADD_CATEGORY':
+      return state.push(category(undefined, { type: action.type, id: state.size }))
+    case 'PREVIOUS_CATEGORY':
+    case 'NEXT_CATEGORY':
+    case 'RANDOM_CATEGORY':
+      return state.map(c => category(c, action))
+    default:
+      return state
+  }
+}
 
 /*
  A "dumb" component contains no business logic.
@@ -112,6 +164,7 @@ const categories = createStore(category)
  transforms into renderable output, as well as how
  callbacks (passed as props) are bound to event handlers.
 */
+/*
 const Category = ({
   value, nextInterest, previousInterest, randomInterest
 }) => (
@@ -157,7 +210,7 @@ const render = () => {
 
 categories.subscribe(render)
 render()
-
+*/
 /* the state will be the index of a single category now, not the whole array
  Add each category to 'categories', which is THE redux store
 cats.forEach(function(interest) {
@@ -168,86 +221,94 @@ cats.forEach(function(interest) {
 })
 */
 
-/* this is what this js file is SUPPOSED to do (move to socket.io)
-module.exports = {
-  addCategories: function(div) {
-    let categories = getRandomInt(3) === 0 ? getTwoCategories(cats) : getOneCategory(cats)
-    return addAttributesToFirstTag('vdnaclass="' + categories.join(',') + '"', div)
-  },
-
-  sendOneCategory: function() {
-    return getOneCategory(cats)
-  },
-  sendTwoCategories: function() {
-    return getTwoCategories(cats)
-  }
-}
-*/
-
 // ---------- test
 
-expect(
-  cats.get(category(0, { type: 'NEXT_CATEGORY' }))
-).toEqual('french actors')
-expect(
-  cats.get(category(5, { type: 'PREVIOUS_CATEGORY' }))
-).toEqual('czech film')
-console.log('Next/Prev category tests passed')
-
-// ------ for a list of cats
-
-const testAddToCategoryList = () => {
+const testAddCategory = () => {
+  console.log('testAddCategory')
   const catsBefore = Immutable.List.of()
-  const catsAfter = Immutable.List.of(0)
+  const catsAfter = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }))
   expect(
-    addToCategoryList(catsBefore).toArray()
-  ).toEqual(catsAfter.toArray())
+    Immutable.is(categories(catsBefore, { type: 'ADD_CATEGORY' }), catsAfter)
+  ).toEqual(true)
 }
-testAddToCategoryList()
 
-const testRemoveFromCategoryList = () => {
-  const catsBefore = Immutable.List.of(0, 5)
-  const catsAfter = Immutable.List.of(5)
+const testNextCategory = () => {
+  console.log('testNextCategory')
+  const catsBefore = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }),
+                                       Immutable.Map({ id: 1, index: 0 }))
+  const catsAfter = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }),
+                                      Immutable.Map({ id: 1, index: 1 }))
+  console.log(catsBefore.constructor.name)
+  console.log(categories(catsBefore, { type: 'NEXT_CATEGORY', id: 1 }).constructor.name)
   expect(
-    removeFromCategoryList(0, catsBefore).toArray()
-  ).toEqual(catsAfter.toArray())
+    Immutable.is(categories(catsBefore, { type: 'NEXT_CATEGORY', id: 1 }, catsAfter))
+  ).toEqual(true)
 }
-testRemoveFromCategoryList()
-console.log('add / remove tests passed')
 
-// I'm not testing edge cases right now (ie, when something in catsBefore is the maximum)
-const testIncrementInCategoryList = () => {
-  const catsBefore = Immutable.List.of(0, 1, 8, 7)
-  const catsAfter = Immutable.List.of(0, 1, 9, 7)
+const testPreviousCategoryZero = () => {
+  console.log('testPreviousCategory on 0')
+    const catsBefore = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }),
+                                         Immutable.Map({ id: 1, index: 0 }))
+    const catsAfter = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }),
+                                        Immutable.Map({ id: 1, index: 0 }))
   expect(
-    incrementInCategoryList(2, catsBefore).toArray()
-  ).toEqual(catsAfter.toArray())
+    Immutable.is(categories(catsBefore, { type: 'PREVIOUS_CATEGORY', id: 0 }, catsAfter))
+  ).toEqual(true)
 }
-const testDecrementInCategoryList = () => {
-  const catsBefore = Immutable.List.of(0, 1, 8, 7)
-  const catsAfter = Immutable.List.of(0, 0, 8, 7)
+
+const testPreviousCategory = () => {
+  console.log('testPreviousCategory')
+    const catsBefore = Immutable.List.of(Immutable.Map({ id: 0, index: 1 }),
+                                         Immutable.Map({ id: 1, index: 3 }),
+                                         Immutable.Map({ id: 2, index: 5 }))
+    const catsAfter = Immutable.List.of(Immutable.Map({ id: 0, index: 1 }),
+                                        Immutable.Map({ id: 1, index: 2 }),
+                                        Immutable.Map({ id: 2, index: 5 }))
   expect(
-    decrementInCategoryList(1, catsBefore).toArray()
-  ).toEqual(catsAfter.toArray())
+    Immutable.is(categories(catsBefore, { type: 'PREVIOUS_CATEGORY', id: 1 }, catsAfter))
+  ).toEqual(true)
 }
-testIncrementInCategoryList()
-testDecrementInCategoryList()
-console.log('increment / decrement tests passed')
+
+testAddCategory()
+// testNextCategory()
+// testPreviousCategoryZero()
+// testPreviousCategory()
+
+console.log('category tests passed')
+
+// -------------- vdna tests
+
+const testGatherOriginalVdnaRootNodes = () => {
+  console.log('testGatherOriginalVdnaRootNodes')
+  const originalVdna = gatherOriginalVdna()
+  expect(
+    Immutable.is(originalVdna.reduce((keys, _, key) => { return keys.add(key) }, Immutable.Set()),
+                 Immutable.Set.of('martens', 'minks', 'ferrets'))
+  ).toEqual(true)
+}
+testGatherOriginalVdnaRootNodes()
+
+const testGatherOriginalVdnaChildNodes = () => {
+  console.log('testGatherOriginalVdnaChildNodes')
+  const originalVdna = gatherOriginalVdna()
+  const firstChildren = originalVdna.reduce((children, child) => { return children.add(child.first()) }, Immutable.Set())
+  expect(
+    Immutable.is(firstChildren, Immutable.Set.of('<li>Henderson</li>', '<li>Rinaldo</li>', '<li>Malvada</li>'))
+  ).toEqual(true)
+}
+testGatherOriginalVdnaChildNodes()
+
+//console.log('testSendVdna')
+//socket.on('death', data => {
+//  console.log(data.text)
+//})
+console.log('testSendDiv')
+socket.emit('addCats', { div: '<li>leprosy is a <strong>very</strong> fine thing.</li>' })
+socket.on('sendDiv', data => {
+  console.log(data.div)
+})
 
 // -------------- video tutorial todo hovno
-
-const testToggleTodo = () => {
-  const todoBefore = Immutable.Map({
-    id: 0, text: 'Brush a pine marten', complete: false
-  })
-  const todoAfter = Immutable.Map({
-    id: 0, text: 'Brush a pine marten', complete: true
-  })
-  expect(
-    toggleTodo(todoBefore).toObject()
-  ).toEqual(todoAfter.toObject())
-}
-testToggleTodo()
 
 const testAddTodo = () => {
   const todo = Immutable.Map({
@@ -267,6 +328,7 @@ const testAddTodo = () => {
   ).toEqual(true)
 }
 testAddTodo()
+console.log('add a todo test passed')
 
 const testAddAnotherTodo = () => {
   const todo = Immutable.Map({
@@ -294,5 +356,29 @@ const testAddAnotherTodo = () => {
   ).toEqual(true)
 }
 testAddAnotherTodo()
+console.log('add another todo test passed')
+
+const testToggleTodo = () => {
+  const todo0 = Immutable.Map({ text: 'Brush a pine marten' })
+  const todo1 = Immutable.Map({ text: 'Kill Christián' })
+  const todo2 = Immutable.Map({ text: 'Pasea un poco' })
+  const addAction = (todo) => {
+    return {
+      type: 'ADD_TODO',
+      text: todo.get('text')
+    }
+  }
+  const toggleAction = {
+    type: 'TOGGLE_TODO',
+    id: 1
+  }
+  const state0 = todos(Immutable.List(), addAction(todo0))
+  const state1 = todos(state0, addAction(todo1))
+  const state2 = todos(state1, addAction(todo2))
+  expect(
+    todos(state2, toggleAction).get(1).get('complete')
+  ).toEqual(true)
+}
+testToggleTodo()
 
 console.log('tests passed')
