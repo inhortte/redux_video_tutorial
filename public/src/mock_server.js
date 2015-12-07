@@ -1,4 +1,4 @@
-// import { createStore } from 'redux'
+// import { combineReducers } from 'redux'
 import Immutable from 'immutable'
 import $ from 'jquery'
 import React, { Component, PropTypes } from 'react'
@@ -53,6 +53,18 @@ const createStore = (reducer) => {
   return { getState, dispatch, subscribe }
 }
 
+// --- reimplementing combineReducers
+
+const combineReducers = (reducerMapping) => {
+  // returns a reducer (the combination!), así que otro función
+  return (state = {}, action) => {
+    return Object.keys(reducerMapping).reduce((nextState, key) => {
+      nextState[key] = reducerMapping[key](state[key], action)
+      return nextState
+    }, {})
+  }
+}
+
 // ------------------------------ most of this is from the video tutorial
 
 /*
@@ -80,7 +92,7 @@ const decrementInCategoryList = (index, catList) => {
   })
 }
 
-const todo = (state, action) => {
+const todo = (state = Immutable.Map(), action) => {
   switch(action.type) {
     case 'ADD_TODO':
       return Immutable.Map({
@@ -99,16 +111,35 @@ const todo = (state, action) => {
   }
 }
 
-const todos = (state = Immutable.List.of(), action) => {
+const todos = (state = Immutable.List(), action) => {
   switch(action.type) {
     case 'ADD_TODO':
-      return state.push(todo(undefined, Immutable.Map(action).merge({ id: state.size }).toObject()))
+      let temp = todo(undefined, Immutable.Map(action).merge({
+        id: state === undefined ? 0 : state.size
+      }).toObject())
+      return state === undefined ? Immutable.List.of(temp) : state.push(temp)
     case 'TOGGLE_TODO':
       return state.map(t => todo(t, action))
     default:
       return state
   }
 }
+
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
+  switch(action.type) {
+    case 'SET_VISIBILITY_FILTER':
+      return action.filter
+    default:
+      return state
+  }
+}
+
+const todoApp = combineReducers({
+  todos,
+  visibilityFilter
+})
+
+const store = createStore(todoApp)
 
 // ---------------------------------------------------------------------
 
@@ -120,13 +151,13 @@ const category = (state, action) => {
     case 'ADD_CATEGORY':
       return Immutable.Map({ id: action.id, index: 0 })
     case 'NEXT_CATEGORY':
-      console.log('state: ' + state)
-      console.log('action: ' + JSON.stringify(action))
       let max = cats.size - 1
       if(state.get('id') === action.id) {
-        return state.update('index', v => v === max ? max : v + 1)
+        let temp = state.update('index', v => v === max ? max : v + 1)
+        return temp
+      } else {
+        return state
       }
-      return state
     case 'PREVIOUS_CATEGORY':
       if(state.get('id') === action.id) {
         return state.update('index', v => v === 0 ? 0 : v - 1)
@@ -234,14 +265,12 @@ const testAddCategory = () => {
 
 const testNextCategory = () => {
   console.log('testNextCategory')
-  const catsBefore = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }),
-                                       Immutable.Map({ id: 1, index: 0 }))
+  const state0 = categories(Immutable.List(), { type: 'ADD_CATEGORY' })
+  const catsBefore = categories(state0, { type: 'ADD_CATEGORY' })
   const catsAfter = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }),
                                       Immutable.Map({ id: 1, index: 1 }))
-  console.log(catsBefore.constructor.name)
-  console.log(categories(catsBefore, { type: 'NEXT_CATEGORY', id: 1 }).constructor.name)
   expect(
-    Immutable.is(categories(catsBefore, { type: 'NEXT_CATEGORY', id: 1 }, catsAfter))
+    Immutable.is(categories(catsBefore, { type: 'NEXT_CATEGORY', id: 1 }), catsAfter)
   ).toEqual(true)
 }
 
@@ -252,7 +281,7 @@ const testPreviousCategoryZero = () => {
     const catsAfter = Immutable.List.of(Immutable.Map({ id: 0, index: 0 }),
                                         Immutable.Map({ id: 1, index: 0 }))
   expect(
-    Immutable.is(categories(catsBefore, { type: 'PREVIOUS_CATEGORY', id: 0 }, catsAfter))
+    Immutable.is(categories(catsBefore, { type: 'PREVIOUS_CATEGORY', id: 0 }), catsAfter)
   ).toEqual(true)
 }
 
@@ -265,14 +294,14 @@ const testPreviousCategory = () => {
                                         Immutable.Map({ id: 1, index: 2 }),
                                         Immutable.Map({ id: 2, index: 5 }))
   expect(
-    Immutable.is(categories(catsBefore, { type: 'PREVIOUS_CATEGORY', id: 1 }, catsAfter))
+    Immutable.is(categories(catsBefore, { type: 'PREVIOUS_CATEGORY', id: 1 }), catsAfter)
   ).toEqual(true)
 }
 
 testAddCategory()
-// testNextCategory()
-// testPreviousCategoryZero()
-// testPreviousCategory()
+testNextCategory()
+testPreviousCategoryZero()
+testPreviousCategory()
 
 console.log('category tests passed')
 
