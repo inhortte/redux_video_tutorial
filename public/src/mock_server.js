@@ -39,9 +39,12 @@ const createStore = (reducer) => {
   let state
   let listeners = []
   const getState = () => state
-  const dispatch = (action) => {
+  const dispatch = (action, cb) => {
     state = reducer(state, action)
     listeners.forEach((listener) => listener())
+    if(cb !== undefined) {
+      cb()
+    }
   }
   const subscribe = (listener) => {
     listeners.push(listener)
@@ -111,13 +114,11 @@ const todo = (state = Immutable.Map(), action) => {
   }
 }
 
-const todos = (state = Immutable.List(), action) => {
+const todos = (state = [], action) => {
   switch(action.type) {
     case 'ADD_TODO':
-      let temp = todo(undefined, Immutable.Map(action).merge({
-        id: state === undefined ? 0 : state.size
-      }).toObject())
-      return state === undefined ? Immutable.List.of(temp) : state.push(temp)
+      state.push(Immutable.Map(todo(undefined, action)).merge({ id: state.length }).toObject())
+      return state
     case 'TOGGLE_TODO':
       return state.map(t => todo(t, action))
     default:
@@ -140,6 +141,55 @@ const todoApp = combineReducers({
 })
 
 const store = createStore(todoApp)
+
+class TodoForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { value: this.props.value }
+  }
+  handleChange(e) {
+    this.setState({ value: e.target.value })
+  }
+  clearValue() {
+    this.setState({ value: '' })
+  }
+  render() {
+    // let that = this
+    return (
+      <div>
+        <input type="text" name="todoInput" id="todoInput" onChange={this.handleChange.bind(this)} value={this.state.value} />
+        <button onClick={() => {
+          store.dispatch({ type: 'ADD_TODO', text: this.state.value }, this.clearValue.bind(this))
+        }}>Smack!</button>
+      </div>
+    )
+  }
+}
+
+class TodoApp extends Component {
+  render() {
+    return (
+      <div>
+        <TodoForm />
+        <ul>
+          {this.props.todos.map((todo) =>
+            <li key={todo.id}>{todo.text}</li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+}
+
+const render = () => {
+  ReactDOM.render(
+    <TodoApp todos={store.getState().todos} />,
+    document.getElementById('mockServer')
+  )
+}
+
+store.subscribe(render)
+render()
 
 // ---------------------------------------------------------------------
 
@@ -340,20 +390,31 @@ socket.on('sendDiv', data => {
 // -------------- video tutorial todo hovno
 
 const testAddTodo = () => {
-  const todo = Immutable.Map({
-    text: 'Brush a pine marten'
-  })
-  const stateBefore = Immutable.List.of()
-  const action = {
-    type: 'ADD_TODO',
-    text: todo.get('text')
-  }
-  const stateAfter = Immutable.List.of(Immutable.Map(todo).merge({
-    id: 0,
-    complete: false
-  }))
+  // const todo = Immutable.Map({
+    // text: 'Brush a pine marten'
+  // })
+  // const stateBefore = Immutable.List.of()
+  const stateBefore = []
+  // const action = {
+    // type: 'ADD_TODO',
+    // text: todo.get('text')
+  // }
+  // const stateAfter = Immutable.List.of(Immutable.Map(todo).merge({
+  //  id: 0,
+  //  complete: false
+  // }))
+  const stateAfter = [
+    {
+      id: 0,
+      text: 'Brush a pine marten',
+      complete: false
+    }
+  ]
+  const nextState = todos(stateBefore, { type: 'ADD_TODO', text: 'Brush a pine marten' })
+  console.log(JSON.stringify(nextState))
   expect(
-    Immutable.is(todos(stateBefore, action), stateAfter)
+    // Immutable.is(todos(stateBefore, action), stateAfter)
+    nextState.text === stateAfter.text
   ).toEqual(true)
 }
 testAddTodo()
