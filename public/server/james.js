@@ -53,13 +53,29 @@ const addAttributesToFirstTag = (attr, html) => {
   return matches[1] + ' ' + attr + matches[2]
 }
 
-
-const categories = (state = [], action) => {
+/*
+ state: { category: [ -selected cat(s)- ], cats: -current cat list-
+*/
+const category = (state = {
+  category: [],
+  cats: cats
+}, action) => {
   switch(action.type) {
+    case 'SET_CATEGORIES':
+      return {
+        category: state.category,
+        cats: action.cats
+      }
     case 'GET_ONE_CATEGORY':
-      return getOneCategory(cats)
+      return {
+        category: getOneCategory(state.cats),
+        cats: cats
+      }
       case 'GET_TWO_CATEGORIES':
-      return getTwoCategories(cats)
+      return {
+        category: getTwoCategories(state.cats),
+        cats: cats
+      }
     default:
       return state
   }
@@ -75,7 +91,7 @@ const snippet = (state = "<div>Leprosy</div>", action) => {
 }
 
 const catServ = combineReducers({
-  categories, snippet
+  category, snippet
 })
 
 export const store = createStore(catServ)
@@ -89,10 +105,19 @@ export default function startServer() {
     socket.emit('death', { text: 'DIE!' })
 
     socket.on('addCats', data => {
-      let categories = getRandomInt(3) === 0 ? getTwoCategories(cats) : getOneCategory(cats)
-        let newDiv = addAttributesToFirstTag('vdnaclass="' + categories.join(',') + '"', data.div)
-        console.log('enviando div: ' + newDiv)
-        io.emit('sendDiv', { div: newDiv })
+      let actionType = getRandomInt(3) === 0 ? 'GET_TWO_CATEGORIES' : 'GET_ONE_CATEGORY'
+      store.dispatch({ type: actionType })
+      let newDiv = addAttributesToFirstTag('vdnaclass="' + store.getState().category.category.join(',') + '"', data.div)
+      console.log('enviando div: ' + newDiv)
+      io.emit('sendDiv', { div: newDiv })
+    })
+
+    socket.on('setCats', data => {
+      store.dispatch({
+        type: 'SET_CATEGORIES',
+        cats: data.cats
+      })
+      console.log('after setCats store: ' + JSON.stringify(store.getState()))
     })
   })
 }

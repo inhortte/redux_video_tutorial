@@ -20,14 +20,14 @@ describe('categories', () => {
       james.store.dispatch({
         type: 'GET_ONE_CATEGORY'
       })
-      expect(james.store.getState().categories.length).to.equal(1)
+      expect(james.store.getState().category.category.length).to.equal(1)
     })
 
     it('returns a string within the array', () => {
       james.store.dispatch({
         type: 'GET_ONE_CATEGORY'
       })
-      expect(james.store.getState().categories[0]).to.be.a('string')
+      expect(james.store.getState().category.category[0]).to.be.a('string')
     })
   })
 
@@ -36,16 +36,28 @@ describe('categories', () => {
       james.store.dispatch({
         type: 'GET_TWO_CATEGORIES'
       })
-      expect(james.store.getState().categories.length).to.equal(2)
+      expect(james.store.getState().category.category.length).to.equal(2)
     })
 
     it('returns two strings', () => {
       james.store.dispatch({
         type: 'GET_TWO_CATEGORIES'
       })
-      expect(james.store.getState().categories.reduce((truth, s) => {
+      expect(james.store.getState().category.category.reduce((truth, s) => {
         return truth && typeof s === 'string'
       }, true)).to.be.true
+    })
+  })
+
+  describe('SET_CATEGORIES', () => {
+    it('changes the category list (array)', () => {
+      james.store.dispatch({
+        type: 'SET_CATEGORIES',
+        cats: ['helium', 'argon', 'neon', 'xenon', 'radon']
+      })
+      expect(
+        james.store.getState().category.cats.indexOf('neon')
+      ).to.not.equal(-1)
     })
   })
 })

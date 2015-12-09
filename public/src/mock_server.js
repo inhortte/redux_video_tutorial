@@ -381,11 +381,11 @@ testGatherOriginalVdnaChildNodes()
 //socket.on('death', data => {
 //  console.log(data.text)
 //})
-console.log('testSendDiv')
-socket.emit('addCats', { div: '<li>leprosy is a <strong>very</strong> fine thing.</li>' })
-socket.on('sendDiv', data => {
-  console.log(data.div)
-})
+// console.log('testSendDiv')
+//socket.emit('addCats', { div: '<li>leprosy is a <strong>very</strong> fine thing.</li>' })
+//socket.on('sendDiv', data => {
+//  console.log(data.div)
+//})
 
 // -------------- video tutorial todo hovno
 
