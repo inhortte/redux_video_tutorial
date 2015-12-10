@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
 // ----- socket.io
-const socket = require('socket.io-client')('http://localhost:9187')
+// const socket = require('socket.io-client')('http://localhost:9187')
 // ---------------
 
 const cats = Immutable.List.of('music', 'french actors', 'actors', 'spirituality', 'czech film', 'rock music', 'world music', 'jazz', 'technology', 'health', 'dental', 'comics', 'humor', 'literature', 'science', 'drama', 'theater', 'film', 'concerts', 'contemporary art', 'opera', 'fitness')
@@ -70,42 +70,17 @@ const combineReducers = (reducerMapping) => {
 
 // ------------------------------ most of this is from the video tutorial
 
-/*
- Simply append the first Category to the end of the passed list
- I keep forgetting these are just INDEXES to cats.
-*/
-const addToCategoryList = (catList) => {
-  return catList.push(0)
-}
-
-const removeFromCategoryList = (index, catList) => {
-  return catList.splice(index, 1)
-}
-
-const incrementInCategoryList = (index, catList) => {
-  let max = catList.size - 1
-  return catList.update(index, (value) => {
-    return value === max ? max : value + 1
-  })
-}
-
-const decrementInCategoryList = (index, catList) => {
-  return catList.update(index, (value) => {
-    return value === 0 ? 0 : value - 1
-  })
-}
-
-const todo = (state = Immutable.Map(), action) => {
+const todo = (state = {}, action) => {
   switch(action.type) {
     case 'ADD_TODO':
-      return Immutable.Map({
+      return {
         id: action.id,
         text: action.text,
         complete: false
-      })
+      }
     case 'TOGGLE_TODO':
-      if(state.get('id') === action.id) {
-        return state.update('complete', (v) => !v)
+      if(state.id === action.id) {
+        return Immutable.Map(state).update('complete', v => !v).toObject()
       } else {
         return state
       }
@@ -117,8 +92,8 @@ const todo = (state = Immutable.Map(), action) => {
 const todos = (state = [], action) => {
   switch(action.type) {
     case 'ADD_TODO':
-      state.push(Immutable.Map(todo(undefined, action)).merge({ id: state.length }).toObject())
-      return state
+      return [...state,
+              Immutable.Map(todo(undefined, action)).merge({ id: state.length }).toObject()]
     case 'TOGGLE_TODO':
       return state.map(t => todo(t, action))
     default:
@@ -140,7 +115,7 @@ const todoApp = combineReducers({
   visibilityFilter
 })
 
-const store = createStore(todoApp)
+export const store = createStore(todoApp)
 
 class TodoForm extends Component {
   constructor(props) {
@@ -157,9 +132,14 @@ class TodoForm extends Component {
     // let that = this
     return (
       <div>
+        <input type="text" ref={node => { this.pomegranate = node }} />
         <input type="text" name="todoInput" id="todoInput" onChange={this.handleChange.bind(this)} value={this.state.value} />
         <button onClick={() => {
-          store.dispatch({ type: 'ADD_TODO', text: this.state.value }, this.clearValue.bind(this))
+          store.dispatch({
+            type: 'ADD_TODO',
+            text: this.pomegranate.value + ":::" + this.state.value
+          }, this.clearValue.bind(this))
+          this.pomegranate.value = ''
         }}>Smack!</button>
       </div>
     )
@@ -411,7 +391,7 @@ const testAddTodo = () => {
     }
   ]
   const nextState = todos(stateBefore, { type: 'ADD_TODO', text: 'Brush a pine marten' })
-  console.log(JSON.stringify(nextState))
+  // console.log(JSON.stringify(nextState))
   expect(
     // Immutable.is(todos(stateBefore, action), stateAfter)
     nextState.text === stateAfter.text
@@ -421,52 +401,62 @@ testAddTodo()
 console.log('add a todo test passed')
 
 const testAddAnotherTodo = () => {
-  const todo = Immutable.Map({
-    text: 'Kill Christián'
-  })
-  const stateBefore = Immutable.List.of(Immutable.Map({
-    id: 0,
-    text: 'Brush a pine marten',
-    complete: false
-  }))
-  const action = {
+  const state1 = todos([], {
     type: 'ADD_TODO',
-    text: todo.get('text')
-  }
-  const stateAfter = Immutable.List.of(Immutable.Map({
-    id: 0,
-    text: 'Brush a pine marten',
-    complete: false
-  }), Immutable.Map(todo).merge({
-    id: 1,
-    complete: false
-  }))
+    text: 'Kill Christian'
+  })
+  const state2 = todos(state1, {
+    type: 'ADD_TODO',
+    text: 'Brush a pine marten'
+  })
+  const stateAfter = [
+    Immutable.Map({
+      id: 0,
+      text: 'Kill Christian',
+      complete: false
+    }),
+    Immutable.Map({
+      id: 1,
+      text: 'Brush a pine marten',
+      complete: false
+    })
+  ]
+  console.log(state2[1].constructor.name)
   expect(
-    Immutable.is(todos(stateBefore, action), stateAfter)
-  ).toEqual(true)
+    state2[1].text
+  ).toEqual(stateAfter[1].get('text'))
 }
 testAddAnotherTodo()
 console.log('add another todo test passed')
 
 const testToggleTodo = () => {
-  const todo0 = Immutable.Map({ text: 'Brush a pine marten' })
-  const todo1 = Immutable.Map({ text: 'Kill Christián' })
-  const todo2 = Immutable.Map({ text: 'Pasea un poco' })
-  const addAction = (todo) => {
-    return {
-      type: 'ADD_TODO',
-      text: todo.get('text')
-    }
-  }
+  const state1 = todos([], {
+    type: 'ADD_TODO',
+    text: 'Kill Christian'
+  })
+  const state2 = todos(state1, {
+    type: 'ADD_TODO',
+    text: 'Brush a pine marten'
+  })
+  const stateAfter = [
+    Immutable.Map({
+      id: 0,
+      text: 'Kill Christian',
+      complete: false
+    }),
+    Immutable.Map({
+      id: 1,
+      text: 'Brush a pine marten',
+      complete: false
+    })
+  ]
   const toggleAction = {
     type: 'TOGGLE_TODO',
     id: 1
   }
-  const state0 = todos(Immutable.List(), addAction(todo0))
-  const state1 = todos(state0, addAction(todo1))
-  const state2 = todos(state1, addAction(todo2))
+  console.log(todos(state2, toggleAction))
   expect(
-    todos(state2, toggleAction).get(1).get('complete')
+    todos(state2, toggleAction)[1].complete
   ).toEqual(true)
 }
 testToggleTodo()
