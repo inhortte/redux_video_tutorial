@@ -34,12 +34,15 @@
     "expect": "^1.13.0",
     "socket.io": "^1.3.7",
     "mocha": "*",
-    "chai": "*"
+    "chai": "*",
+    "jsdom": "*"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test_james": "mocha --compilers js:babel-core/register --recursive"
+    "test_james": "mocha --compilers js:babel-core/register ./test/test_james.js",
+    "test_ms": "mocha --compilers js:babel-core/register --require ./test/ayuda.js ./test/test_mock_server.js",
+    "test_todoApp": "mocha --compilers js:babel-core/register ./test/test_todoApp.js"
   }
 }

@@ -11,8 +11,8 @@ var jsDir = 'public/js';
 var noLimpies = ['cookie.js', 'thurk.js'];
 
 var babelPaths = {
-  vdna: [path.join(srcDir, '*.js')],
-  mock_server: srcDir + '/mock_server.js',
+  vdna: [srcDir + '/static_data.js', srcDir + '/vdnamenu.js'],
+  mock_server: [srcDir + '/todoApp.js', srcDir + '/TodoApp.js', srcDir + '/mock_server.js'],
   dest: jsDir,
   ms_dest: jsDir
 };
@@ -29,20 +29,22 @@ gulp.task('ms', function(cb) {
 });
 gulp.task('msBabel', function(cb) {
   return gulp.src(babelPaths.mock_server)
+            .pipe(sourcemaps.init())
             .pipe(babel({
-              presets: ['es2015']
+              presets: ['es2015', 'react']
             }))
             .pipe(gulp.dest(babelPaths.ms_dest));
 });
 gulp.task('msBrowserify', function(cb) {
   return gulp.src('public/js/mock_server.js')
             .pipe(browserify({
-              insertGlobals: true
+              insertGlobals: true,
+              debug: true
             }))
             .pipe(gulp.dest('public/js/bundle'));
 });
 gulp.task('watchMs', function() {
-  gulp.watch('public/src/mock_server.js', ['ms']);
+  gulp.watch(['public/src/mock_server.js', 'public/src/TodoApp.js', 'public/src/todoApp.js'], ['ms']);
 });
 
 gulp.task('build', function(cb) {
