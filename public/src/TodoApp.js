@@ -1,50 +1,40 @@
 const store = require('./todoApp').store
 import React, { Component } from 'react'
 
-export class TodoForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { value: this.props.value }
-  }
-  handleChange(e) {
-    this.setState({ value: e.target.value })
-  }
-  clearValue() {
-    this.setState({ value: '' })
-  }
-  render() {
-    return (
-      <div>
-      <input type="text" ref={node => { this.pomegranate = node }} />
-      <input type="text" name="todoInput" id="todoInput" onChange={this.handleChange.bind(this)} value={this.state.value} />
+const AddTodo = ( { onAddClick } ) => {
+  let pomegranate
+  return (
+    <div>
+      <input type="text" ref={node => { pomegranate = node }} />
       <button onClick={() => {
-        store.dispatch({
-          type: 'ADD_TODO',
-          text: this.pomegranate.value + ":::" + this.state.value
-        }, this.clearValue.bind(this))
-          this.pomegranate.value = ''
+        onAddClick(pomegranate.value)
+        pomegranate.value = ''
       }}>Smack!</button>
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
-export const FilterLink = ( { filter, current, children } ) => {
+export const FilterLink = ( { filter, current, children, filterLinkClick } ) => {
   if(current === filter) {
     return <span style={{color: 'red'}}>{children}</span>
   } else {
     return (
       <a href="#" onClick={e => {
         e.preventDefault()
-          store.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            filter: filter
-          })
+        filterLinkClick(filter)
       }}
       style={{color: 'black'}}>{children}</a>
     )
   }
 }
+
+const FilterBuddy = ( { visibilityFilter, filterLinkClick } ) => (
+  <p>
+    <FilterLink filter={'ALL'} text={'Todo'} current={visibilityFilter} filterLinkClick={filterLinkClick} >Todo</FilterLink>{' '}
+  <FilterLink filter={'COMPLETE'} text={'Terminado'} current={visibilityFilter} filterLinkClick={filterLinkClick}>Terminado</FilterLink>{' '}
+  <FilterLink filter={'INCOMPLETE'} text={'Incompleto'} current={visibilityFilter} filterLinkClick={filterLinkClick}>Incompleto</FilterLink>
+  </p>
+)
 
 export const isVisible = (filter, t) => {
   switch(filter) {
@@ -70,13 +60,14 @@ export const Todo = ( { text, complete, onClick } ) => {
 export const TodoList = ( { onTodoClick, todos, visibilityFilter } ) => {
   return (
     <ul>
-    {todos.filter(t => isVisible(visibilityFilter, t)).map((todo) =>
-      <Todo key={todo.id} onClick={() => onTodoClick(todo.id)} {...todo} />
-    )}
+      {todos.filter(t => isVisible(visibilityFilter, t)).map((todo) =>
+        <Todo key={todo.id} onClick={() => onTodoClick(todo.id)} {...todo} />
+      )}
     </ul>
   )
 }
 
+/*
 export class TodoApp extends Component {
   constructor(props) {
     super(props)
@@ -87,18 +78,35 @@ export class TodoApp extends Component {
     store.dispatch({ type: 'TOGGLE_TODO', id: id })
   }
 
+  onAddClick(inputValue) {
+    store.dispatch({ type: 'ADD_TODO', text: inputValue })
+  }
+
+  filterLinkClick(filter) {
+    store.dispatch({
+      type: 'SET_VISIBILITY_FILTER',
+      filter: filter
+    })
+  }
+
   render() {
     const { visibilityFilter } = this.props
     return (
       <div>
-      <p>
-      <FilterLink filter={'ALL'} text={'Todo'} current={visibilityFilter}>Todo</FilterLink>{' '}
-      <FilterLink filter={'COMPLETE'} text={'Terminado'} current={visibilityFilter}>Terminado</FilterLink>{' '}
-      <FilterLink filter={'INCOMPLETE'} text={'Incompleto'} current={visibilityFilter}>Incompleto</FilterLink>
-      </p>
-      <TodoForm />
-      <TodoList onTodoClick={id => store.dispatch({ type: 'TOGGLE_TODO', id: id })} {...this.props} />
+        <FilterBuddy visibilityFilter={visibilityFilter} filterLinkClick={this.filterLinkClick} />
+        <AddTodo onAddClick={this.onAddClick} />
+        <TodoList onTodoClick={id => store.dispatch({ type: 'TOGGLE_TODO', id: id })} {...this.props} />
       </div>
     )
   }
 }
+*/
+
+export const TodoApp = ( props ) => (
+  <div>
+    <FilterBuddy visibilityFilter={props.visibilityFilter}
+                 filterLinkClick={filter => store.dispatch({ type: 'SET_VISIBILITY_FILTER', filter: filter })} />
+    <AddTodo onAddClick={inputValue => store.dispatch({ type: 'ADD_TODO', text: inputValue })} />
+    <TodoList onTodoClick={id => store.dispatch({ type: 'TOGGLE_TODO', id: id })} {...props} />
+  </div>
+)
