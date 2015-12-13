@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 // --- reimplementing createStore
 
-const createStore = (reducer) => {
+export const createStore = (reducer) => {
   let state
   let listeners = []
   const getState = () => state
@@ -15,9 +15,9 @@ const createStore = (reducer) => {
   }
   const subscribe = (listener) => {
     listeners.push(listener)
-      return () => {
-        listeners.filter(l => l !== listener)
-      }
+    return () => {
+      listeners.filter(l => l !== listener)
+    }
   }
   dispatch({})
     return { getState, dispatch, subscribe }
@@ -83,9 +83,9 @@ const visibilityFilter = (state = 'ALL', action) => {
   }
 }
 
-const todoApp = combineReducers({
+export const todoApp = combineReducers({
   todos,
   visibilityFilter
 })
 
-export const store = createStore(todoApp)
+// export const store = createStore(todoApp)

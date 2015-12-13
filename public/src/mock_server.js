@@ -1,5 +1,5 @@
-const store = require('./todoApp').store
-const TodoApp = require('./TodoApp').TodoApp
+const { createStore, todoApp } = require('./todoApp')
+const { TodoApp, Provider } = require('./TodoApp')
 import Immutable from 'immutable'
 import $ from 'jquery'
 import React from 'react'
@@ -36,12 +36,14 @@ const gatherOriginalVdna = () => {
 
 const render = () => {
   ReactDOM.render(
-    <TodoApp {...store.getState()} />,
+    <Provider store={createStore(todoApp)}>
+      <TodoApp />
+    </Provider>,
     document.getElementById('mockServer')
   )
 }
 
-store.subscribe(render)
+// store.subscribe(render)
 render()
 
 // -------------- vdna tests

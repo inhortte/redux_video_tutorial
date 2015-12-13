@@ -1,38 +1,79 @@
-const store = require('./todoApp').store
 import React, { Component } from 'react'
 
-const AddTodo = ( { onAddClick } ) => {
+/*
+ Presentation and behavior are combined because the object is not complex
+*/
+const AddTodo = ( props, { store } ) => {
   let pomegranate
   return (
     <div>
       <input type="text" ref={node => { pomegranate = node }} />
       <button onClick={() => {
-        onAddClick(pomegranate.value)
+        store.dispatch({
+          type: 'ADD_TODO',
+          text: pomegranate.value
+        })
         pomegranate.value = ''
       }}>Smack!</button>
     </div>
   )
 }
+AddTodo.contextTypes = {
+  store: React.PropTypes.object
+}
 
-export const FilterLink = ( { filter, current, children, filterLinkClick } ) => {
-  if(current === filter) {
+const Link = ( { active, children, onClick } ) => {
+  if(active) {
     return <span style={{color: 'red'}}>{children}</span>
   } else {
     return (
       <a href="#" onClick={e => {
         e.preventDefault()
-        filterLinkClick(filter)
-      }}
-      style={{color: 'black'}}>{children}</a>
+        onClick()
+      }}>{children}</a>
     )
   }
 }
 
-const FilterBuddy = ( { visibilityFilter, filterLinkClick } ) => (
+/*
+ Containers provides the data and the behavior of presentational components (ie, Link).
+ They are self sufficient and return the same given the same props - purely functional.
+ FilterLink changes when any part of the state changes because the store is subscribed.
+*/
+class FilterLink extends Component {
+  componentDidMount() {
+    const { store } = this.context
+    this.unsubscribe = store.subscribe(() => {
+      this.forceUpdate()
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
+  render() {
+    const props = this.props
+    const { store } = this.context
+    const state = store.getState()
+    return (
+      <Link active={state.visibilityFilter === props.filter}
+            onClick={() => store.dispatch({ type: 'SET_VISIBILITY_FILTER', filter: props.filter })}>{props.children}</Link>
+    )
+  }
+}
+FilterLink.contextTypes = {
+  store: React.PropTypes.object
+}
+
+/*
+ props contains store
+*/
+const FilterBuddy = ( props ) => (
   <p>
-    <FilterLink filter={'ALL'} text={'Todo'} current={visibilityFilter} filterLinkClick={filterLinkClick} >Todo</FilterLink>{' '}
-  <FilterLink filter={'COMPLETE'} text={'Terminado'} current={visibilityFilter} filterLinkClick={filterLinkClick}>Terminado</FilterLink>{' '}
-  <FilterLink filter={'INCOMPLETE'} text={'Incompleto'} current={visibilityFilter} filterLinkClick={filterLinkClick}>Incompleto</FilterLink>
+    <FilterLink filter='ALL' {...props}>Todo</FilterLink>{' '}
+    <FilterLink filter='COMPLETE' {...props}>Terminado</FilterLink>{' '}
+    <FilterLink filter='INCOMPLETE' {...props}>Incompleto</FilterLink>
   </p>
 )
 
@@ -57,56 +98,55 @@ export const Todo = ( { text, complete, onClick } ) => {
   )
 }
 
-export const TodoList = ( { onTodoClick, todos, visibilityFilter } ) => {
-  return (
-    <ul>
-      {todos.filter(t => isVisible(visibilityFilter, t)).map((todo) =>
-        <Todo key={todo.id} onClick={() => onTodoClick(todo.id)} {...todo} />
-      )}
-    </ul>
-  )
-}
+const Todos = ( { onClick, todos } ) => (
+  <ul>
+    {todos.map((todo) => <Todo key={todo.id} onClick={() => onClick(todo.id)} {...todo} />)}
+  </ul>
+)
 
 /*
-export class TodoApp extends Component {
-  constructor(props) {
-    super(props)
-    // this.store = props.store
-  }
-
-  onTodoClick(id) {
-    store.dispatch({ type: 'TOGGLE_TODO', id: id })
-  }
-
-  onAddClick(inputValue) {
-    store.dispatch({ type: 'ADD_TODO', text: inputValue })
-  }
-
-  filterLinkClick(filter) {
-    store.dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter: filter
+ Another container component
+*/
+class TodoList extends Component {
+  componentDidMount() {
+    const { store } = this.context
+    this.unsubscribe = store.subscribe(() => {
+      this.forceUpdate()
     })
   }
-
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
   render() {
-    const { visibilityFilter } = this.props
+    const { store } = this.context
+    const vf = store.getState().visibilityFilter
+    const todos = store.getState().todos.filter(t => isVisible(vf, t))
     return (
-      <div>
-        <FilterBuddy visibilityFilter={visibilityFilter} filterLinkClick={this.filterLinkClick} />
-        <AddTodo onAddClick={this.onAddClick} />
-        <TodoList onTodoClick={id => store.dispatch({ type: 'TOGGLE_TODO', id: id })} {...this.props} />
-      </div>
+      <Todos todos={todos}
+             onClick={id => store.dispatch({ type: 'TOGGLE_TODO', id })} />
     )
   }
 }
-*/
+TodoList.contextTypes = {
+  store: React.PropTypes.object
+}
 
-export const TodoApp = ( props ) => (
+export const TodoApp = () => (
   <div>
-    <FilterBuddy visibilityFilter={props.visibilityFilter}
-                 filterLinkClick={filter => store.dispatch({ type: 'SET_VISIBILITY_FILTER', filter: filter })} />
-    <AddTodo onAddClick={inputValue => store.dispatch({ type: 'ADD_TODO', text: inputValue })} />
-    <TodoList onTodoClick={id => store.dispatch({ type: 'TOGGLE_TODO', id: id })} {...props} />
+    <FilterBuddy />
+    <AddTodo />
+    <TodoList />
   </div>
 )
+
+export class Provider extends Component {
+  getChildContext() {
+    return { store: this.props.store }
+  }
+  render() {
+    return this.props.children
+  }
+}
+Provider.childContextTypes = {
+  store: React.PropTypes.object
+}

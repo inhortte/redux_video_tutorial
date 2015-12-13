@@ -42,7 +42,7 @@
   },
   "scripts": {
     "test_james": "mocha --compilers js:babel-core/register ./test/test_james.js",
-    "test_ms": "mocha --compilers js:babel-core/register --require ./test/ayuda.js ./test/test_mock_server.js",
-    "test_todoApp": "mocha --compilers js:babel-core/register ./test/test_todoApp.js"
+    "test_ms": "mocha --compilers js:babel-core/register --require ./test/ayuda.js -R nyan ./test/test_mock_server.js",
+    "test_todoApp": "mocha --compilers js:babel-core/register -R nyan ./test/test_todoApp.js"
   }
 }
