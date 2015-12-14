@@ -10,12 +10,10 @@
   "dependencies": {
     "immutable": "*",
     "jquery": "*",
-    "moment": "*",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.1",
-    "redux": "*",
-    "socket.io-client": "*"
+    "redux": "*"
   },
   "devDependencies": {
     "babel-core": "^6.1.21",
@@ -23,7 +21,6 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babelify": "*",
-    "bootstrap": "*",
     "del": "*",
     "gulp": "*",
     "gulp-babel": "^6.1.1",
@@ -32,8 +29,6 @@
     "http-server": "^0.7.5",
     "request": "*",
     "run-sequence": "*",
-    "expect": "^1.13.0",
-    "socket.io": "^1.3.7",
     "mocha": "*",
     "chai": "*",
     "jsdom": "*"
@@ -42,7 +37,6 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test_james": "mocha --compilers js:babel-core/register ./test/test_james.js",
     "test_ms": "mocha --compilers js:babel-core/register --require ./test/ayuda.js -R nyan ./test/test_mock_server.js",
     "test_todoApp": "mocha --compilers js:babel-core/register -R nyan ./test/test_todoApp.js"
   }

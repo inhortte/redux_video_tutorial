@@ -8,32 +8,27 @@ var del = require('del');
 var path = require('path');
 var srcDir = 'public/src';
 var jsDir = 'public/js';
-var noLimpies = ['cookie.js', 'thurk.js'];
 
 var babelPaths = {
-  vdna: [srcDir + '/static_data.js', srcDir + '/vdnamenu.js'],
-  mock_server: [srcDir + '/todoApp.js', srcDir + '/TodoApp.js', srcDir + '/mock_server.js'],
-  dest: jsDir,
-  ms_dest: jsDir
+  msSrc: [path.join(srcDir, '*.js')],
+  msDest: jsDir
 };
 gulp.task('clean', function() {
   del([
-    path.join(jsDir, '*.js'),
-    path.join(jsDir, 'bundle'),
-    '!' + path.join(jsDir, 'cookie.js'),
-    '!' + path.join(jsDir, 'thurk.js')
+    path.join(msDest, '*.js'),
+    path.join(msDest, 'bundle'),
   ]);
 });
 gulp.task('ms', function(cb) {
   runSequence('msBabel', 'msBrowserify', cb);
 });
 gulp.task('msBabel', function(cb) {
-  return gulp.src(babelPaths.mock_server)
+  return gulp.src(['public/src/todoApp.js', 'public/src/TodoApp.js', 'public/src/mock_server.js'])
             .pipe(sourcemaps.init())
             .pipe(babel({
               presets: ['es2015', 'react']
             }))
-            .pipe(gulp.dest(babelPaths.ms_dest));
+            .pipe(gulp.dest(babelPaths.msDest));
 });
 gulp.task('msBrowserify', function(cb) {
   return gulp.src('public/js/mock_server.js')
@@ -46,27 +41,4 @@ gulp.task('msBrowserify', function(cb) {
 gulp.task('watchMs', function() {
   gulp.watch(['public/src/mock_server.js', 'public/src/TodoApp.js', 'public/src/todoApp.js'], ['ms']);
 });
-
-gulp.task('build', function(cb) {
-  runSequence('babel', 'browserify', cb);
-});
-gulp.task('babel', function() {
-  return gulp.src(babelPaths.vdna)
-             .pipe(sourcemaps.init())
-             .pipe(babel({
-               presets: ['es2015', 'react']
-             }))
-             .pipe(gulp.dest(babelPaths.dest));
-});
-gulp.task('browserify', function() {
-  return gulp.src(['public/js/vdnamenu.js', 'public/js/mock_server.js'])
-             .pipe(browserify({
-               insertGlobals: true,
-               debug: true
-             }))
-             .pipe(gulp.dest('public/js/bundle'))
-});
-gulp.task('watch', function() {
-  gulp.watch(babelPaths.vdna, ['build']);
-});
-gulp.task('default', ['watch']);
+gulp.task('default', ['watchMs']);

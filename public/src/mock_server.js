@@ -5,7 +5,7 @@ import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import expect, { createSpy, spyOn, isSpy } from 'expect'
+// import expect, { createSpy, spyOn, isSpy } from 'expect'
 
 // ----- socket.io
 // const socket = require('socket.io-client')('http://localhost:9187')
