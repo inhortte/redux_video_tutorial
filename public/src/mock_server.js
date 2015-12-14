@@ -1,9 +1,10 @@
 const { createStore, todoApp } = require('./todoApp')
-const { TodoApp, Provider } = require('./TodoApp')
+const { TodoApp } = require('./TodoApp')
 import Immutable from 'immutable'
 import $ from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
 // ----- socket.io

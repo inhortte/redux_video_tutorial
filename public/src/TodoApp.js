@@ -69,11 +69,11 @@ FilterLink.contextTypes = {
 /*
  props contains store
 */
-const FilterBuddy = ( props ) => (
+const FilterBuddy = () => (
   <p>
-    <FilterLink filter='ALL' {...props}>Todo</FilterLink>{' '}
-    <FilterLink filter='COMPLETE' {...props}>Terminado</FilterLink>{' '}
-    <FilterLink filter='INCOMPLETE' {...props}>Incompleto</FilterLink>
+    <FilterLink filter='ALL'>Todo</FilterLink>{' '}
+    <FilterLink filter='COMPLETE'>Terminado</FilterLink>{' '}
+    <FilterLink filter='INCOMPLETE'>Incompleto</FilterLink>
   </p>
 )
 
@@ -139,6 +139,7 @@ export const TodoApp = () => (
   </div>
 )
 
+/* ---- scratch implementation (now using Provider from react-redux)
 export class Provider extends Component {
   getChildContext() {
     return { store: this.props.store }
@@ -150,3 +151,4 @@ export class Provider extends Component {
 Provider.childContextTypes = {
   store: React.PropTypes.object
 }
+*/

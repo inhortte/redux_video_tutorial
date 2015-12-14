@@ -8,10 +8,13 @@
     ]
   },
   "dependencies": {
-    "moment": "*",
-    "redux": "*",
     "immutable": "*",
     "jquery": "*",
+    "moment": "*",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.1",
+    "redux": "*",
     "socket.io-client": "*"
   },
   "devDependencies": {
@@ -27,8 +30,6 @@
     "gulp-browserify": "*",
     "gulp-sourcemaps": "*",
     "http-server": "^0.7.5",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
     "request": "*",
     "run-sequence": "*",
     "expect": "^1.13.0",
